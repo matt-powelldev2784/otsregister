@@ -55,7 +55,7 @@ export const Login = props => {
                     />
                     <Button text="SIGN IN" />
                     <Footer>
-                        <Link href={'/signup'}>Need an account? Sign up here</Link>
+                        <Link href={'/signup'}>Need an account? Sign Up here</Link>
                     </Footer>
                 </LoginForm>
             </Container>
