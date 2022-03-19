@@ -20,7 +20,7 @@ export const loginUser = async emailPassword => {
     const body = JSON.stringify(emailPassword);
 
     try {
-        const res = await axios.post('api/auth', body, config);
+        const res = await axios.post('https://ots-register-server.herokuapp.com/api/auth', body, config);
 
         const token = res.data.token;
 
