@@ -16,7 +16,7 @@ export const registerUser = async userNameEmailPassword => {
 };
 
 export const loginUser = async emailPassword => {
-    const config = { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } };
+    const config = { headers: { 'Content-Type': 'application/json' } };
     const body = JSON.stringify(emailPassword);
 
     try {
