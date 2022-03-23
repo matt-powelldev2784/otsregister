@@ -16,11 +16,12 @@ export const registerUser = async userNameEmailPassword => {
 };
 
 export const loginUser = async emailPassword => {
-    const config = { headers: { 'Content-Type': 'application/json' } };
+    const config = { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } };
     const body = JSON.stringify(emailPassword);
 
     try {
         const res = await axios.post('https://ots-register-server.herokuapp.com/api/auth', body, config);
+        console.log('res', res);
 
         const token = res.data.token;
 
