@@ -3,6 +3,7 @@ build/
 .prettierrc
 __tests__/
 coverage/
+.env
 
 # Local Netlify folder
 .netlify
