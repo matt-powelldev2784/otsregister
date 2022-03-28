@@ -21,6 +21,7 @@ export const loginUser = async emailPassword => {
 
     try {
         console.log('process.env.REACT_APP_API_ADDRESS', process.env.REACT_APP_API_ADDRESS);
+        console.log('process.env.REACT_APP_API_ADDRESS', process.env);
         const res = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/api/auth`, body, config);
         console.log('res', res);
 
