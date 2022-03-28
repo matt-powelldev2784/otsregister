@@ -5,7 +5,7 @@ export const registerUser = async userNameEmailPassword => {
     const body = JSON.stringify(userNameEmailPassword);
 
     try {
-        const res = await axios.post('/api/users', body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/api/users`, body, config);
 
         const token = res.data.token;
 
@@ -20,9 +20,7 @@ export const loginUser = async emailPassword => {
     const body = JSON.stringify(emailPassword);
 
     try {
-        console.log('process.env.REACT_APP_API_ADDRESS', process.env.REACT_APP_API_ADDRESS);
-        console.log('process.env1', process.env);
-        const res = await axios.post(`${process.env.REACT_APP_API_ADDRESS}api/auth`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/api/auth`, body, config);
         console.log('res', res);
 
         const token = res.data.token;
@@ -37,7 +35,7 @@ export const getAuthUser = async token => {
     const config = { headers: { 'x-auth-token': token, 'content-type': 'application/json' } };
 
     try {
-        const res = await axios.get('/api/auth', config);
+        const res = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/api/auth`, config);
 
         const user = res.data;
         return user;
@@ -54,13 +52,13 @@ export const apiCall = async (apiCallType, route, token, body) => {
 
         switch (apiCallType) {
             case 'post':
-                repsonse = await axios.post(route, body, config);
+                repsonse = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/${route}`, body, config);
                 break;
             case 'get':
-                repsonse = await axios.get(route, config);
+                repsonse = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config);
                 break;
             default:
-                repsonse = await axios.get(route, config);
+                repsonse = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config);
         }
 
         const responseData = repsonse.data;
