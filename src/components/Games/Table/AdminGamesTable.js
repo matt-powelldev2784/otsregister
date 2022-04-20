@@ -17,6 +17,8 @@ export const AdminGamesTable = () => {
         getGamesData();
     }, [token, updateAppState]);
 
+    console.log('token', token);
+
     const GamesTable = makeGamesTable(gamesData);
 
     return (
