@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../Context/authContext';
-import { apiCall as updateProfile } from '../Login/authHelpers';
-import { registerUser } from './authHelpers';
+import { apiCall as updateProfile } from '../Utilities/apiUtil';
+import { registerUser } from '../Utilities/apiUtil';
 import styled from 'styled-components';
 import { FormField } from '../Utilities/FormField';
 import { Button } from '../Utilities/Button';

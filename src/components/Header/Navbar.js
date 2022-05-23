@@ -1,11 +1,13 @@
-import React, { useState, useContext } from 'react';
-import AuthContext from '../../Context/authContext';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import menuIcon from '../../img/menu_white_36dp.svg';
 import { MenuElement } from './MenuElement';
 
 export const Navbar = () => {
-    const { authUser, isDesktop } = useContext(AuthContext);
+    const { isDesktop, menu } = useSelector(state => state.globalReducer);
+    const { homepage, adminUser, user } = menu;
+
     const [menuOpen, setMenuOpen] = useState(false);
 
     const menuClickHandler = () => {
@@ -14,12 +16,12 @@ export const Navbar = () => {
 
     const Menu = (
         <Flexbox>
-            {!authUser && <MenuElement menuContent="LOGIN" href="/login" />}
-            {!authUser && <MenuElement menuContent="SIGNUP" href="/signup" />}
-            {authUser && !authUser.admin && <MenuElement menuContent="REGISTER FOR GAME" href="/dashboard" />}
-            {authUser && !authUser.admin && <MenuElement menuContent="EDIT PROFILE" href="/editprofile" />}
-            {authUser.admin && <MenuElement menuContent="CREATE GAME" href="/creategame" />}
-            {authUser.admin && <MenuElement menuContent="GAMES LIST" href="/dashboard" />}
+            {homepage && <MenuElement menuContent="LOGIN" href="/login" />}
+            {homepage && <MenuElement menuContent="SIGNUP" href="/signup" />}
+            {user && <MenuElement menuContent="REGISTER FOR GAME" href="/dashboard" />}
+            {user && <MenuElement menuContent="EDIT PROFILE" href="/editprofile" />}
+            {adminUser && <MenuElement menuContent="CREATE GAME" href="/creategame" />}
+            {adminUser && <MenuElement menuContent="GAMES LIST" href="/dashboard" />}
         </Flexbox>
     );
 

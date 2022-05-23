@@ -1,29 +1,29 @@
-import React, { useContext, useLayoutEffect } from 'react';
-import AuthContext from '../../../Context/authContext';
+import React, { useLayoutEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGamesData } from '../../redux/dataState';
 import styled from 'styled-components';
-import { apiCall } from '../../Login/authHelpers';
-import { makeGamesTable } from '../Utilites/makeGamesTable';
+import { makeUserGamesTable } from '../Utilites/makeUserGamesTable';
 import { GamesTableHead } from './GamesTableHead';
 
 export const UserGamesTable = () => {
-    const { token, gamesData } = useContext(AuthContext);
-    const updateAppState = useContext(AuthContext).setAppStateHandler;
+    const dispatch = useDispatch();
+    const { authToken } = useSelector(state => state.authReducer);
+    const { gamesData } = useSelector(state => state.dataReducer);
+    const { gamesList} = gamesData;
 
     useLayoutEffect(() => {
-        const getGamesData = async () => {
-            const gamesData = await apiCall('get', 'api/games/recentgames', token);
-            updateAppState({ gamesData: gamesData });
-        };
-        getGamesData();
-    }, [token, updateAppState]);
+        if (authToken) {
+            dispatch(getGamesData(authToken));
+        }
+    }, [authToken, dispatch]);
 
-    const GamesTable = makeGamesTable(gamesData);
+    const GamesTable = makeUserGamesTable(gamesList);
 
     return (
         <Section>
             <Table>
                 <thead>
-                    <GamesTableHead cell1="Game Date" cell2="Game Name" cell3="Register Open" cell4="Available" />
+                    <GamesTableHead cell1="Game Date" cell2="Game Name" cell3="Register Status" cell4="Player Availability" />
                 </thead>
                 <tbody>{GamesTable}</tbody>
             </Table>

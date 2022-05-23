@@ -1,42 +1,28 @@
-import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthContext from '../Context/authContext';
-import { PlanTeamsContextProvider } from '../Context/planTeamsContext';
-import { getAuthUser } from '../components/Login/authHelpers';
+import React, { Fragment, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setMenu } from '../components/redux/globalState';
 import styled from 'styled-components';
 import { Header } from '../components/Header/Header';
 import { Background } from '../components/Header/Background';
-import { PlanTeams } from '../components/PlanTeams/PlanTeams';
+import { PlanTeams } from '../components/PlanTeam/PlanTeams';
 
 export const PlanTeamsPage = () => {
-    const { isDesktop, authUser, token } = useContext(AuthContext);
-    const updateAppState = useContext(AuthContext).setAppStateHandler;
-    const navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    const { isDesktop } = useSelector(state => state.globalReducer);
+    const { adminUser } = useSelector(state => state.authReducer);
+   
     useEffect(() => {
-        const getAuhtorisedUser = async () => {
-            try {
-                const authorisedUser = await getAuthUser(token);
-
-                updateAppState({ token: token, authUser: authorisedUser, authError: false, authErrors: false });
-            } catch (err) {
-                navigate('/');
-                const invalidCredError = [{ msg: 'Invalid user credentials. Please login' }];
-                updateAppState({ token: false, authUser: false, authError: true, authErrors: invalidCredError });
-                console.log(err);
-            }
-        };
-        getAuhtorisedUser();
-    }, [token, updateAppState, navigate]);
+        dispatch(setMenu({ homepage: false, adminUser: adminUser, user: !adminUser }));
+    }, [dispatch, adminUser]);
 
     return (
-        <PlanTeamsContextProvider>
+        <Fragment>
             <Header />
             <Main>
                 {isDesktop && <Background />}
-                <Container>{authUser.admin && <PlanTeams />}</Container>
+                <Container>{adminUser && <PlanTeams />}</Container>
             </Main>
-        </PlanTeamsContextProvider>
+        </Fragment>
     );
 };
 

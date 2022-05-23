@@ -26,7 +26,7 @@ export const AuthContextProvider = props => {
         backgroundColor: '#003a68'
     });
 
-    console.log('authcContext', appState);
+    //console.log('authcContext', appState);
     return <AuthContext.Provider value={appState}>{props.children}</AuthContext.Provider>;
 };
 
