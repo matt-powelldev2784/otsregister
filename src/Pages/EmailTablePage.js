@@ -1,14 +1,13 @@
 import React, { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setMenu } from '../components/redux/globalState';
 import styled from 'styled-components';
 import { Header } from '../components/Header/Header';
 import { Background } from '../components/Header/Background';
-import { CreateGame } from '../components/Games/CreateGame/CreateGame';
+import { EmailTable } from '../components/PlanTeam/TableForEmail/EmailTable';
 
-export const CreateGamePage = () => {
+export const EmailTablePage = () => {
     const dispatch = useDispatch();
-
     const { isDesktop } = useSelector(state => state.globalReducer);
     const { adminUser } = useSelector(state => state.authReducer);
 
@@ -21,7 +20,7 @@ export const CreateGamePage = () => {
             <Header />
             <Main>
                 {isDesktop && <Background />}
-                <Container>{adminUser && <CreateGame />}</Container>
+                <Container>{adminUser && <EmailTable />}</Container>
             </Main>
         </Fragment>
     );

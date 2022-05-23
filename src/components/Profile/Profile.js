@@ -1,55 +1,48 @@
-import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../Context/authContext';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { apiCall as getProfile } from '../Login/authHelpers';
-import { apiCall as updateProfile } from '../Login/authHelpers';
+import { getProfileData, updateProfileData } from '../redux/dataState';
+import { setDataIsLoading } from '../redux/dataState';
 import { Button } from '../Utilities/Button';
 import { FormTitle } from '../Utilities/FormTitle';
 import { Errors } from '../Login/Errors';
 import ProifleImagePlaceholder from '../../img/account_circle_white_24dp.svg';
 
-export const Profile = props => {
-    const { token, authError, authErrors } = useContext(AuthContext);
-    const updateAppState = useContext(AuthContext).setAppStateHandler;
-    const [defaultTeam, setDefaultTeam] = useState();
-    const [position, setPosition] = useState();
-    const defaultTeamRef = useRef(null);
-    const positionRef = useRef(null);
+export const Profile = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { authToken, authErrors } = useSelector(state => state.authReducer);
+    const { dataIsLoading, playerProfile } = useSelector(state => state.dataReducer);
+    const { defaultTeam, position } = playerProfile.playerProfile;
+    console.log('position', position);
+    console.log('defaultTeam', defaultTeam);
+
+    const defaultTeamRef = useRef(position);
+    const positionRef = useRef(null);
 
     useEffect(() => {
-        const getProfileData = async () => {
-            try {
-                const profile = await getProfile('get', 'api/profile/me', token);
-                updateAppState({ playerProfile: true, playerDetails: profile });
-                const defaultTeam = parseInt(profile.defaultTeam);
-                const position = profile.position;
-                setDefaultTeam(defaultTeam);
-                setPosition(position);
-            } catch (err) {
-                console.log(err);
-                updateAppState({ authError: true, authErrors: err.errors });
-            }
-        };
-        getProfileData();
-    }, [token, updateAppState]);
+        try {
+            dispatch(getProfileData({ authToken }));
+        } catch (err) {
+            throw Error;
+        }
+    }, [authToken, dispatch, navigate]);
 
     const onSubmit = async e => {
         e.preventDefault();
-
+        dispatch(setDataIsLoading(true));
         const updateTeam = defaultTeamRef.current.value;
         const updatePosition = positionRef.current.value;
         const formData = { defaultTeam: updateTeam, position: updatePosition };
-        console.log(formData);
-
         try {
-            await updateProfile('post', 'api/profile', token, formData);
-            updateAppState({ authError: true, authErrors: [{ msg: 'Profile Updated' }] });
-            navigate('/editprofile');
+            const updatedProfile = await dispatch(updateProfileData({ authToken, formData }));
+            if (updatedProfile) {
+                navigate('/dashboard');
+            }
+            dispatch(setDataIsLoading(false));
         } catch (err) {
-            console.log(err);
-            updateAppState({ authError: true, authErrors: err.errors });
+            throw Error;
         }
     };
 
@@ -58,11 +51,11 @@ export const Profile = props => {
             <Container>
                 <UpdateProfileForm onSubmit={e => onSubmit(e)}>
                     <FormTitle text="PROFILE" />
-                    {authError && <Errors errors={authErrors} />}
+                    {authErrors && <Errors errors={authErrors} />}
                     <ProfileImage src={ProifleImagePlaceholder} />
                     <Label>
                         <Span>USUAL MATCHDAY TEAM</Span>
-                        <Select placeholder="Usual Matchday Team" defaultValue={defaultTeam} ref={defaultTeamRef}>
+                        <Select placeholder="Usual Matchday Team" ref={defaultTeamRef}>
                             <option value={defaultTeam}>{defaultTeam}</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -76,8 +69,8 @@ export const Profile = props => {
                     </Label>
                     <Label>
                         <Span>POSITION</Span>
-                        <Select placeholder="Position" defaultValue={position} ref={positionRef}>
-                            <option value={position}>NK</option>
+                        <Select placeholder="Position" ref={positionRef}>
+                            <option value={position}>{position}</option>
                             <option value="GK">GK</option>
                             <option value="LB">LB</option>
                             <option value="CB">CB</option>
@@ -88,9 +81,9 @@ export const Profile = props => {
                             <option value="CF">CF</option>
                         </Select>
                     </Label>
-                    <Button text="UPDATE PROFILE" />
+                    <Button text="UPDATE PROFILE" disabled={dataIsLoading} />
                     <Footer>
-                        <Link href={'/dashboard'}>Click here to register for Training or Games</Link>
+                        <Link>Click here to register for Training or Games</Link>
                     </Footer>
                 </UpdateProfileForm>
             </Container>
