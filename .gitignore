@@ -4,6 +4,7 @@ build/
 __tests__/
 coverage/
 .env
+_test.js
 
 # Local Netlify folder
 .netlify
