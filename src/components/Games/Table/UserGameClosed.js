@@ -11,13 +11,11 @@ export const UserGameClosed = ({ gameId, gameClosed, currentPlayerAvailable }) =
         dispatch(getGamesData(authToken));
     }, [authToken, dispatch]);
 
-    const tableRowColor = gameClosed ? '#707070' : undefined;
-
     return (
         <Fragment>
             <Flexbox>
-                {currentPlayerAvailable && <PlayerAvailable color={tableRowColor}>{authUserName} Available</PlayerAvailable>}
-                {!currentPlayerAvailable && <PlayerUnavialable color={tableRowColor}>{authUserName} NOT Available</PlayerUnavialable>}
+                {currentPlayerAvailable && <PlayerAvailable>{authUserName} Available</PlayerAvailable>}
+                {!currentPlayerAvailable && <PlayerUnavialable>{authUserName} NOT Available</PlayerUnavialable>}
             </Flexbox>
         </Fragment>
     );
@@ -38,7 +36,7 @@ const Flexbox = styled.div`
 
 const PlayerAvailable = styled.p`
     display: inline-block;
-    background: green;
+    background: black;
     color: white;
     padding: 0.2rem 0.6rem;
     font-size: 1.2rem;

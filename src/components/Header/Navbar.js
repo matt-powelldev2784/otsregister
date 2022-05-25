@@ -18,7 +18,7 @@ export const Navbar = () => {
         <Flexbox>
             {homepage && <MenuElement menuContent="LOGIN" href="/login" />}
             {homepage && <MenuElement menuContent="SIGNUP" href="/signup" />}
-            {user && <MenuElement menuContent="REGISTER FOR GAME" href="/dashboard" />}
+            {user && <MenuElement menuContent="GAME REGISTRATION" href="/dashboard" />}
             {user && <MenuElement menuContent="EDIT PROFILE" href="/editprofile" />}
             {adminUser && <MenuElement menuContent="CREATE GAME" href="/creategame" />}
             {adminUser && <MenuElement menuContent="GAMES LIST" href="/dashboard" />}

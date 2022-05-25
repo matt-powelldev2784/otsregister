@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getProfileData, updateProfileData } from '../redux/dataState';
-import { setDataIsLoading } from '../redux/dataState';
 import { Button } from '../Utilities/Button';
 import { FormTitle } from '../Utilities/FormTitle';
 import { Errors } from '../Login/Errors';
@@ -15,8 +14,6 @@ export const Profile = () => {
     const { authToken, authErrors } = useSelector(state => state.authReducer);
     const { dataIsLoading, playerProfile } = useSelector(state => state.dataReducer);
     const { defaultTeam, position } = playerProfile.playerProfile;
-    console.log('position', position);
-    console.log('defaultTeam', defaultTeam);
 
     const defaultTeamRef = useRef(position);
     const positionRef = useRef(null);
@@ -31,16 +28,12 @@ export const Profile = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
-        dispatch(setDataIsLoading(true));
+
         const updateTeam = defaultTeamRef.current.value;
         const updatePosition = positionRef.current.value;
         const formData = { defaultTeam: updateTeam, position: updatePosition };
         try {
-            const updatedProfile = await dispatch(updateProfileData({ authToken, formData }));
-            if (updatedProfile) {
-                navigate('/dashboard');
-            }
-            dispatch(setDataIsLoading(false));
+            dispatch(updateProfileData({ authToken, formData }));
         } catch (err) {
             throw Error;
         }

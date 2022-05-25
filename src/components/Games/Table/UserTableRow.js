@@ -12,9 +12,8 @@ export const UserTableRow = ({ gameId, gameDate, gameName, registeredPlayers, ga
             <TableCell>{gameDate}</TableCell>
             <TableCell>{gameName}</TableCell>
             <TableCell>
-                {gameClosedText}
-                <br />
-                {registeredPlayers} Available Players
+                <Div> {gameClosedText}</Div>
+                <Div>{registeredPlayers} Available Players</Div>
             </TableCell>
             <TableCell>
                 <Flexbox>
@@ -62,4 +61,8 @@ const Flexbox = styled.div`
     @media (max-device-width: 440px) {
         flex-direction: column;
     }
+`;
+
+const Div = styled.div`
+    padding: 0.25rem;
 `;

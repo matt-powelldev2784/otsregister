@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 export const ToggleButton = ({ onClick, defaultChecked, toggleColor }) => {
-    const { isLoading } = useSelector(state => state.globalReducer);
+    const { isLoading } = useSelector(state => state.dataReducer);
 
     return (
         <Fragment>

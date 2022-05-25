@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsLoading } from '../../redux/globalState';
 import { setGameRegister } from '../../redux/dataState';
 import { ToggleButton } from '../Utilites/ToggleButton';
 import { TableButton } from '../Utilites/TableButton';
@@ -10,8 +9,7 @@ export const GameStatus = ({ gameClosed, gameId }) => {
     const dispatch = useDispatch();
     const { isDesktop } = useSelector(state => state.globalReducer);
     const { authToken } = useSelector(state => state.authReducer);
-    const { gamesData } = useSelector(state => state.dataReducer);
-    const { gamesDataIsLoading } = gamesData;
+    const { isLoading, gamesData } = useSelector(state => state.dataReducer);
 
     const gameStatusHandler = async () => {
         if (gameClosed)
@@ -21,11 +19,7 @@ export const GameStatus = ({ gameClosed, gameId }) => {
 
         const body = { gameId, gameClosed: !gameClosed };
         try {
-            dispatch(setIsLoading(true));
-            const gameRegisterResult = await dispatch(setGameRegister({ authToken, body }));
-            if (gameRegisterResult) {
-                dispatch(setIsLoading(false));
-            }
+            dispatch(setGameRegister({ authToken, body }));
         } catch (err) {
             throw Error;
         }
@@ -39,12 +33,7 @@ export const GameStatus = ({ gameClosed, gameId }) => {
             <Flexbox>
                 {gameClosed && <GameClosed color={gameClosedColor}>Game Closed</GameClosed>}
                 {!gameClosed && <GameOpen>Game Open</GameOpen>}
-                <ToggleButton
-                    onClick={gameStatusHandler}
-                    defaultChecked={gameClosed}
-                    toggleColor={toggleColor}
-                    isLoading={gamesDataIsLoading}
-                />
+                <ToggleButton onClick={gameStatusHandler} defaultChecked={gameClosed} toggleColor={toggleColor} isLoading={isLoading} />
                 {isDesktop && <TableButton text={'DELETE'} color={'white'} bgColor={'red'} />}
             </Flexbox>
         </Fragment>

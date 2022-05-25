@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const MenuElement = props => {
+export const MenuElement = ({ href, menuContent }) => {
     return (
         <FlexItem>
-            <Container href={props.href}>
-                <MenuItem>{props.menuContent}</MenuItem>
+            <Container href={href}>
+                <MenuItem>{menuContent}</MenuItem>
             </Container>
         </FlexItem>
     );

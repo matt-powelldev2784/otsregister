@@ -31,6 +31,7 @@ export const getGamesData = createAsyncThunk('dataState/getGamesData', async aut
 export const createGame = createAsyncThunk('dataState/createGame', async ({ authToken, formData }) => {
     try {
         const createdGame = await apiCall('post', 'api/games/creategame', authToken, formData);
+        window.location.href = '/dashboard';
         return createdGame;
     } catch (err) {
         console.log('err.msg', err);
@@ -101,8 +102,8 @@ export const getProfileData = createAsyncThunk('dataState/getProfileData', async
 
 export const updateProfileData = createAsyncThunk('dataState/updateProfileData', async ({ authToken, formData }) => {
     try {
-        console.log('formData', formData);
         const updatedProfile = await apiCall('post', 'api/profile', authToken, formData);
+        window.location.href = '/dashboard';
         return updatedProfile;
     } catch (err) {
         console.log('err.msg', err);
@@ -117,8 +118,8 @@ export const dataSlice = createSlice({
         isLoading: false,
         authUserName: localStorage.getItem('authUserName') || null,
         authUserId: localStorage.getItem('authUserId') || null,
-        playerProfile: { playerProfile: {}, playerProfileisLoading: false },
-        playerRegister: { registerDetails: {}, playerRegisterIsLoading: false },
+        playerProfile: { playerProfile: {} },
+        playerRegister: { registerDetails: {} },
         createGameData: { gameData: null, createGameDataIsLoading: false, authErrors: null },
         gamesData: { gamesList: null, gamesDataIsLoading: false, authErrors: null },
         planTeamsData: {
@@ -177,9 +178,11 @@ export const dataSlice = createSlice({
     },
     extraReducers: {
         [getGamesData.pending]: state => {
-            state.gamesData = { ...state.gamesData, gamesDataIsLoading: true, authErrors: false };
+            state.isLoading = true;
+            state.gamesData = { ...state.gamesData, authErrors: false };
         },
         [getGamesData.fulfilled]: (state, action) => {
+            state.isLoading = false;
             state.authUserName = localStorage.getItem('authUserName');
             state.authUserId = localStorage.getItem('authUserId');
 
@@ -195,12 +198,14 @@ export const dataSlice = createSlice({
             };
         },
         [getGamesData.rejected]: (state, action) => {
-            state.gamesData = { ...state.gamesData, gamesDataIsLoading: false, authErrors: [action.error] };
+            state.isLoading = false;
+            state.gamesData = { ...state.gamesData, authErrors: [action.error] };
         },
 
         //---------------------------------------------------------------------
         [getPlanTeamsData.pending]: state => {
-            state.planTeamsData = { ...state.planTeamsData, planTeamsDataIsLoading: true, authErrors: false };
+            state.isLoading = true;
+            state.planTeamsData = { ...state.planTeamsData, authErrors: false };
         },
         [getPlanTeamsData.fulfilled]: (state, { payload }) => {
             state.planTeamsData = {
@@ -210,39 +215,45 @@ export const dataSlice = createSlice({
                 fixtureDate: formatDate(payload.gameDate),
                 fixtureName: payload.gameName
             };
+            state.isLoading = false;
         },
         [getPlanTeamsData.rejected]: (state, action) => {
-            state.planTeamsData = { ...state.planTeamsData, planTeamsDataIsLoading: false, authErrors: [action.error] };
+            state.planTeamsData = { ...state.planTeamsData, authErrors: [action.error] };
+            state.isLoading = false;
         },
         //---------------------------------------------------------------------
         [createGame.pending]: state => {
-            state.createGameData = { gameData: null, createGameDataIsLoading: true, authErrors: null };
+            state.createGameData = { gameData: null, authErrors: null };
+            state.isLoading = true;
         },
         [createGame.fulfilled]: (state, { payload }) => {
-            state.createGameData = { gameData: payload, createGameDataIsLoading: false, authErrors: null };
+            state.createGameData = { gameData: payload, authErrors: null };
+            state.isLoading = false;
         },
         [createGame.rejected]: (state, action) => {
-            console.log('action', action);
-            state.createGameData = { gameData: null, createGameDataIsLoading: false, authErrors: [action.error] };
+            state.createGameData = { gameData: null, authErrors: [action.error] };
+            state.isLoading = false;
         },
         //---------------------------------------------------------------------
         [setGameRegister.pending]: state => {
-            state.gamesData = { ...state.gamesData, gamesDataIsLoading: true };
+            state.gamesData = { ...state.gamesData };
+            state.isLoading = true;
         },
         [setGameRegister.fulfilled]: (state, { payload }) => {
-            state.gamesData.gamesDataIsLoading = false;
             state.gamesData.gamesList = payload;
+            state.isLoading = false;
         },
         [setGameRegister.rejected]: (state, action) => {
-            state.gamesData = { ...state.gamesData, gamesDataIsLoading: false, authErrors: [action.error] };
+            state.gamesData = { ...state.gamesData, authErrors: [action.error] };
+            state.isLoading = false;
         },
         //---------------------------------------------------------------------
         [setPlayerRegister.pending]: state => {
-            state.playerRegister = { ...state.playerRegister, playerRegisterIsLoading: true };
+            state.isLoading = true;
+            state.playerRegister = { ...state.playerRegister };
         },
         [setPlayerRegister.fulfilled]: (state, { payload }) => {
             const gamesData = payload;
-
             const gamesDataWithCurrentUserAvailability = setGamesDataWithCurrentUserAvailability(gamesData, state.authUserId);
 
             state.gamesData = {
@@ -251,29 +262,31 @@ export const dataSlice = createSlice({
                 gamesList: [...gamesDataWithCurrentUserAvailability],
                 authErrors: false
             };
+            state.isLoading = false;
         },
         [setPlayerRegister.rejected]: (state, action) => {
-            state.gamesData = { ...state.gamesData, playerRegisterIsLoading: false, authErrors: [action.error] };
+            state.isLoading = true;
+            state.gamesData = { ...state.gamesData, authErrors: [action.error] };
         },
         //---------------------------------------------------------------------
         [getProfileData.pending]: state => {
-            state.playerProfile = { ...state.playerProfile, playerProfileisLoading: true };
+            state.playerProfile = { ...state.playerProfile };
         },
         [getProfileData.fulfilled]: (state, { payload }) => {
-            state.playerProfile = { playerProfile: payload, playerProfileisLoading: false };
+            state.playerProfile = { playerProfile: payload };
         },
         [getProfileData.rejected]: (state, action) => {
-            state.playerProfile = { ...state.playerProfile, playerProfileisLoading: false, authErrors: [action.error] };
+            state.playerProfile = { ...state.playerProfile, authErrors: [action.error] };
         },
         //---------------------------------------------------------------------
         [updateProfileData.pending]: state => {
-            state.playerProfile = { ...state.playerProfile, playerProfileisLoading: true };
+            state.playerProfile = { ...state.playerProfile };
         },
         [updateProfileData.fulfilled]: (state, { payload }) => {
-            state.playerProfile = { playerProfile: payload, playerProfileisLoading: false };
+            state.playerProfile = { playerProfile: payload };
         },
         [updateProfileData.rejected]: (state, action) => {
-            state.playerProfile = { ...state.playerProfile, playerProfileisLoading: false, authErrors: [action.error] };
+            state.playerProfile = { ...state.playerProfile, authErrors: [action.error] };
         }
     }
 });
