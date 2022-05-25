@@ -1,8 +1,6 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../Context/authContext';
-import { apiCall as updateProfile } from '../Login/authHelpers';
-import { registerUser } from './authHelpers';
+import React, { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthErrors, registerNewUser } from '../redux/authState';
 import styled from 'styled-components';
 import { FormField } from '../Utilities/FormField';
 import { Button } from '../Utilities/Button';
@@ -10,119 +8,71 @@ import { FormTitle } from '../Utilities/FormTitle';
 import { Errors } from './Errors';
 
 export const SignUp = props => {
-    const { authError, authErrors } = useContext(AuthContext);
-    const updateAppState = useContext(AuthContext).setAppStateHandler;
-    const [inputErrors, setInputErrors] = useState({ name: false, email: false, password: false });
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { authToken, authIsLoading, authErrors } = useSelector(state => state.authReducer);
 
-    const setInputErrorsHandler = newState => {
-        setInputErrors(prevState => {
-            return { ...prevState, ...newState };
-        });
+    const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' });
+    const { name, email, password, password2 } = formData;
+
+    const signUp = async => {
+        try {
+            dispatch(registerNewUser({ authToken, formData }));
+        } catch (err) {
+            throw Error;
+        }
     };
 
-    const getInputErrors = authErrors => {
-        const inputErrors = {};
-        authErrors.forEach(error => {
-            const inputName = error.param;
-            Object.assign(inputErrors, { [inputName]: true });
-        });
-        return inputErrors;
+    const onFormSubmit = e => {
+        e.preventDefault();
+        if (password !== password2) {
+            const error = [{ message: 'Passwords do not match' }];
+            dispatch(setAuthErrors(error));
+            return;
+        }
+        signUp();
     };
 
-    const onChange = e => {
+    const onInputChange = e => {
         if (e.target.name === 'email') {
             const emailLowerCase = e.target.value.toLowerCase();
             setFormData({ ...formData, [e.target.name]: emailLowerCase });
         } else {
             setFormData({ ...formData, [e.target.name]: e.target.value });
         }
-        const clearInputError = { [e.target.name]: false };
-        setInputErrorsHandler(clearInputError);
-    };
-
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' });
-    const { name, email, password, password2 } = formData;
-
-    const signUp = async () => {
-        try {
-            const token = await registerUser(formData);
-            const defaultProfile = { defaultTeam: 0, position: 'Unknown' };
-            if (token) {
-                localStorage.setItem('token', token);
-                await updateProfile('post', 'api/profile', token, defaultProfile);
-                updateAppState({ token: token, authError: false, authErrors: false });
-            }
-
-            navigate('/editprofile');
-        } catch (err) {
-            updateAppState({ token: false, authError: true, authErrors: err.errors });
-            const authErrors = err.errors;
-            const inputErrors = getInputErrors(authErrors);
-            setInputErrorsHandler(inputErrors);
-        }
-    };
-
-    const passwordError = () => {
-        const error = [{ msg: 'Password do not match. Please try again' }];
-        updateAppState({ token: false, isAuth: false, authError: true, authErrors: error });
-        setInputErrorsHandler({ password: true });
-    };
-
-    const onSubmit = async e => {
-        e.preventDefault();
-        password !== password2 ? passwordError() : signUp();
     };
 
     return (
         <Fragment>
             <Container>
-                <SignUpForm onSubmit={e => onSubmit(e)}>
+                <SignUpForm onSubmit={e => onFormSubmit(e)}>
                     <FormTitle text="CREATE NEW ACCOUNT" />
-                    {authError && <Errors errors={authErrors} />}
+                    {authErrors && <Errors errors={authErrors} />}
                     <FormField
-                        error={inputErrors.name}
                         type="text"
                         placeholder="Name"
                         label="FIRST NAME AND SURNAME"
                         name="name"
                         value={name}
-                        onChange={onChange}
-                        required
+                        onChange={onInputChange}
                     />
+                    <FormField placeholder="Email" label="EMAIL" name="email" value={email} onChange={onInputChange} />
                     <FormField
-                        error={inputErrors.email}
-                        type="email"
-                        placeholder="Email"
-                        label="EMAIL"
-                        name="email"
-                        value={email}
-                        onChange={onChange}
-                        required
-                    />
-                    <FormField
-                        error={inputErrors.password}
                         type="password"
                         placeholder="Password"
                         label="PASSWORD"
                         name="password"
                         value={password}
-                        onChange={onChange}
-                        minLength="6"
-                        required
+                        onChange={onInputChange}
                     />
                     <FormField
-                        error={inputErrors.password}
                         type="password"
                         placeholder="Confirm Password"
                         label="CONFIRM PASSWORD"
                         name="password2"
                         value={password2}
-                        onChange={onChange}
-                        minLength="6"
-                        required
+                        onChange={onInputChange}
                     />
-                    <Button text="SIGN UP" />
+                    <Button text="SIGN UP" disabled={authIsLoading} />
                     <Footer></Footer>
                 </SignUpForm>
             </Container>

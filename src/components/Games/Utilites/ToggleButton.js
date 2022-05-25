@@ -1,16 +1,19 @@
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-export const ToggleButton = props => {
+export const ToggleButton = ({ onClick, defaultChecked, toggleColor }) => {
+    const { isLoading } = useSelector(state => state.dataReducer);
+
     return (
         <Fragment>
             <Input
                 type="checkbox"
                 id="playeravailibity"
-                onClick={props.onClick}
-                toggle={props.toggle}
-                defaultChecked={props.toggle}
-                colorTrue={props.colorTrue}
+                disabled={isLoading}
+                onClick={onClick}
+                defaultChecked={defaultChecked}
+                toggleColor={toggleColor}
             />
         </Fragment>
     );
@@ -26,6 +29,7 @@ const Input = styled.input`
     cursor: pointer;
     vertical-align: middle;
     transform: translateY(1px);
+    cursor: ${props => (props.isLoading === true ? 'wait' : 'pointer')};
 
     @media (max-device-width: 440px) {
         display: block;
@@ -37,9 +41,11 @@ const Input = styled.input`
         width: 48px;
         height: 22px;
         display: inline-block;
-        background: ${props => (props.colorTrue && 'green') || 'red'};
         border-radius: 18px;
         clear: both;
+        background: ${props => {
+            return props.toggleColor.toggleOff;
+        }}};
     }
 
     &:before {
@@ -53,14 +59,18 @@ const Input = styled.input`
         border-radius: 50%;
         background: rgb(255, 255, 255);
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        
     }
 
     &:checked:before {
         box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
-        left: ${props => props.toggle && '28px'};
+        left: 28px;
+        
     }
 
     &:checked:after {
-        background: ${props => (props.colorTrue && 'black') || (props.toggle && 'green')};
+        background: ${props => {
+            return props.toggleColor.toggleOn;
+        }};
     }
 `;

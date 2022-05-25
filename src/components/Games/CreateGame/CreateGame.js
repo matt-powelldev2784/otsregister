@@ -1,32 +1,27 @@
-import React, { Fragment, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../../Context/authContext';
+import React, { Fragment, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createGame } from '../../redux/dataState';
 import styled from 'styled-components';
-import { apiCall as createGame } from '../../Login/authHelpers';
 import { Errors } from '../../Login/Errors';
 import { Button } from '../../Utilities/Button';
 import { FormTitle } from '../../Utilities/FormTitle';
 
-export const CreateGame = props => {
-    const { token, authError, authErrors } = useContext(AuthContext);
-    const updateAppState = useContext(AuthContext).setAppStateHandler;
-    const navigate = useNavigate();
+export const CreateGame = () => {
+    const dispatch = useDispatch();
+    const { authToken } = useSelector(state => state.authReducer);
+    const { createGameData } = useSelector(state => state.dataReducer);
+    const { authErrors } = createGameData;
     const gameDate = useRef(null);
     const gameName = useRef(null);
 
     const onSubmit = async e => {
         e.preventDefault();
 
-        const date = gameDate.current.value;
-        const name = gameName.current.value;
-        const formData = { gameDate: date, gameName: name };
-
+        const formData = { gameDate: gameDate.current.value, gameName: gameName.current.value };
         try {
-            await createGame('post', 'api/games/creategame', token, formData);
-            navigate('/dashboard');
+            dispatch(createGame({ authToken, formData }));
         } catch (err) {
-            console.log(err);
-            updateAppState({ authError: true, authErrors: err.errors });
+            throw Error;
         }
     };
 
@@ -35,7 +30,7 @@ export const CreateGame = props => {
             <Container>
                 <CreateGameForm onSubmit={e => onSubmit(e)}>
                     <FormTitle text="CREATE GAME" />
-                    {authError && <Errors errors={authErrors} />}
+                    {authErrors && <Errors errors={authErrors} />}
                     <Label>
                         <Span>DATE</Span>
                         <Input type="date" placeholder="Game Date" label="GAMEDATE" ref={gameDate} />

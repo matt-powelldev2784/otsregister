@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-export const Button = props => {
+export const Button = ({ onClick, isLoading, text }) => {
     return (
         <Fragment>
-            <MainButton onClick={props.onClick}>{props.text}</MainButton>
+            <MainButton onClick={onClick} isLoading={isLoading} disabled={isLoading}>
+                {text}
+            </MainButton>
         </Fragment>
     );
 };
@@ -13,6 +15,7 @@ const MainButton = styled.button`
     display: block;
     margin: 1rem auto 1rem auto;
     color: white;
+    cursor: ${props => (props.isLoading === true ? 'wait' : 'pointer')};
 
     background-color: #011826;
     border: 3px solid white;
@@ -28,15 +31,12 @@ const MainButton = styled.button`
         color: #011826;
         border: 3px solid #011826;
         &:hover {
-            cursor: pointer;
+            cursor: ${props => (props.isLoading === true ? 'wait' : 'pointer')};
         }
     }
 
     &:active {
         transition-duration: 0.1s;
         transform: translateY(1px);
-        &:hover {
-            cursor: wait;
-        }
     }
 `;

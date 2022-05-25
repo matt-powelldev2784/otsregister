@@ -1,34 +1,38 @@
-import React, { useContext, useLayoutEffect } from 'react';
-import AuthContext from '../../../Context/authContext';
-import { apiCall } from '../../Login/authHelpers';
+import React, { useLayoutEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGamesData } from '../../redux/dataState';
 import styled from 'styled-components';
-import { makeGamesTable } from '../Utilites/makeGamesTable';
+import { makeAdminGamesTable } from '../Utilites/makeAdminGamesTable';
 import { GamesTableHead } from './GamesTableHead';
+import { UserGameClosed } from './UserGameClosed';
+import { Errors } from '../../Login/Errors';
 
 export const AdminGamesTable = () => {
-    const { token, gamesData } = useContext(AuthContext);
-    const updateAppState = useContext(AuthContext).setAppStateHandler;
+    const dispatch = useDispatch();
+    const { authToken, adminUser } = useSelector(state => state.authReducer);
+    const { gamesData, planTeamsData } = useSelector(state => state.dataReducer);
+    const { gamesList, authErrors } = gamesData;
+    const { gameNotClosedError } = planTeamsData;
 
     useLayoutEffect(() => {
-        const getGamesData = async () => {
-            const gamesData = await apiCall('get', 'api/games/recentgames', token);
-            updateAppState({ gamesData: gamesData });
-        };
-        getGamesData();
-    }, [token, updateAppState]);
+        if (authToken) {
+            dispatch(getGamesData(authToken));
+        }
+    }, [authToken, dispatch]);
 
-    console.log('token', token);
-
-    const GamesTable = makeGamesTable(gamesData);
+    const GamesTable = makeAdminGamesTable(gamesList);
 
     return (
         <Section>
+            {gameNotClosedError && <Errors errors={gameNotClosedError} />}
+            {authErrors && <Errors errors={authErrors} />}
             <Table>
                 <thead>
                     <GamesTableHead cell1="Game Date" cell2="Game Name" cell3="Available Players" cell4="Register Status" />
                 </thead>
                 <tbody>{GamesTable}</tbody>
             </Table>
+            {!adminUser && UserGameClosed}
         </Section>
     );
 };

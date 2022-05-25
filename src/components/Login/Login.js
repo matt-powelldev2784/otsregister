@@ -1,59 +1,55 @@
-import React, { Fragment, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/authState';
 import styled from 'styled-components';
-import AuthContext from '../../Context/authContext';
-import { loginUser } from './authHelpers';
 import { FormField } from '../Utilities/FormField';
 import { Button } from '../Utilities/Button';
 import { FormTitle } from '../Utilities/FormTitle';
 import { Errors } from './Errors';
 
 export const Login = props => {
-    const { authError, authErrors } = useContext(AuthContext);
-    const updateAppState = useContext(AuthContext).setAppStateHandler;
+    const dispatch = useDispatch();
+    const { authIsLoading, authErrors } = useSelector(state => state.authReducer);
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { email, password } = formData;
-    let navigate = useNavigate();
 
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onInputChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const login = async () => {
-        try {
-            const token = await loginUser(formData);
-
-            if (token) {
-                localStorage.setItem('token', token);
-                updateAppState({ token: token, authError: false, authErrors: false });
-                navigate('/dashboard');
-            }
-        } catch (err) {
-            updateAppState({ token: false, isAuth: false, authUser: false, authError: true, authErrors: err.errors });
-        }
-    };
-
-    const onSubmit = async e => {
+    const loginUser = async e => {
         e.preventDefault();
-        login();
+        try {
+            dispatch(login(formData));
+        } catch (err) {
+            throw Error;
+        }
     };
 
     return (
         <Fragment>
             <Container>
-                <LoginForm onSubmit={e => onSubmit(e)}>
+                <LoginForm onSubmit={e => loginUser(e)}>
                     <FormTitle text="LOGIN" />
-                    {authError && <Errors errors={authErrors} />}
-                    <FormField type="email" placeholder="Email" label="EMAIL" name="email" value={email} onChange={onChange} required />
+                    {authErrors && <Errors errors={authErrors} />}
+                    <FormField
+                        type="email"
+                        placeholder="Email"
+                        label="EMAIL"
+                        name="email"
+                        value={email}
+                        onChange={onInputChange}
+                        required
+                    />
                     <FormField
                         type="password"
                         placeholder="Password"
                         label="PASSWORD"
                         name="password"
                         value={password}
-                        onChange={onChange}
+                        onChange={onInputChange}
                         minLength="6"
                         required
                     />
-                    <Button text="SIGN IN" />
+                    <Button text="SIGN IN" isLoading={authIsLoading} />
                     <Footer>
                         <Link href={'/signup'}>Need an account? Sign Up here</Link>
                     </Footer>
