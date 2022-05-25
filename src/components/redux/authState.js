@@ -60,7 +60,6 @@ export const authSlice = createSlice({
             state.authErrors = payload;
         },
         setAuthIsLoading: (state, { payload }) => {
-            console.log('payload', payload);
             state.authIsLoading = payload;
         }
     },
