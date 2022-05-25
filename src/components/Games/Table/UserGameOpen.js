@@ -1,7 +1,6 @@
 import React, { Fragment, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGamesData, setPlayerRegister } from '../../redux/dataState';
-import { setIsLoading } from '../../redux/globalState';
 import styled from 'styled-components';
 import { ToggleButton } from '../Utilites/ToggleButton';
 
@@ -12,11 +11,7 @@ export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
     const playerRegHandler = async () => {
         const body = { gameId: gameId, playerAvailable: !currentPlayerAvailable };
         try {
-            dispatch(setIsLoading(true));
-            const registerResult = await dispatch(setPlayerRegister({ authToken, body }));
-            if (registerResult) {
-                dispatch(setIsLoading(false));
-            }
+            dispatch(setPlayerRegister({ authToken, body }));
         } catch (err) {
             console.log(err);
         }

@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, setAuthIsLoading } from '../redux/authState';
-import { useNavigate } from 'react-router-dom';
+import { login } from '../redux/authState';
 import styled from 'styled-components';
 import { FormField } from '../Utilities/FormField';
 import { Button } from '../Utilities/Button';
@@ -13,19 +12,13 @@ export const Login = props => {
     const { authIsLoading, authErrors } = useSelector(state => state.authReducer);
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { email, password } = formData;
-    let navigate = useNavigate();
 
     const onInputChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const loginUser = async e => {
         e.preventDefault();
         try {
-            setAuthIsLoading(true);
-            const loginResult = await dispatch(login(formData)).unwrap();
-            if (loginResult) {
-                navigate('/dashboard');
-            }
-            setAuthIsLoading(false);
+            dispatch(login(formData));
         } catch (err) {
             throw Error;
         }

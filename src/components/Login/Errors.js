@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Error } from './Error';
 
-export const Errors = props => {
-    const errors = props.errors;
+export const Errors = ({ errors }) => {
     let ErrorsJSX;
+    console.log('errors', errors);
 
     if (!errors) {
         ErrorsJSX = <Fragment></Fragment>;

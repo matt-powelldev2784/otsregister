@@ -8,8 +8,6 @@ import { SignUp } from '../components/Login/SignUp';
 export const SignUpPage = props => {
     const { isDesktop, backgroundColor } = useContext(AuthContext);
 
-    console.log('backgroundColor', backgroundColor);
-
     return (
         <Contianer background={backgroundColor}>
             <Header />

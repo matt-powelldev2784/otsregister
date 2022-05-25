@@ -10,7 +10,7 @@ import { UserGamesTable } from '../components/Games/Table/UserGamesTable';
 import { AdminGamesTable } from '../components/Games/Table/AdminGamesTable';
 import { Errors } from '../components/Login/Errors';
 
-export const Dashboard = () => {
+export const DashboardPage = () => {
     const dispatch = useDispatch();
     const { isDesktop } = useSelector(state => state.globalReducer);
     const { authToken, adminUser, authUserName, authErrors } = useSelector(state => state.authReducer);

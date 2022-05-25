@@ -1,15 +1,12 @@
 import React, { Fragment, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGame } from '../../redux/dataState';
-import { setDataIsLoading } from '../../redux/dataState';
 import styled from 'styled-components';
 import { Errors } from '../../Login/Errors';
 import { Button } from '../../Utilities/Button';
 import { FormTitle } from '../../Utilities/FormTitle';
 
 export const CreateGame = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { authToken } = useSelector(state => state.authReducer);
     const { createGameData } = useSelector(state => state.dataReducer);
@@ -19,14 +16,10 @@ export const CreateGame = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
-        dispatch(setDataIsLoading(true));
+
         const formData = { gameDate: gameDate.current.value, gameName: gameName.current.value };
         try {
-            const newGame = await dispatch(createGame({ authToken, formData }));
-            if (newGame) {
-                navigate('/dashboard');
-            }
-            dispatch(setDataIsLoading(false));
+            dispatch(createGame({ authToken, formData }));
         } catch (err) {
             throw Error;
         }
