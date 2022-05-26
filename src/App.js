@@ -1,5 +1,5 @@
-import React, { Fragment, useContext } from 'react';
-import AuthContext from './Context/authContext';
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LoginPage } from './Pages/LoginPage';
 import { SignUpPage } from './Pages/SignUpPage';
@@ -10,7 +10,7 @@ import { EmailTablePage } from './Pages/EmailTablePage';
 import { EditProfilePage } from './Pages/EditProfilePage';
 
 const App = () => {
-    const { token } = useContext(AuthContext);
+    const { authToken } = useSelector(state => state.authReducer);
 
     return (
         <BrowserRouter>
@@ -18,11 +18,11 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/signup/" element={<SignUpPage />} />
-                    {token && <Route path="/dashboard/" element={<DashboardPage />} />}
-                    {token && <Route path="/creategame/" element={<CreateGamePage />} />}
-                    {token && <Route path="/planteams/" element={<PlanTeamsPage />} />}
-                    {token && <Route path="/emailtable/" element={<EmailTablePage />} />}
-                    {token && <Route path="/editprofile/" element={<EditProfilePage />} />}
+                    {authToken && <Route path="/dashboard/" element={<DashboardPage />} />}
+                    {authToken && <Route path="/creategame/" element={<CreateGamePage />} />}
+                    {authToken && <Route path="/planteams/" element={<PlanTeamsPage />} />}
+                    {authToken && <Route path="/emailtable/" element={<EmailTablePage />} />}
+                    {authToken && <Route path="/editprofile/" element={<EditProfilePage />} />}
                     <Route path="*" element={<LoginPage />} />
                 </Routes>
             </Fragment>

@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import AuthContext from '../Context/authContext';
+import { useSelector } from 'react-redux';
 import { Header } from '../components/Header/Header';
 import { Background } from '../components/Header/Background';
 import { SignUp } from '../components/Login/SignUp';
 
 export const SignUpPage = props => {
-    const { isDesktop, backgroundColor } = useContext(AuthContext);
+    const { isDesktop, backgroundColor } = useSelector(state => state.globalReducer);
 
     return (
         <Contianer background={backgroundColor}>

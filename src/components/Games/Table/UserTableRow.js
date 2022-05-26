@@ -4,11 +4,10 @@ import { UserGameClosed } from './UserGameClosed';
 import styled from 'styled-components';
 
 export const UserTableRow = ({ gameId, gameDate, gameName, registeredPlayers, gameClosed, currentPlayerAvailable }) => {
-    const gameClosedBackgroundColor = gameClosed ? '#707070' : undefined;
-    const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open';
+      const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open';
 
     return (
-        <TableRow color={gameClosedBackgroundColor}>
+        <TableRow>
             <TableCell>{gameDate}</TableCell>
             <TableCell>{gameName}</TableCell>
             <TableCell>

@@ -3,7 +3,6 @@ import { Error } from './Error';
 
 export const Errors = ({ errors }) => {
     let ErrorsJSX;
-    console.log('errors', errors);
 
     if (!errors) {
         ErrorsJSX = <Fragment></Fragment>;

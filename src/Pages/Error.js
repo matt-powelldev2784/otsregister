@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import AuthContext from '../Context/authContext';
+import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { Background } from '../components/Header/Background';
 import { Header } from '../components/Header/Header';
 import { PageTitle } from '../components/Utilities/PageTitle';
 
 export const Error = () => {
-    const { isDesktop } = useContext(AuthContext);
+    const { isDesktop } = useSelector(state => state.globalReducer);
 
     return (
         <div>

@@ -6,7 +6,7 @@ export const globalSlice = createSlice({
     name: 'globalState',
     initialState: {
         isLoading: false,
-        backgroundColor: 'blue',
+        backgroundColor: '#003a68',
         isDesktop: deviceWidth > 440 ? true : false,
         menu: { homepage: true }
     },
