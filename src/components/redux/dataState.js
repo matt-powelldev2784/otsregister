@@ -77,6 +77,18 @@ export const setGameRegister = createAsyncThunk('dataState/setGameRegister', asy
     }
 });
 
+export const deleteGame = createAsyncThunk('dataState/deleteGame', async ({ authToken, gameId }) => {
+    try {
+        await apiCall('delete', `api/games/deletegame/${gameId}`, authToken);
+        const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
+        return gamesData;
+    } catch (err) {
+        console.log('err.msg', err);
+        const errorMessage = err.errors[0].msg;
+        throw Error(errorMessage);
+    }
+});
+
 export const setPlayerRegister = createAsyncThunk('dataState/setPlayerRegister', async ({ authToken, body }) => {
     try {
         await apiCall('post', 'api/games/registerforgame', authToken, body);
@@ -236,14 +248,29 @@ export const dataSlice = createSlice({
         },
         //---------------------------------------------------------------------
         [setGameRegister.pending]: state => {
-            state.gamesData = { ...state.gamesData };
+            state.gamesData = { ...state.gamesData, authErrors: null };
             state.isLoading = true;
         },
         [setGameRegister.fulfilled]: (state, { payload }) => {
+            state.gamesData = { ...state.gamesData, authErrors: null };
             state.gamesData.gamesList = payload;
             state.isLoading = false;
         },
         [setGameRegister.rejected]: (state, action) => {
+            state.gamesData = { ...state.gamesData, authErrors: [action.error] };
+            state.isLoading = false;
+        },
+        //---------------------------------------------------------------------
+        [deleteGame.pending]: state => {
+            state.gamesData = { ...state.gamesData, authErrors: null };
+            state.isLoading = true;
+        },
+        [deleteGame.fulfilled]: (state, { payload }) => {
+            state.gamesData = { ...state.gamesData, authErrors: null };
+            state.gamesData.gamesList = payload;
+            state.isLoading = false;
+        },
+        [deleteGame.rejected]: (state, action) => {
             state.gamesData = { ...state.gamesData, authErrors: [action.error] };
             state.isLoading = false;
         },

@@ -22,8 +22,6 @@ export const AdminTableRow = ({ gameId, gameDate, gameName, registeredPlayers, g
         }
     };
 
-    const gameClosedBackgroundColor = gameClosed ? '#707070' : undefined;
-
     return (
         <TableRow>
             <TableCell>
