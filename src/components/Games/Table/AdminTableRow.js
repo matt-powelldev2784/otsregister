@@ -25,11 +25,9 @@ export const AdminTableRow = ({ gameId, gameDate, gameName, registeredPlayers, g
     const gameClosedBackgroundColor = gameClosed ? '#707070' : undefined;
 
     return (
-        <TableRow color={gameClosedBackgroundColor}>
+        <TableRow>
             <TableCell>
-                <Link onClick={planTeamsHandler} gameClosed={gameClosed}>
-                    {gameDate}
-                </Link>
+                <Link onClick={planTeamsHandler}>{gameDate}</Link>
             </TableCell>
             <TableCell>{gameName}</TableCell>
             <TableCell>{registeredPlayers}</TableCell>
@@ -67,7 +65,7 @@ const TableCell = styled.td`
 
 const Link = styled.span`
     text-decoration: ${props => props.gameClosed && 'underline'};
-    color: ${props => props.gameClosed && '#003a68'};
+    color: '#003a68';
     &:hover {
         border-bottom: 2px solid white;
         cursor: pointer;

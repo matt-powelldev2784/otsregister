@@ -1,18 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const FormField = props => {
+export const FormField = ({ label, type, placeholder, name, value, onChange, error }) => {
     return (
         <Label>
-            <Span>{props.label}</Span>
-            <Input
-                type={props.type}
-                placeholder={props.placeholder}
-                name={props.name}
-                value={props.value}
-                onChange={props.onChange}
-                error={props.error || 'none'}
-            />
+            <Span>{label}</Span>
+            <Input type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} error={error || 'none'} />
         </Label>
     );
 };

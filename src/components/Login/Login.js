@@ -13,7 +13,10 @@ export const Login = props => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { email, password } = formData;
 
-    const onInputChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onInputChange = e => {
+        const inputName = e.target.name;
+        setFormData({ ...formData, [inputName]: e.target.value });
+    };
 
     const loginUser = async e => {
         e.preventDefault();
@@ -31,13 +34,14 @@ export const Login = props => {
                     <FormTitle text="LOGIN" />
                     {authErrors && <Errors errors={authErrors} />}
                     <FormField
-                        type="email"
+                        type="text"
                         placeholder="Email"
                         label="EMAIL"
                         name="email"
                         value={email}
                         onChange={onInputChange}
                         required
+                        autocomplete
                     />
                     <FormField
                         type="password"
