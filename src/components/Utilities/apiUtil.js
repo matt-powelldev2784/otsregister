@@ -43,24 +43,29 @@ export const getAuthUser = async token => {
     }
 };
 
-export const apiCall = async (apiCallType, route, token, body) => {
+export const apiCall = async (apiCallType, route, token, body, ) => {
+   
     const config = { headers: { 'x-auth-token': token } };
-
+   
     try {
-        let repsonse;
+        let response;
 
         switch (apiCallType) {
             case 'post':
-                repsonse = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/${route}`, body, config);
+                response = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/${route}`, body, config);
                 break;
             case 'get':
-                repsonse = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config);
+                response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config);
+                break;
+            case 'delete':
+                response = await axios.delete(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config);
+
                 break;
             default:
-                repsonse = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config);
+                response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config);
         }
 
-        const responseData = repsonse.data;
+        const responseData = response.data;
         return responseData;
     } catch (err) {
         throw err.response.data;

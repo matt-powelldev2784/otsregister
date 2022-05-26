@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGameRegister } from '../../redux/dataState';
+import { setGameRegister, deleteGame } from '../../redux/dataState';
 import { ToggleButton } from '../Utilites/ToggleButton';
 import { TableButton } from '../Utilites/TableButton';
 
@@ -9,7 +9,7 @@ export const GameStatus = ({ gameClosed, gameId }) => {
     const dispatch = useDispatch();
     const { isDesktop } = useSelector(state => state.globalReducer);
     const { authToken } = useSelector(state => state.authReducer);
-    const { isLoading, gamesData } = useSelector(state => state.dataReducer);
+    const { isLoading } = useSelector(state => state.dataReducer);
 
     const gameStatusHandler = async () => {
         if (gameClosed)
@@ -25,6 +25,10 @@ export const GameStatus = ({ gameClosed, gameId }) => {
         }
     };
 
+    const deleteGameHandler = () => {
+        dispatch(deleteGame({ authToken, gameId }));
+    };
+
     const toggleColor = { toggleOn: 'black', toggleOff: 'green' };
     const gameClosedColor = gameClosed ? 'black' : undefined;
 
@@ -34,7 +38,7 @@ export const GameStatus = ({ gameClosed, gameId }) => {
                 {gameClosed && <GameClosed color={gameClosedColor}>Game Closed</GameClosed>}
                 {!gameClosed && <GameOpen>Game Open</GameOpen>}
                 <ToggleButton onClick={gameStatusHandler} defaultChecked={gameClosed} toggleColor={toggleColor} isLoading={isLoading} />
-                {isDesktop && <TableButton text={'DELETE'} color={'white'} bgColor={'red'} />}
+                {isDesktop && <TableButton text={'DELETE'} color={'white'} bgColor={'red'} onClick={deleteGameHandler} />}
             </Flexbox>
         </Fragment>
     );
