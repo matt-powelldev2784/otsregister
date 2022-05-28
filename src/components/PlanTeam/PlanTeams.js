@@ -16,7 +16,7 @@ export const PlanTeams = props => {
         <Container>
             <DndProvider backend={HTML5Backend}>
                 {authErrors && <Errors errors={authErrors} />}
-                <PageTitle text={`Plan Teams for ${fixtureName} on ${fixtureDate}`} />
+                <PageTitle text={`Final Teams for ${fixtureName} on ${fixtureDate}`} />
                 <Teams></Teams>
                 <TableForEmailButton text={'Display Table for Email'} navigationPage={'/emailtable'} />
             </DndProvider>
