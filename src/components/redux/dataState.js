@@ -67,7 +67,7 @@ export const saveFinalTeams = createAsyncThunk(
 
 export const setGameRegister = createAsyncThunk('dataState/setGameRegister', async ({ authToken, body }) => {
     try {
-        await apiCall('post', 'api/games/setregister', authToken, body);
+        await apiCall('post', 'api/games/setgameregister', authToken, body);
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
         return gamesData;
     } catch (err) {
@@ -91,7 +91,7 @@ export const deleteGame = createAsyncThunk('dataState/deleteGame', async ({ auth
 
 export const setPlayerRegister = createAsyncThunk('dataState/setPlayerRegister', async ({ authToken, body }) => {
     try {
-        await apiCall('post', 'api/games/registerforgame', authToken, body);
+        await apiCall('post', 'api/player/playerregisterforgame', authToken, body);
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
         return gamesData;
     } catch (err) {
