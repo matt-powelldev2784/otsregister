@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { AdminTableRow } from '../Table/AdminTableRow';
 import { formatDate } from '../../Utilities/formatDate';
 
-export const makeAdminGamesTable = gamesData => {
-     let GamesTable;
+export const makeAdminGamesTable = gamesList => {
+    let GamesTable;
 
-    if (gamesData) {
-        GamesTable = gamesData.map(game => {
+    if (gamesList && gamesList.length > 0) {
+        GamesTable = gamesList.map(game => {
             const gameDate = formatDate(game.gameDate);
             const { gameName, _id, registeredPlayers = game.playersAvailable.length, gameClosed } = game;
 
