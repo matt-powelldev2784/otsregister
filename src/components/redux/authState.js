@@ -114,7 +114,6 @@ export const authSlice = createSlice({
             state.authErrors = null;
         },
         [registerNewUser.fulfilled]: (state, { payload }) => {
-            console.log('payload', payload);
             state.authToken = payload;
             localStorage.setItem('token', payload);
             state.authIsLoading = false;

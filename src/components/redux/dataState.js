@@ -6,12 +6,12 @@ const setGamesDataWithCurrentUserAvailability = (gamesData, authUserId) =>
     gamesData.map(game => {
         let currentPlayerAvailable;
         game.playersAvailable.forEach(player => {
-            if (player._id === authUserId) {
+            if (player.user._id === authUserId) {
                 currentPlayerAvailable = true;
             }
         });
         game.playersUnavailable.forEach(player => {
-            if (player._id === authUserId) {
+            if (player.user._id === authUserId) {
                 currentPlayerAvailable = false;
             }
         });
@@ -22,7 +22,8 @@ const setGamesDataWithCurrentUserAvailability = (gamesData, authUserId) =>
 export const getGamesData = createAsyncThunk('dataState/getGamesData', async authToken => {
     try {
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
-        return gamesData;
+        const { recentGames } = gamesData;
+        return recentGames;
     } catch (err) {
         throw Error(err.msg);
     }
@@ -43,7 +44,8 @@ export const createGame = createAsyncThunk('dataState/createGame', async ({ auth
 export const getPlanTeamsData = createAsyncThunk('dataState/getPlanTeamData', async ({ authToken, body }) => {
     try {
         const game = await apiCall('post', 'api/games/gameavailibility', authToken, body);
-        return game;
+        const { gameDetails } = game;
+        return gameDetails;
     } catch (err) {
         console.log('err.msg', err);
         const errorMessage = err.errors[0].msg;
@@ -69,7 +71,8 @@ export const setGameRegister = createAsyncThunk('dataState/setGameRegister', asy
     try {
         await apiCall('post', 'api/games/setgameregister', authToken, body);
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
-        return gamesData;
+        const { recentGames } = gamesData;
+        return recentGames;
     } catch (err) {
         console.log('err.msg', err);
         const errorMessage = err.errors[0].msg;
@@ -81,7 +84,8 @@ export const deleteGame = createAsyncThunk('dataState/deleteGame', async ({ auth
     try {
         await apiCall('delete', `api/games/deletegame/${gameId}`, authToken);
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
-        return gamesData;
+        const { recentGames } = gamesData;
+        return recentGames;
     } catch (err) {
         console.log('err.msg', err);
         const errorMessage = err.errors[0].msg;
@@ -93,7 +97,8 @@ export const setPlayerRegister = createAsyncThunk('dataState/setPlayerRegister',
     try {
         await apiCall('post', 'api/player/playerregisterforgame', authToken, body);
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
-        return gamesData;
+        const { recentGames } = gamesData;
+        return recentGames;
     } catch (err) {
         console.log('err.msg', err);
         const errorMessage = err.errors[0].msg;
@@ -128,12 +133,13 @@ export const dataSlice = createSlice({
     name: 'dataState',
     initialState: {
         isLoading: false,
+        dataErrors: [],
         authUserName: localStorage.getItem('authUserName') || null,
         authUserId: localStorage.getItem('authUserId') || null,
         playerProfile: { playerProfile: {} },
         playerRegister: { registerDetails: {} },
-        createGameData: { gameData: null, createGameDataIsLoading: false, authErrors: null },
-        gamesData: { gamesList: null, gamesDataIsLoading: false, authErrors: null },
+        createGameData: { gameData: null, createGameDataIsLoading: false },
+        gamesData: { gamesList: null, gamesDataIsLoading: false },
         planTeamsData: {
             planTeamsGameId: sessionStorage.getItem('planTeamsGameId') || null,
             gameNotClosedError: null,
@@ -178,7 +184,7 @@ export const dataSlice = createSlice({
             const playerId = payload.playerId;
             const newTeam = payload.newTeam.toString();
             state.planTeamsData.unsortedFinalTeamData.map(player => {
-                if (player._id === playerId) {
+                if (player.user._id === playerId) {
                     player.defaultTeam = newTeam;
                 }
                 return player;
@@ -191,10 +197,12 @@ export const dataSlice = createSlice({
     extraReducers: {
         [getGamesData.pending]: state => {
             state.isLoading = true;
-            state.gamesData = { ...state.gamesData, authErrors: false };
+            state.gamesData = { ...state.gamesData };
+            state.dataErrors = null;
         },
         [getGamesData.fulfilled]: (state, action) => {
             state.isLoading = false;
+            state.dataErrors = null;
             state.authUserName = localStorage.getItem('authUserName');
             state.authUserId = localStorage.getItem('authUserId');
 
@@ -205,13 +213,13 @@ export const dataSlice = createSlice({
             state.gamesData = {
                 ...state.gamesData,
                 gamesDataIsLoading: false,
-                gamesList: [...gamesDataWithCurrentUserAvailability],
-                authErrors: false
+                gamesList: [...gamesDataWithCurrentUserAvailability]
             };
         },
         [getGamesData.rejected]: (state, action) => {
             state.isLoading = false;
-            state.gamesData = { ...state.gamesData, authErrors: [action.error] };
+            state.gamesData = { ...state.gamesData };
+            state.dataErrors = [action.error];
         },
 
         //---------------------------------------------------------------------
@@ -277,6 +285,7 @@ export const dataSlice = createSlice({
         //---------------------------------------------------------------------
         [setPlayerRegister.pending]: state => {
             state.isLoading = true;
+            state.dataErrors = null;
             state.playerRegister = { ...state.playerRegister };
         },
         [setPlayerRegister.fulfilled]: (state, { payload }) => {
@@ -286,14 +295,15 @@ export const dataSlice = createSlice({
             state.gamesData = {
                 ...state.gamesData,
                 gamesDataIsLoading: false,
-                gamesList: [...gamesDataWithCurrentUserAvailability],
-                authErrors: false
+                gamesList: [...gamesDataWithCurrentUserAvailability]
             };
             state.isLoading = false;
+            state.dataErrors = null;
         },
         [setPlayerRegister.rejected]: (state, action) => {
-            state.isLoading = true;
-            state.gamesData = { ...state.gamesData, authErrors: [action.error] };
+            state.isLoading = false;
+            state.gamesData = { ...state.gamesData };
+            state.dataErrors = [action.error];
         },
         //---------------------------------------------------------------------
         [getProfileData.pending]: state => {

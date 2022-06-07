@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import { UserTableRow } from '../Table/UserTableRow';
 import { formatDate } from '../../Utilities/formatDate';
 
-export const makeUserGamesTable = gamesData => {
+export const makeUserGamesTable = gamesList => {
     let GamesTable;
 
-    if (gamesData) {
-        GamesTable = gamesData.map(game => {
+    if (gamesList) {
+        GamesTable = gamesList.map(game => {
             const gameDate = formatDate(game.gameDate);
             const { gameName, _id, gameClosed, currentPlayerAvailable } = game;
             const registeredPlayers = game.playersAvailable.length;
 
-                       return (
+            return (
                 <UserTableRow
                     key={_id}
                     gameId={_id}
