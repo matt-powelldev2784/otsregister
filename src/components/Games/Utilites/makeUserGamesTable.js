@@ -6,7 +6,7 @@ import { formatDate } from '../../Utilities/formatDate';
 export const makeUserGamesTable = gamesList => {
     let GamesTable;
 
-    if (gamesList) {
+    if (gamesList && gamesList.length > 0) {
         GamesTable = gamesList.map(game => {
             const gameDate = formatDate(game.gameDate);
             const { gameName, _id, gameClosed, currentPlayerAvailable } = game;
