@@ -36,7 +36,7 @@ const Flexbox = styled.div`
 
 const PlayerAvailable = styled.p`
     display: inline-block;
-    background: black;
+    background: green;
     color: white;
     padding: 0.2rem 0.6rem;
     font-size: 1.2rem;
@@ -50,7 +50,7 @@ const PlayerAvailable = styled.p`
 
 const PlayerUnavialable = styled.p`
     display: inline-block;
-    background: black;
+    background: red;
     color: white;
     padding: 0.2rem 0.6rem;
     text-align: center;

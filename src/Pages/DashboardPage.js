@@ -13,6 +13,7 @@ import { Errors } from '../components/Login/Errors';
 export const DashboardPage = () => {
     const dispatch = useDispatch();
     const { isDesktop } = useSelector(state => state.globalReducer);
+    const { dataErrors } = useSelector(state => state.dataReducer);
     const { authToken, adminUser, authUserName, authErrors } = useSelector(state => state.authReducer);
     const userName = authUserName === 'admin' ? 'Admin' : authUserName;
 
@@ -38,6 +39,7 @@ export const DashboardPage = () => {
                 <Container>
                     {authUserName && <PageTitle text={`${userName} Dashboard`} />}
                     {authErrors && <Errors errors={authErrors} />}
+                    {dataErrors && <Errors errors={dataErrors} />}
                     {!adminUser && <UserGamesTable />}
                     {adminUser && <AdminGamesTable />}
                 </Container>

@@ -23,7 +23,9 @@ export const TeamList = ({ teamList, teamName }) => {
     let PlayersList;
     if (teamList && teamList.length > 0) {
         PlayersList = teamList.map(player => {
-            const { _id, position, name, defaultTeam } = player;
+            const { position, defaultTeam } = player;
+            const _id = player.user._id;
+            const name = player.user.name;
             return <PlayerItem key={_id} id={_id} position={position} name={name} defaultTeam={defaultTeam} />;
         });
     }

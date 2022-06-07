@@ -12,7 +12,7 @@ export const TableForEmail = () => {
         if (team === 'Bin') {
             return null;
         }
-        
+
         const key = `${team}${i}`;
         return <TeamName teamName={team} key={key}></TeamName>;
     });
@@ -22,9 +22,10 @@ export const TableForEmail = () => {
             return null;
         }
 
-        const key = `${team}${i}`;        
+        const key = `${team}${i}`;
         const Players = players.map(player => {
-            const { name, _id } = player;
+            const { _id } = player;
+            const name = player.user.name;
             return <PlayerItem playerName={name} key={_id}></PlayerItem>;
         });
         return <TableCell key={key}>{Players}</TableCell>;
