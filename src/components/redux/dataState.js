@@ -8,10 +8,7 @@ const setGamesDataWithCurrentUserAvailability = (gamesData, authUserId) =>
         game.playersAvailable.forEach(player => {
             if (player.user._id === authUserId) {
                 currentPlayerAvailable = true;
-            }
-        });
-        game.playersUnavailable.forEach(player => {
-            if (player.user._id === authUserId) {
+            } else {
                 currentPlayerAvailable = false;
             }
         });
@@ -212,7 +209,6 @@ export const dataSlice = createSlice({
 
             state.gamesData = {
                 ...state.gamesData,
-                gamesDataIsLoading: false,
                 gamesList: [...gamesDataWithCurrentUserAvailability]
             };
         },
