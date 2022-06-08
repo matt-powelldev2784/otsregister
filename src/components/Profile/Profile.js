@@ -14,7 +14,7 @@ export const Profile = () => {
     const { authToken, authErrors } = useSelector(state => state.authReducer);
     const { dataIsLoading, playerProfile } = useSelector(state => state.dataReducer);
     const { defaultTeam, position } = playerProfile.playerProfile;
-
+  
     const defaultTeamRef = useRef(position);
     const positionRef = useRef(null);
 
