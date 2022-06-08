@@ -29,7 +29,7 @@ export const registerNewUser = createAsyncThunk('authState/registerNewUser', asy
     try {
         const authToken = await registerUser(formData);
         const defaultProfile = { defaultTeam: 0, position: 'XX' };
-        await apiCall('post', 'api/profile', authToken, defaultProfile);
+        await apiCall('post', 'api/profile/createUpdate', authToken, defaultProfile);
         window.location.href = '/editProfile';
         return authToken;
     } catch (err) {

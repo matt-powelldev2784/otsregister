@@ -8,8 +8,6 @@ const setGamesDataWithCurrentUserAvailability = (gamesData, authUserId) =>
         game.playersAvailable.forEach(player => {
             if (player.user._id === authUserId) {
                 currentPlayerAvailable = true;
-            } else {
-                currentPlayerAvailable = false;
             }
         });
 
@@ -39,8 +37,9 @@ export const createGame = createAsyncThunk('dataState/createGame', async ({ auth
 });
 
 export const getPlanTeamsData = createAsyncThunk('dataState/getPlanTeamData', async ({ authToken, body }) => {
+    const { gameId } = body;
     try {
-        const game = await apiCall('post', 'api/games/gameavailibility', authToken, body);
+        const game = await apiCall('get', `api/games/planTeamData/${gameId}`, authToken, body);
         const { gameDetails } = game;
         return gameDetails;
     } catch (err) {
@@ -66,7 +65,7 @@ export const saveFinalTeams = createAsyncThunk(
 
 export const setGameRegister = createAsyncThunk('dataState/setGameRegister', async ({ authToken, body }) => {
     try {
-        await apiCall('post', 'api/games/setgameregister', authToken, body);
+        await apiCall('post', 'api/games/gameregister', authToken, body);
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
         const { recentGames } = gamesData;
         return recentGames;
@@ -92,7 +91,7 @@ export const deleteGame = createAsyncThunk('dataState/deleteGame', async ({ auth
 
 export const setPlayerRegister = createAsyncThunk('dataState/setPlayerRegister', async ({ authToken, body }) => {
     try {
-        await apiCall('post', 'api/player/playerregisterforgame', authToken, body);
+        await apiCall('post', 'api/player/playerRegister', authToken, body);
         const gamesData = await apiCall('get', 'api/games/recentgames', authToken);
         const { recentGames } = gamesData;
         return recentGames;
@@ -105,7 +104,8 @@ export const setPlayerRegister = createAsyncThunk('dataState/setPlayerRegister',
 
 export const getProfileData = createAsyncThunk('dataState/getProfileData', async ({ authToken }) => {
     try {
-        const profile = await apiCall('get', 'api/profile/me', authToken);
+        const profileData = await apiCall('get', 'api/profile/currentProfile', authToken);
+        const { profile } = profileData;
         return profile;
     } catch (err) {
         console.log('err.msg', err);
@@ -116,7 +116,7 @@ export const getProfileData = createAsyncThunk('dataState/getProfileData', async
 
 export const updateProfileData = createAsyncThunk('dataState/updateProfileData', async ({ authToken, formData }) => {
     try {
-        const updatedProfile = await apiCall('post', 'api/profile', authToken, formData);
+        const updatedProfile = await apiCall('post', 'api/profile/createUpdate', authToken, formData);
         window.location.href = '/dashboard';
         return updatedProfile;
     } catch (err) {
