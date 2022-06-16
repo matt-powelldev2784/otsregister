@@ -13,12 +13,8 @@ export const Teams = () => {
 
     useEffect(() => {
         const getTeamsData = async () => {
-            try {
-                const body = { gameId: planTeamsGameId };
-                dispatch(getPlanTeamsData({ authToken, body }));
-            } catch (err) {
-                throw Error;
-            }
+            const body = { gameId: planTeamsGameId };
+            dispatch(getPlanTeamsData({ authToken, body }));
         };
         getTeamsData();
     }, [dispatch, authToken, planTeamsGameId]);

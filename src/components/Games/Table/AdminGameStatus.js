@@ -11,18 +11,14 @@ export const GameStatus = ({ gameClosed, gameId }) => {
     const { authToken } = useSelector(state => state.authReducer);
     const { isLoading } = useSelector(state => state.dataReducer);
 
-    const gameStatusHandler = async () => {
+    const gameStatusHandler = () => {
         if (gameClosed)
             window.confirm(
                 'If the game reopened, any manger team selections will be lost. Players will be reset to their default teams. Please confirm you are happy to proceed?'
             );
 
         const body = { gameId, gameClosed: !gameClosed };
-        try {
-            dispatch(setGameRegister({ authToken, body }));
-        } catch (err) {
-            throw Error;
-        }
+        dispatch(setGameRegister({ authToken, body }));
     };
 
     const deleteGameHandler = () => {
