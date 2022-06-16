@@ -12,6 +12,7 @@ export const EditProfilePage = () => {
     const dispatch = useDispatch();
     const { isDesktop } = useSelector(state => state.globalReducer);
     const { authToken, adminUser, authErrors } = useSelector(state => state.authReducer);
+    const { dataErrors } = useSelector(state => state.dataReducer);
 
     useEffect(() => {
         try {
@@ -34,6 +35,7 @@ export const EditProfilePage = () => {
                 {isDesktop && <Background />}
                 <Container>
                     {authErrors && <Errors errors={authErrors} />}
+                    {dataErrors && <Errors errors={dataErrors} />}
                     {!adminUser && <Profile />}
                 </Container>
             </Main>

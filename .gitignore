@@ -5,7 +5,7 @@ __tests__/
 coverage/
 .env
 _test.js
+test.js
 
 # Local Netlify folder
 .netlify
-test.html

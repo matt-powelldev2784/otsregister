@@ -20,7 +20,9 @@ export const getGamesData = createAsyncThunk('dataState/getGamesData', async aut
         const { recentGames } = gamesData;
         return recentGames;
     } catch (err) {
-        throw Error(err.msg);
+        console.log('err.msg', err);
+        const errorMessage = err.errors[0].msg;
+        throw Error(errorMessage);
     }
 });
 
@@ -304,22 +306,26 @@ export const dataSlice = createSlice({
         //---------------------------------------------------------------------
         [getProfileData.pending]: state => {
             state.playerProfile = { ...state.playerProfile };
+            state.dataErrors = null;
         },
         [getProfileData.fulfilled]: (state, { payload }) => {
             state.playerProfile = { playerProfile: payload };
         },
         [getProfileData.rejected]: (state, action) => {
-            state.playerProfile = { ...state.playerProfile, authErrors: [action.error] };
+            state.playerProfile = { ...state.playerProfile };
+            state.dataErrors = [action.error];
         },
         //---------------------------------------------------------------------
         [updateProfileData.pending]: state => {
             state.playerProfile = { ...state.playerProfile };
+            state.dataErrors = null;
         },
         [updateProfileData.fulfilled]: (state, { payload }) => {
             state.playerProfile = { playerProfile: payload };
         },
         [updateProfileData.rejected]: (state, action) => {
-            state.playerProfile = { ...state.playerProfile, authErrors: [action.error] };
+            state.playerProfile = { ...state.playerProfile };
+            state.dataErrors = [action.error];
         }
     }
 });

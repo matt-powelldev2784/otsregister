@@ -8,13 +8,9 @@ export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
     const dispatch = useDispatch();
     const { authToken, authUserName } = useSelector(state => state.authReducer);
 
-    const playerRegHandler = async () => {
+    const playerRegHandler = () => {
         const body = { gameId: gameId, playerAvailable: !currentPlayerAvailable };
-        try {
-            dispatch(setPlayerRegister({ authToken, body }));
-        } catch (err) {
-            console.log(err);
-        }
+        dispatch(setPlayerRegister({ authToken, body }));
     };
 
     useLayoutEffect(() => {
