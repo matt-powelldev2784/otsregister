@@ -4,12 +4,11 @@ import { getGamesData } from '../../redux/dataState';
 import styled from 'styled-components';
 import { makeAdminGamesTable } from '../Utilites/makeAdminGamesTable';
 import { GamesTableHead } from './GamesTableHead';
-import { UserGameClosed } from './UserGameClosed';
-import { Errors } from '../../Login/Errors';
+import { Errors } from '../../Utilities/Errors';
 
 export const AdminGamesTable = () => {
     const dispatch = useDispatch();
-    const { authToken, adminUser } = useSelector(state => state.authReducer);
+    const { authToken } = useSelector(state => state.authReducer);
     const { gamesData, planTeamsData } = useSelector(state => state.dataReducer);
     const { gamesList, authErrors } = gamesData;
     const { gameNotClosedError } = planTeamsData;
@@ -22,17 +21,18 @@ export const AdminGamesTable = () => {
 
     const GamesTable = makeAdminGamesTable(gamesList);
 
+    const tableHeadTitles = { cell1: 'Game Date', cell2: 'Game Name', cell3: 'Available Players', cell4: 'Register Status' };
+
     return (
         <Section>
             {gameNotClosedError && <Errors errors={gameNotClosedError} />}
             {authErrors && <Errors errors={authErrors} />}
             <Table>
-                <thead>
-                    <GamesTableHead cell1="Game Date" cell2="Game Name" cell3="Available Players" cell4="Register Status" />
-                </thead>
-                <tbody>{GamesTable}</tbody>
+                <TableHead>
+                    <GamesTableHead {...tableHeadTitles} />
+                </TableHead>
+                <TableBody>{GamesTable}</TableBody>
             </Table>
-            {!adminUser && UserGameClosed}
         </Section>
     );
 };
@@ -48,3 +48,7 @@ const Table = styled.table`
     border-spacing: 0;
     border-bottom: 5px solid #011826;
 `;
+
+const TableHead = styled.thead``;
+
+const TableBody = styled.tbody``;

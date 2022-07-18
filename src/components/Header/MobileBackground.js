@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import backgroundImage from '../../img/soccer_bg_color_80.jpg';
 
-export const Background = () => {
+export const MobileBackground = () => {
     return (
         <Fragment>
             <BackgroudImage />

@@ -1,42 +1,31 @@
 import React, { Fragment, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getProfileData, updateProfileData } from '../redux/dataState';
 import { Button } from '../Utilities/Button';
 import { FormTitle } from '../Utilities/FormTitle';
-import { Errors } from '../Login/Errors';
+import { Errors } from '../Utilities/Errors';
 import ProifleImagePlaceholder from '../../img/account_circle_white_24dp.svg';
 
 export const Profile = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { authToken, authErrors } = useSelector(state => state.authReducer);
-    const { dataIsLoading, playerProfile } = useSelector(state => state.dataReducer);
+    const { isLoading, playerProfile } = useSelector(state => state.dataReducer);
     const { defaultTeam, position } = playerProfile.playerProfile;
-  
+
     const defaultTeamRef = useRef(position);
     const positionRef = useRef(null);
 
     useEffect(() => {
-        try {
-            dispatch(getProfileData({ authToken }));
-        } catch (err) {
-            throw Error;
-        }
-    }, [authToken, dispatch, navigate]);
+        dispatch(getProfileData({ authToken }));
+    }, [authToken, dispatch]);
 
     const onSubmit = async e => {
         e.preventDefault();
-
         const updateTeam = defaultTeamRef.current.value;
         const updatePosition = positionRef.current.value;
         const formData = { defaultTeam: updateTeam, position: updatePosition };
-        try {
-            dispatch(updateProfileData({ authToken, formData }));
-        } catch (err) {
-            throw Error;
-        }
+        dispatch(updateProfileData({ authToken, formData }));
     };
 
     return (
@@ -62,7 +51,7 @@ export const Profile = () => {
                     </Label>
                     <Label>
                         <Span>POSITION</Span>
-                        <Select placeholder="Position" ref={positionRef}>
+                        <Select data-testid="testid_position" placeholder="Position" ref={positionRef}>
                             <option value={position}>{position}</option>
                             <option value="GK">GK</option>
                             <option value="LB">LB</option>
@@ -74,7 +63,7 @@ export const Profile = () => {
                             <option value="CF">CF</option>
                         </Select>
                     </Label>
-                    <Button text="UPDATE PROFILE" disabled={dataIsLoading} />
+                    <Button text="UPDATE PROFILE" disabled={isLoading} />
                     <Footer>
                         <Link>Click here to register for Training or Games</Link>
                     </Footer>

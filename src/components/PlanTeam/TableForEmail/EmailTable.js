@@ -6,7 +6,7 @@ import { sortPlayersIntoTeams } from '../sortPlayersIntoTeams';
 import { TableForEmail } from './TableForEmail';
 import { TableForEmailButton } from '../TableForEmailButton';
 import { PageTitle } from '../../Utilities/PageTitle';
-import { Errors } from '../../Login/Errors';
+import { Errors } from '../../Utilities/Errors';
 
 export const EmailTable = props => {
     const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { UserGameClosed } from './UserGameClosed';
 import styled from 'styled-components';
 
 export const UserTableRow = ({ gameId, gameDate, gameName, registeredPlayers, gameClosed, currentPlayerAvailable }) => {
-      const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open';
+    const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open';
 
     return (
         <TableRow>

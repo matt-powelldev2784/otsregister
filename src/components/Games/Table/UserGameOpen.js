@@ -22,8 +22,8 @@ export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
     return (
         <Fragment>
             <Flexbox>
-                {currentPlayerAvailable && <PlayerAvailable>{authUserName} Available</PlayerAvailable>}
-                {!currentPlayerAvailable && <PlayerUnavialable>{authUserName} NOT Available</PlayerUnavialable>}
+                {currentPlayerAvailable && <PlayerAvailable data-testid="available">{authUserName} Available</PlayerAvailable>}
+                {!currentPlayerAvailable && <PlayerUnavialable data-testid="unavailable">{authUserName} NOT Available</PlayerUnavialable>}
                 <ToggleButton onClick={playerRegHandler} defaultChecked={currentPlayerAvailable} toggleColor={toggleColor} />
             </Flexbox>
         </Fragment>
@@ -43,7 +43,7 @@ const Flexbox = styled.div`
     }
 `;
 
-const PlayerAvailable = styled.p`
+const PlayerAvailable = styled.div`
     display: inline-block;
     background: green;
     color: white;

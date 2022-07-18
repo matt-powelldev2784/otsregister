@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Header } from '../components/Header/Header';
 import { Background } from '../components/Header/Background';
 import { Profile } from '../components/Profile/Profile';
-import { Errors } from '../components/Login/Errors';
+import { Errors } from '../components/Utilities/Errors';
 
 export const EditProfilePage = () => {
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export const EditProfilePage = () => {
                 <Container>
                     {authErrors && <Errors errors={authErrors} />}
                     {dataErrors && <Errors errors={dataErrors} />}
-                    {!adminUser && <Profile />}
+                    {!adminUser && <Profile data-testid="profile" />}
                 </Container>
             </Main>
         </Fragment>

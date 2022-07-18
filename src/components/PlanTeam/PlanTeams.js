@@ -6,7 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Teams } from './Teams';
 import { TableForEmailButton } from './TableForEmailButton';
 import { PageTitle } from '../Utilities/PageTitle';
-import { Errors } from '../Login/Errors';
+import { Errors } from '../Utilities/Errors';
 
 export const PlanTeams = props => {
     const { planTeamsData } = useSelector(state => state.dataReducer);
