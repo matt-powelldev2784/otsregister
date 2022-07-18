@@ -8,7 +8,7 @@ import { PageTitle } from '../components/Utilities/PageTitle';
 import { Background } from '../components/Header/Background';
 import { UserGamesTable } from '../components/Games/Table/UserGamesTable';
 import { AdminGamesTable } from '../components/Games/Table/AdminGamesTable';
-import { Errors } from '../components/Login/Errors';
+import { Errors } from '../components/Utilities/Errors';
 
 export const DashboardPage = () => {
     const dispatch = useDispatch();

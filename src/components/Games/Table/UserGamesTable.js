@@ -9,7 +9,7 @@ export const UserGamesTable = () => {
     const dispatch = useDispatch();
     const { authToken } = useSelector(state => state.authReducer);
     const { gamesData } = useSelector(state => state.dataReducer);
-    const { gamesList} = gamesData;
+    const { gamesList } = gamesData;
 
     useLayoutEffect(() => {
         if (authToken) {
@@ -19,13 +19,17 @@ export const UserGamesTable = () => {
 
     const GamesTable = makeUserGamesTable(gamesList);
 
+    console.log('gamesList', gamesList);
+
+    const tableHeadTitles = { cell1: 'Game Date', cell2: 'Game Name', cell3: 'Register Status', cell4: 'Player Availability' };
+
     return (
         <Section>
             <Table>
-                <thead>
-                    <GamesTableHead cell1="Game Date" cell2="Game Name" cell3="Register Status" cell4="Player Availability" />
-                </thead>
-                <tbody>{GamesTable}</tbody>
+                <TableHead>
+                    <GamesTableHead {...tableHeadTitles} />
+                </TableHead>
+                <TableBody>{GamesTable}</TableBody>
             </Table>
         </Section>
     );
@@ -42,3 +46,7 @@ const Table = styled.table`
     border-spacing: 0;
     border-bottom: 5px solid #011826;
 `;
+
+const TableHead = styled.thead``;
+
+const TableBody = styled.tbody``;

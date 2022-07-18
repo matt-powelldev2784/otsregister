@@ -2,7 +2,7 @@ import React, { Fragment, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGame } from '../../redux/dataState';
 import styled from 'styled-components';
-import { Errors } from '../../Login/Errors';
+import { Errors } from '../../Utilities/Errors';
 import { Button } from '../../Utilities/Button';
 import { FormTitle } from '../../Utilities/FormTitle';
 

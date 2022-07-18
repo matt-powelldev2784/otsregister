@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { FormField } from '../Utilities/FormField';
 import { Button } from '../Utilities/Button';
 import { FormTitle } from '../Utilities/FormTitle';
-import { Errors } from './Errors';
+import { Errors } from '../Utilities/Errors';
 
-export const Login = props => {
+export const Login = () => {
     const dispatch = useDispatch();
     const { authIsLoading, authErrors } = useSelector(state => state.authReducer);
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -20,11 +20,7 @@ export const Login = props => {
 
     const loginUser = async e => {
         e.preventDefault();
-        try {
-            dispatch(login(formData));
-        } catch (err) {
-            throw Error;
-        }
+        dispatch(login(formData));
     };
 
     return (

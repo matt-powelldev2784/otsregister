@@ -29,7 +29,7 @@ const Input = styled.input`
     cursor: pointer;
     vertical-align: middle;
     transform: translateY(1px);
-    cursor: ${props => (props.isLoading === true ? 'wait' : 'pointer')};
+    
 
     @media (max-device-width: 440px) {
         display: block;

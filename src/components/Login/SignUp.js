@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { FormField } from '../Utilities/FormField';
 import { Button } from '../Utilities/Button';
 import { FormTitle } from '../Utilities/FormTitle';
-import { Errors } from './Errors';
+import { Errors } from '../Utilities/Errors';
 
 export const SignUp = props => {
     const dispatch = useDispatch();

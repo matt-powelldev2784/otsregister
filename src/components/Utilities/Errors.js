@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Error } from './Error';
+import { Error } from '../Utilities/Error';
 
 export const Errors = ({ errors }) => {
     let ErrorsJSX;
