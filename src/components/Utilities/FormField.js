@@ -1,12 +1,14 @@
 import React from 'react';
+import { Fragment } from 'react';
 import styled from 'styled-components';
 
-export const FormField = ({ label, type, placeholder, name, value, onChange, error }) => {
+export const FormField = ({ label, type, placeholder, name, value, onChange, error, aria }) => {
     return (
-        <Label>
+        <Fragment>
+            <Label htmlFor={name}></Label>
             <Span>{label}</Span>
-            <Input type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} error={error || 'none'} />
-        </Label>
+            <Input type={type} placeholder={placeholder} name={name} id={name} value={value} onChange={onChange} error={error || 'none'} />
+        </Fragment>
     );
 };
 

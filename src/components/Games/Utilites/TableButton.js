@@ -21,6 +21,7 @@ const Button = styled.button`
     border-radius: 14px;
     font-size: 1.2rem;
     letter-spacing: 0.05rem;
+    cursor: pointer;
 
     &:active {
         transition-duration: 0.1s;

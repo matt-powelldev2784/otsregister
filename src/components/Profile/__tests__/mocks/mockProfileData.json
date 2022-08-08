@@ -1,0 +1,12 @@
+{
+    "success": true,
+    "status": 200,
+    "profile": {
+        "_id": "62d58917d6ae604a6b49692d",
+        "user": { "_id": "62d58916d6ae604a6b49692a", "name": "Matt Powell", "email": "matt.powell2784@gmail.com" },
+        "defaultTeam": "3",
+        "position": "GK",
+        "date": "2022-07-18T16:23:51.215Z",
+        "__v": 0
+    }
+}

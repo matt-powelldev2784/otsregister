@@ -1,32 +1,55 @@
-import React, { Fragment, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { getProfileData, updateProfileData } from '../redux/dataState';
-import { Button } from '../Utilities/Button';
-import { FormTitle } from '../Utilities/FormTitle';
-import { Errors } from '../Utilities/Errors';
-import ProifleImagePlaceholder from '../../img/account_circle_white_24dp.svg';
+import React, { Fragment, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
+import { getProfileData, updateProfileData, setPlayerProfile } from '../redux/dataState'
+import { Button } from '../Utilities/Button'
+import { FormTitle } from '../Utilities/FormTitle'
+import { FormSelect } from '../Utilities/FormSelect'
+import { Errors } from '../Utilities/Errors'
+import ProifleImagePlaceholder from '../../img/account_circle_white_24dp.svg'
 
 export const Profile = () => {
-    const dispatch = useDispatch();
-    const { authToken, authErrors } = useSelector(state => state.authReducer);
-    const { isLoading, playerProfile } = useSelector(state => state.dataReducer);
-    const { defaultTeam, position } = playerProfile.playerProfile;
-
-    const defaultTeamRef = useRef(position);
-    const positionRef = useRef(null);
+    const dispatch = useDispatch()
+    const { authToken, authErrors } = useSelector(state => state.authReducer)
+    const { isLoading } = useSelector(state => state.dataReducer)
+    const { defaultTeam, position } = useSelector(state => state.dataReducer.playerProfile.playerProfile)
 
     useEffect(() => {
-        dispatch(getProfileData({ authToken }));
-    }, [authToken, dispatch]);
+        dispatch(getProfileData({ authToken }))
+    }, [authToken, dispatch])
 
     const onSubmit = async e => {
-        e.preventDefault();
-        const updateTeam = defaultTeamRef.current.value;
-        const updatePosition = positionRef.current.value;
-        const formData = { defaultTeam: updateTeam, position: updatePosition };
-        dispatch(updateProfileData({ authToken, formData }));
-    };
+        e.preventDefault()
+        const formData = { defaultTeam, position }
+        dispatch(updateProfileData({ authToken, formData }))
+    }
+
+    const onInputChange = e => {
+        const inputName = e.target.name
+        dispatch(setPlayerProfile({ [inputName]: e.target.value }))
+    }
+
+    const teamOptions = [
+        { value: '1', text: '1' },
+        { value: '2', text: '2' },
+        { value: '3', text: '3' },
+        { value: '4', text: '4' },
+        { value: '5', text: '5' },
+        { value: '6', text: '6' },
+        { value: '7', text: '7' },
+        { value: '0', text: 'Vets' }
+    ]
+
+    const positionOptions = [
+        { value: 'GK', text: 'GK' },
+        { value: 'LB', text: 'LB' },
+        { value: 'CB', text: 'CB' },
+        { value: 'RB', text: 'RB' },
+        { value: 'LM', text: 'LM' },
+        { value: 'CM', text: 'CM' },
+        { value: 'RM', text: 'RM' },
+        { value: 'CF', text: 'CF' }
+    ]
 
     return (
         <Fragment>
@@ -35,49 +58,38 @@ export const Profile = () => {
                     <FormTitle text="PROFILE" />
                     {authErrors && <Errors errors={authErrors} />}
                     <ProfileImage src={ProifleImagePlaceholder} />
-                    <Label>
-                        <Span>USUAL MATCHDAY TEAM</Span>
-                        <Select placeholder="Usual Matchday Team" ref={defaultTeamRef}>
-                            <option value={defaultTeam}>{defaultTeam}</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="0">Vets</option>
-                        </Select>
-                    </Label>
-                    <Label>
-                        <Span>POSITION</Span>
-                        <Select data-testid="testid_position" placeholder="Position" ref={positionRef}>
-                            <option value={position}>{position}</option>
-                            <option value="GK">GK</option>
-                            <option value="LB">LB</option>
-                            <option value="CB">CB</option>
-                            <option value="RB">RB</option>
-                            <option value="LM">LM</option>
-                            <option value="CM">CM</option>
-                            <option value="RM">RM</option>
-                            <option value="CF">CF</option>
-                        </Select>
-                    </Label>
-                    <Button text="UPDATE PROFILE" disabled={isLoading} />
+                    <FormSelect
+                        placeholder="Usual Matchday Team"
+                        name={'defaultTeam'}
+                        value={defaultTeam || 1}
+                        onChange={onInputChange}
+                        optionsElements={teamOptions}
+                    />
+                    <FormSelect
+                        placeholder="Position"
+                        name={'position'}
+                        value={position || 'XX'}
+                        onChange={onInputChange}
+                        optionsElements={positionOptions}
+                    />
+                    <Button
+                        text="UPDATE PROFILE"
+                        disabled={isLoading}
+                    />
                     <Footer>
-                        <Link>Click here to register for Training or Games</Link>
+                        <Link href={'/dashboard'}>Click here to register for Training or Games</Link>
                     </Footer>
                 </UpdateProfileForm>
             </Container>
         </Fragment>
-    );
-};
+    )
+}
 
 const Container = styled.section`
     position: relative;
     top: 0;
     width: 100%;
-`;
+`
 
 const UpdateProfileForm = styled.form`
     margin: 3rem auto 3rem auto;
@@ -94,45 +106,13 @@ const UpdateProfileForm = styled.form`
         border-right: none;
         border-radius: 0rem;
     }
-`;
+`
 
 const ProfileImage = styled.img`
     display: block;
     margin: 1rem auto 1rem auto;
     width: 5rem;
-`;
-
-const Label = styled.label`
-    display: block;
-    margin: 1rem auto 1rem auto;
-`;
-
-const Span = styled.span`
-    display: block;
-    width: 18rem;
-    margin: 0rem auto 0rem auto;
-    padding: 0.1rem;
-    color: white;
-    font-weight: 500;
-    font-size: 0.8rem;
-
-    background: none;
-`;
-
-const Select = styled.select`
-    display: block;
-    margin: 0rem auto 0rem auto;
-    width: 18rem;
-    padding: 0.5rem;
-    border: ${props => (props.error === true ? '2px solid red' : 'none')};
-    border-radius: 0rem;
-    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.3);
-    font-size: 1rem;
-
-    &:focus {
-        border: 0;
-    }
-`;
+`
 
 const Footer = styled.h1`
     margin: -2px;
@@ -150,7 +130,7 @@ const Footer = styled.h1`
         font-weight: 700;
         font-size: 1rem;
     }
-`;
+`
 
 const Link = styled.a`
     color: #003a68;
@@ -159,4 +139,4 @@ const Link = styled.a`
     &:hover {
         color: black;
     }
-`;
+`

@@ -1,5 +1,15 @@
 import axios from 'axios';
 
+const defaultError = {
+    errors: [
+        {
+            sucess: false,
+            status: 500,
+            msg: 'Server Error'
+        }
+    ]
+};
+
 export const registerUser = async userNameEmailPassword => {
     const config = { headers: { 'Content-Type': 'application/json' } };
     const body = JSON.stringify(userNameEmailPassword);
@@ -43,10 +53,9 @@ export const getAuthUser = async token => {
     }
 };
 
-export const apiCall = async (apiCallType, route, token, body, ) => {
-   
+export const apiCall = async (apiCallType, route, token, body) => {
     const config = { headers: { 'x-auth-token': token } };
-   
+
     try {
         let response;
 
@@ -68,6 +77,10 @@ export const apiCall = async (apiCallType, route, token, body, ) => {
         const responseData = response.data;
         return responseData;
     } catch (err) {
-        throw err.response.data;
+        if (err.repsonse) {
+            throw err.repsonse.data;
+        } else {
+            throw defaultError;
+        }
     }
 };
