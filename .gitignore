@@ -1,11 +1,9 @@
 node_modules/
 build/
 .prettierrc
-__tests__/
 coverage/
 .env
-_test.js
-test.js
+
 
 # Local Netlify folder
 .netlify

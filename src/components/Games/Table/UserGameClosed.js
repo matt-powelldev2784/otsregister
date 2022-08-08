@@ -15,6 +15,7 @@ export const UserGameClosed = ({ gameId, gameClosed, currentPlayerAvailable }) =
         <Fragment>
             <Flexbox>
                 {currentPlayerAvailable && <PlayerAvailable>{authUserName} Available</PlayerAvailable>}
+
                 {!currentPlayerAvailable && <PlayerUnavialable>{authUserName} NOT Available</PlayerUnavialable>}
             </Flexbox>
         </Fragment>

@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGamesData } from '../../redux/dataState';
 import styled from 'styled-components';
-import { makeAdminGamesTable } from '../Utilites/makeAdminGamesTable';
+import { AdminTableBody } from './AdminTableBody';
 import { GamesTableHead } from './GamesTableHead';
 import { Errors } from '../../Utilities/Errors';
 
@@ -10,7 +10,7 @@ export const AdminGamesTable = () => {
     const dispatch = useDispatch();
     const { authToken } = useSelector(state => state.authReducer);
     const { gamesData, planTeamsData } = useSelector(state => state.dataReducer);
-    const { gamesList, authErrors } = gamesData;
+    const { authErrors } = gamesData;
     const { gameNotClosedError } = planTeamsData;
 
     useLayoutEffect(() => {
@@ -18,8 +18,6 @@ export const AdminGamesTable = () => {
             dispatch(getGamesData(authToken));
         }
     }, [authToken, dispatch]);
-
-    const GamesTable = makeAdminGamesTable(gamesList);
 
     const tableHeadTitles = { cell1: 'Game Date', cell2: 'Game Name', cell3: 'Available Players', cell4: 'Register Status' };
 
@@ -31,7 +29,9 @@ export const AdminGamesTable = () => {
                 <TableHead>
                     <GamesTableHead {...tableHeadTitles} />
                 </TableHead>
-                <TableBody>{GamesTable}</TableBody>
+                <TableBody>
+                    <AdminTableBody />
+                </TableBody>
             </Table>
         </Section>
     );

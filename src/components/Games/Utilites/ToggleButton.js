@@ -7,14 +7,7 @@ export const ToggleButton = ({ onClick, defaultChecked, toggleColor }) => {
 
     return (
         <Fragment>
-            <Input
-                type="checkbox"
-                id="playeravailibity"
-                disabled={isLoading}
-                onClick={onClick}
-                defaultChecked={defaultChecked}
-                toggleColor={toggleColor}
-            />
+            <Input type="checkbox" disabled={isLoading} onClick={onClick} defaultChecked={defaultChecked} toggleColor={toggleColor} />
         </Fragment>
     );
 };

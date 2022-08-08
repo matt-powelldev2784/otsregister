@@ -4,12 +4,12 @@ import styled from 'styled-components';
 export const Error = ({ errorMessage }) => {
     return (
         <Fragment>
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            <ErrorMessage name={'Error Message'}>{errorMessage}</ErrorMessage>
         </Fragment>
     );
 };
 
-const ErrorMessage = styled.p`
+const ErrorMessage = styled.h1`
     margin: 0.7rem auto 0.7rem auto;
     padding: 0.2rem;
     background: red;

@@ -13,17 +13,15 @@ export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
         dispatch(setPlayerRegister({ authToken, body }));
     };
 
-    useLayoutEffect(() => {
-        dispatch(getGamesData(authToken));
-    }, [authToken, dispatch]);
-
     const toggleColor = { toggleOn: 'green', toggleOff: 'red' };
 
     return (
         <Fragment>
             <Flexbox>
                 {currentPlayerAvailable && <PlayerAvailable data-testid="available">{authUserName} Available</PlayerAvailable>}
+
                 {!currentPlayerAvailable && <PlayerUnavialable data-testid="unavailable">{authUserName} NOT Available</PlayerUnavialable>}
+
                 <ToggleButton onClick={playerRegHandler} defaultChecked={currentPlayerAvailable} toggleColor={toggleColor} />
             </Flexbox>
         </Fragment>

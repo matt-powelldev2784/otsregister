@@ -1,29 +1,30 @@
-import React, { Fragment, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createGame } from '../../redux/dataState';
-import styled from 'styled-components';
-import { Errors } from '../../Utilities/Errors';
-import { Button } from '../../Utilities/Button';
-import { FormTitle } from '../../Utilities/FormTitle';
+import React, { Fragment, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { createGame } from '../../redux/dataState'
+import styled from 'styled-components'
+import { Errors } from '../../Utilities/Errors'
+import { Button } from '../../Utilities/Button'
+import { FormTitle } from '../../Utilities/FormTitle'
 
 export const CreateGame = () => {
-    const dispatch = useDispatch();
-    const { authToken } = useSelector(state => state.authReducer);
-    const { createGameData } = useSelector(state => state.dataReducer);
-    const { authErrors } = createGameData;
-    const gameDate = useRef(null);
-    const gameName = useRef(null);
+    const dispatch = useDispatch()
+    const { authToken } = useSelector(state => state.authReducer)
+    const { createGameData } = useSelector(state => state.dataReducer)
+    const { authErrors } = createGameData
+    const createGameDate = useRef(null)
+    const createGameName = useRef(null)
 
     const onSubmit = async e => {
-        e.preventDefault();
-
-        const formData = { gameDate: gameDate.current.value, gameName: gameName.current.value };
+        e.preventDefault()
+        const gameDate = createGameDate.current.value
+        const gameName = createGameName.current.value
+        const formData = { gameDate, gameName }
         try {
-            dispatch(createGame({ authToken, formData }));
+            dispatch(createGame({ authToken, formData }))
         } catch (err) {
-            throw Error;
+            throw Error
         }
-    };
+    }
 
     return (
         <Fragment>
@@ -31,28 +32,41 @@ export const CreateGame = () => {
                 <CreateGameForm onSubmit={e => onSubmit(e)}>
                     <FormTitle text="CREATE GAME" />
                     {authErrors && <Errors errors={authErrors} />}
-                    <Label>
-                        <Span>DATE</Span>
-                        <Input type="date" placeholder="Game Date" label="GAMEDATE" ref={gameDate} />
-                    </Label>
-                    <Label>
-                        <Span>GAME NAME</Span>
-                        <Input type="text" placeholder="Game Name" label="GAME NAME" maxLength="20" ref={gameName} />
-                    </Label>
+                    <Label htmlFor="date-input"></Label>
+                    <Span>DATE</Span>
+                    <Input
+                        type="date"
+                        placeholder="Game Date"
+                        label="GAMEDATE"
+                        name="date-input"
+                        id="date-input"
+                        ref={createGameDate}
+                    />
+
+                    <Label htmlFor="game-name"></Label>
+                    <Span>GAME NAME</Span>
+                    <Input
+                        type="text"
+                        placeholder="Game Name"
+                        label="GAME NAME"
+                        maxLength="20"
+                        id="game-name"
+                        ref={createGameName}
+                    />
 
                     <Button text="CREATE GAME" />
                     <Footer></Footer>
                 </CreateGameForm>
             </Container>
         </Fragment>
-    );
-};
+    )
+}
 
 const Container = styled.section`
     position: relative;
     top: 0;
     width: 100%;
-`;
+`
 
 const CreateGameForm = styled.form`
     margin: 3rem auto 3rem auto;
@@ -69,12 +83,12 @@ const CreateGameForm = styled.form`
         border-right: none;
         border-radius: 0rem;
     }
-`;
+`
 
 const Label = styled.label`
     display: block;
     margin: 1rem auto 1rem auto;
-`;
+`
 
 const Span = styled.span`
     display: block;
@@ -86,7 +100,7 @@ const Span = styled.span`
     font-size: 0.8rem;
 
     background: none;
-`;
+`
 
 const Input = styled.input.attrs(props => ({
     type: props.type || 'type',
@@ -104,7 +118,7 @@ const Input = styled.input.attrs(props => ({
     &:focus {
         border: 0;
     }
-`;
+`
 
 const Footer = styled.h1`
     margin: -2px;
@@ -122,4 +136,4 @@ const Footer = styled.h1`
         font-weight: 700;
         font-size: 1rem;
     }
-`;
+`

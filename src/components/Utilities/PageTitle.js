@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-export const PageTitle = props => {
+export const PageTitle = ({ text }) => {
     return (
         <Fragment>
-            <TitleText>{props.text}</TitleText>
+            <TitleText>{text}</TitleText>
         </Fragment>
     );
 };

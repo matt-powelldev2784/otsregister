@@ -17,6 +17,7 @@ export const UserTableRow = ({ gameId, gameDate, gameName, registeredPlayers, ga
             <TableCell>
                 <Flexbox>
                     {!gameClosed && <UserGameOpen gameId={gameId} currentPlayerAvailable={currentPlayerAvailable} />}
+
                     {gameClosed && <UserGameClosed gameId={gameId} currentPlayerAvailable={currentPlayerAvailable} />}
                 </Flexbox>
             </TableCell>

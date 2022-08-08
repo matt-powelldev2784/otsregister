@@ -36,6 +36,7 @@ export const Login = () => {
                         name="email"
                         value={email}
                         onChange={onInputChange}
+                        aria="email"
                         required
                         autocomplete
                     />

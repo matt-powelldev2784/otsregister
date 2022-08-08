@@ -51,19 +51,16 @@ export const getPlanTeamsData = createAsyncThunk('dataState/getPlanTeamData', as
     }
 });
 
-export const saveFinalTeams = createAsyncThunk(
-    'dataState/saveFinalTeams',
-    async ({ authToken, planTeamsGameId, unsortedFinalTeamData }) => {
-        try {
-            const body = { gameId: planTeamsGameId, finalTeam: unsortedFinalTeamData };
-            await apiCall('post', 'api/games/updatefinalteam', authToken, body);
-        } catch (err) {
-            console.log('err.msg', err);
-            const errorMessage = err.errors[0].msg;
-            throw Error(errorMessage);
-        }
+export const saveFinalTeams = createAsyncThunk('dataState/saveFinalTeams', async ({ authToken, planTeamsGameId, unsortedFinalTeamData }) => {
+    try {
+        const body = { gameId: planTeamsGameId, finalTeam: unsortedFinalTeamData };
+        await apiCall('post', 'api/games/updatefinalteam', authToken, body);
+    } catch (err) {
+        console.log('err.msg', err);
+        const errorMessage = err.errors[0].msg;
+        throw Error(errorMessage);
     }
-);
+});
 
 export const setGameRegister = createAsyncThunk('dataState/setGameRegister', async ({ authToken, body }) => {
     try {
@@ -191,6 +188,10 @@ export const dataSlice = createSlice({
         },
         toggleDisplayTableForEmail: (state, { payload }) => {
             state.planTeamsData.displayTableForEmail = payload;
+        },
+        setPlayerProfile: (state, { payload }) => {
+            console.log('payload', payload);
+            state.playerProfile.playerProfile = { ...state.playerProfile.playerProfile, ...payload };
         }
     },
     extraReducers: {
@@ -341,7 +342,8 @@ export const {
     toggleDisplayTableForEmail,
     deleteAuthData,
     setAuthData,
-    setDataIsLoading
+    setDataIsLoading,
+    setPlayerProfile
 } = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

@@ -2,14 +2,15 @@ import React, { useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGamesData } from '../../redux/dataState';
 import styled from 'styled-components';
-import { makeUserGamesTable } from '../Utilites/makeUserGamesTable';
 import { GamesTableHead } from './GamesTableHead';
+import { UserTableBody } from './UserTableBody';
+import { Errors } from '../../Utilities/Errors';
 
 export const UserGamesTable = () => {
     const dispatch = useDispatch();
     const { authToken } = useSelector(state => state.authReducer);
     const { gamesData } = useSelector(state => state.dataReducer);
-    const { gamesList } = gamesData;
+    const { authErrors } = gamesData;
 
     useLayoutEffect(() => {
         if (authToken) {
@@ -17,19 +18,18 @@ export const UserGamesTable = () => {
         }
     }, [authToken, dispatch]);
 
-    const GamesTable = makeUserGamesTable(gamesList);
-
-    console.log('gamesList', gamesList);
-
     const tableHeadTitles = { cell1: 'Game Date', cell2: 'Game Name', cell3: 'Register Status', cell4: 'Player Availability' };
 
     return (
         <Section>
+            {authErrors && <Errors errors={authErrors} />}
             <Table>
                 <TableHead>
                     <GamesTableHead {...tableHeadTitles} />
                 </TableHead>
-                <TableBody>{GamesTable}</TableBody>
+                <TableBody>
+                    <UserTableBody />
+                </TableBody>
             </Table>
         </Section>
     );
