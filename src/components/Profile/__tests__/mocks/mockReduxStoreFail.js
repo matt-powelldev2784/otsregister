@@ -1,14 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { globalReducer } from '../../../redux/globalState';
-import { authReducer } from '../../../redux/authState';
-import { dataReducer } from '../../../redux/dataState';
+import { configureStore } from '@reduxjs/toolkit'
+import { globalReducer } from '../../../redux/globalState'
+import { authReducer } from '../../../redux/authState'
+import { dataReducer } from '../../../redux/dataState'
+
+import playerProfile from '../mocks/mockProfileData.json'
+
+const { profile } = playerProfile
 
 export const apiFailStore = configureStore({
     reducer: { globalReducer: globalReducer, authReducer: authReducer, dataReducer: dataReducer },
     preloadedState: {
         dataReducer: {
             playerProfile: {
-                playerProfile: { defaultTeam: null, position: null }
+                playerProfile: profile
             }
         },
         authReducer: {
@@ -19,4 +23,4 @@ export const apiFailStore = configureStore({
             ]
         }
     }
-});
+})

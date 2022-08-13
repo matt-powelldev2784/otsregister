@@ -1,0 +1,45 @@
+{
+    "success": true,
+    "status": 200,
+    "recentGames": [
+        {
+            "_id": "62dffe47d6ae604a6b49709d",
+            "gameDate": "2022-08-07T00:00:00.000Z",
+            "gameName": "Game E",
+            "playersAvailable": [
+                { "_id": "62d58917d6ae604a6b49692d", "user": { "_id": "62d58916d6ae604a6b49692a", "name": "Matt Powell", "email": "matt.powell2784@gmail.com" }, "defaultTeam": "3", "position": "CF", "date": "2022-07-18T16:23:51.215Z", "__v": 0 },
+                { "_id": "62ead7301fe899412a980d5a", "user": { "_id": "62ead7301fe899412a980d57", "name": "Matt Powell", "email": "matt.powell201@gmail.com" }, "defaultTeam": "0", "position": "XX", "date": "2022-08-03T20:14:40.554Z", "__v": 0 }
+            ],
+            "playersUnavailable": [],
+            "finalTeam": [
+                { "_id": "62d58917d6ae604a6b49692d", "user": { "_id": "62d58916d6ae604a6b49692a", "name": "Matt Powell", "email": "matt.powell2784@gmail.com" }, "defaultTeam": "3", "position": "CF", "date": "2022-07-18T16:23:51.215Z", "__v": 0 },
+                { "_id": "62ead7301fe899412a980d5a", "user": { "_id": "62ead7301fe899412a980d57", "name": "Matt Powell", "email": "matt.powell201@gmail.com" }, "defaultTeam": "0", "position": "XX", "date": "2022-08-03T20:14:40.554Z", "__v": 0 }
+            ],
+            "gameClosed": true,
+            "createdAt": "2022-07-26T14:46:31.421Z",
+            "__v": 0
+        },
+        {
+            "_id": "62dfe539d6ae604a6b49703a",
+            "gameDate": "2022-07-31T00:00:00.000Z",
+            "gameName": "Name",
+            "playersAvailable": [{ "_id": "62002d4afc707d88bbb9427b", "user": { "_id": "61f83565160cbc8a030af4fd", "name": "Matt Powell", "email": "matt.powell100@gmail.com" }, "defaultTeam": "4", "position": "GK", "date": "2022-02-06T20:19:22.234Z", "__v": 0 }],
+            "playersUnavailable": [],
+            "finalTeam": [],
+            "gameClosed": false,
+            "createdAt": "2022-07-26T12:59:37.904Z",
+            "__v": 0
+        },
+        {
+            "_id": "62deba9cd6ae604a6b49701a",
+            "gameDate": "2022-07-30T00:00:00.000Z",
+            "gameName": "Test A",
+            "playersAvailable": [{ "_id": "62d58917d6ae604a6b49692d", "user": { "_id": "62d58916d6ae604a6b49692a", "name": "Matt Powell", "email": "matt.powell2784@gmail.com" }, "defaultTeam": "3", "position": "GK", "date": "2022-07-18T16:23:51.215Z", "__v": 0 }],
+            "playersUnavailable": [],
+            "finalTeam": [],
+            "gameClosed": false,
+            "createdAt": "2022-07-25T15:45:32.471Z",
+            "__v": 0
+        }
+    ]
+}

@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
-import { rest, server } from '../../../../testServer'
+import { rest, server } from '../../../testServer'
 
 import React from 'react'
-import { apiSucessStore } from './mockReduxStoreSucess'
-import { apiFailStore } from './mockReduxStoreFail'
+import { apiSucessStore } from './mocks/mockReduxStoreSucess'
+import { apiFailStore } from './mocks/mockReduxStoreFail'
 import { Provider } from 'react-redux'
-import { Profile } from '../../Profile'
-import { apiCall } from '../../../Utilities/apiUtil'
+import { Profile } from '../Profile'
+import { apiCall } from '../../Utilities/apiUtil'
 
 describe('When the api call is sucessful', () => {
     it('should render the input fields from the data', async () => {

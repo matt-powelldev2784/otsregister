@@ -1,26 +1,26 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setPlanGamesId, setGamesNotClosedError, deletePlanTeamsGameId } from '../../redux/dataState';
-import styled from 'styled-components';
-import { GameStatus } from './AdminGameStatus';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setPlanGamesId, setGamesNotClosedError, deletePlanTeamsGameId } from '../../../redux/dataState'
+import styled from 'styled-components'
+import { GameStatus } from './AdminGameStatus'
 
 export const AdminTableRow = ({ gameId, gameDate, gameName, registeredPlayers, gameClosed }) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const planTeamsHandler = () => {
-        sessionStorage.removeItem('planTeamsGameId', gameId);
-        dispatch(deletePlanTeamsGameId());
+        sessionStorage.removeItem('planTeamsGameId', gameId)
+        dispatch(deletePlanTeamsGameId())
         if (gameClosed) {
-            sessionStorage.setItem('planTeamsGameId', gameId);
-            dispatch(setPlanGamesId(gameId));
-            navigate('/planteams');
+            sessionStorage.setItem('planTeamsGameId', gameId)
+            dispatch(setPlanGamesId(gameId))
+            navigate('/planteams')
         } else {
-            const planTeamsError = [{ msg: 'Player registartion must be closed before planning teams!' }];
-            dispatch(setGamesNotClosedError(planTeamsError));
+            const planTeamsError = [{ msg: 'Player registartion must be closed before planning teams!' }]
+            dispatch(setGamesNotClosedError(planTeamsError))
         }
-    };
+    }
 
     return (
         <TableRow>
@@ -30,11 +30,14 @@ export const AdminTableRow = ({ gameId, gameDate, gameName, registeredPlayers, g
             <TableCell>{gameName}</TableCell>
             <TableCell>{registeredPlayers}</TableCell>
             <TableCell>
-                <GameStatus gameClosed={gameClosed} gameId={gameId} />
+                <GameStatus
+                    gameClosed={gameClosed}
+                    gameId={gameId}
+                />
             </TableCell>
         </TableRow>
-    );
-};
+    )
+}
 
 const TableRow = styled.tr`
     height: 3rem;
@@ -49,7 +52,7 @@ const TableRow = styled.tr`
         background: ${props => props.color || '#003a68'};
         color: white;
     }
-`;
+`
 
 const TableCell = styled.td`
     padding: 0.4rem 0.5rem 0.4rem 0.5rem;
@@ -59,7 +62,7 @@ const TableCell = styled.td`
     @media (max-device-width: 440px) {
         font-size: 1rem;
     }
-`;
+`
 
 const Link = styled.span`
     text-decoration: ${props => props.gameClosed && 'underline'};
@@ -68,4 +71,4 @@ const Link = styled.span`
         border-bottom: 2px solid white;
         cursor: pointer;
     }
-`;
+`
