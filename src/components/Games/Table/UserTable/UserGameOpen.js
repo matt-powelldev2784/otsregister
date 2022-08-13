@@ -1,32 +1,34 @@
-import React, { Fragment, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getGamesData, setPlayerRegister } from '../../redux/dataState';
-import styled from 'styled-components';
-import { ToggleButton } from '../Utilites/ToggleButton';
+import React, { Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPlayerRegister } from '../../../redux/dataState'
+import styled from 'styled-components'
+import { ToggleButton } from '../../Utilites/ToggleButton'
 
 export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
-    const dispatch = useDispatch();
-    const { authToken, authUserName } = useSelector(state => state.authReducer);
+    const dispatch = useDispatch()
+    const { authToken, authUserName } = useSelector(state => state.authReducer)
 
     const playerRegHandler = () => {
-        const body = { gameId: gameId, playerAvailable: !currentPlayerAvailable };
-        dispatch(setPlayerRegister({ authToken, body }));
-    };
+        const body = { gameId: gameId, playerAvailable: !currentPlayerAvailable }
+        dispatch(setPlayerRegister({ authToken, body }))
+    }
 
-    const toggleColor = { toggleOn: 'green', toggleOff: 'red' };
+    const toggleColor = { toggleOn: 'green', toggleOff: 'red' }
 
     return (
         <Fragment>
             <Flexbox>
                 {currentPlayerAvailable && <PlayerAvailable data-testid="available">{authUserName} Available</PlayerAvailable>}
-
                 {!currentPlayerAvailable && <PlayerUnavialable data-testid="unavailable">{authUserName} NOT Available</PlayerUnavialable>}
-
-                <ToggleButton onClick={playerRegHandler} defaultChecked={currentPlayerAvailable} toggleColor={toggleColor} />
+                <ToggleButton
+                    onClick={playerRegHandler}
+                    defaultChecked={currentPlayerAvailable}
+                    toggleColor={toggleColor}
+                />
             </Flexbox>
         </Fragment>
-    );
-};
+    )
+}
 
 const Flexbox = styled.div`
     display: flex;
@@ -39,9 +41,9 @@ const Flexbox = styled.div`
     @media (max-device-width: 440px) {
         flex-direction: column;
     }
-`;
+`
 
-const PlayerAvailable = styled.div`
+const PlayerAvailable = styled.p`
     display: inline-block;
     background: green;
     color: white;
@@ -53,7 +55,7 @@ const PlayerAvailable = styled.div`
     @media (max-device-width: 440px) {
         font-size: 1rem;
     }
-`;
+`
 
 const PlayerUnavialable = styled.p`
     display: inline-block;
@@ -67,4 +69,4 @@ const PlayerUnavialable = styled.p`
     @media (max-device-width: 440px) {
         font-size: 1rem;
     }
-`;
+`

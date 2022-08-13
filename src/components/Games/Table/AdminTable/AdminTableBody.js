@@ -1,22 +1,22 @@
-import React, { useLayoutEffect } from 'react';
-import { Fragment } from 'react';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { getGamesData } from '../../redux/dataState';
-import { formatDate } from '../../Utilities/formatDate';
-import { AdminTableRow } from './AdminTableRow';
+import React, { useLayoutEffect } from 'react'
+import { Fragment } from 'react'
+import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { getGamesData } from '../../../redux/dataState'
+import { formatDate } from '../../../Utilities/formatDate'
+import { AdminTableRow } from './AdminTableRow'
 
 export const AdminTableBody = () => {
-    const dispatch = useDispatch();
-    const { authToken } = useSelector(state => state.authReducer);
-    const { gamesData } = useSelector(state => state.dataReducer);
-    const { gamesList } = gamesData;
+    const dispatch = useDispatch()
+    const { authToken } = useSelector(state => state.authReducer)
+    const { gamesData } = useSelector(state => state.dataReducer)
+    const { gamesList } = gamesData
 
     useLayoutEffect(() => {
         if (authToken) {
-            dispatch(getGamesData(authToken));
+            dispatch(getGamesData(authToken))
         }
-    }, [authToken, dispatch]);
+    }, [authToken, dispatch])
 
     let AdminTableBody = (
         <TableRow>
@@ -25,12 +25,12 @@ export const AdminTableBody = () => {
             <TableCell></TableCell>
             <TableCell></TableCell>
         </TableRow>
-    );
+    )
 
     if (gamesList && gamesList.length > 0) {
         AdminTableBody = gamesList.map(game => {
-            const gameDate = formatDate(game.gameDate);
-            const { gameName, _id, registeredPlayers = game.playersAvailable.length, gameClosed } = game;
+            const gameDate = formatDate(game.gameDate)
+            const { gameName, _id, registeredPlayers = game.playersAvailable.length, gameClosed } = game
 
             return (
                 <AdminTableRow
@@ -41,12 +41,12 @@ export const AdminTableBody = () => {
                     gameName={gameName}
                     registeredPlayers={registeredPlayers}
                 />
-            );
-        });
+            )
+        })
     }
 
-    return <Fragment>{AdminTableBody}</Fragment>;
-};
+    return <Fragment>{AdminTableBody}</Fragment>
+}
 
 const TableRow = styled.tr`
     height: 3rem;
@@ -61,7 +61,7 @@ const TableRow = styled.tr`
         background: ${props => props.color || '#003a68'};
         color: white;
     }
-`;
+`
 
 const TableCell = styled.td`
     padding: 0.4rem 0.5rem 0.4rem 0.5rem;
@@ -71,4 +71,4 @@ const TableCell = styled.td`
     @media (max-device-width: 440px) {
         font-size: 1rem;
     }
-`;
+`

@@ -1,16 +1,23 @@
-import React, { Fragment } from 'react';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React, { Fragment } from 'react'
+import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 
 export const ToggleButton = ({ onClick, defaultChecked, toggleColor }) => {
-    const { isLoading } = useSelector(state => state.dataReducer);
+    const { isLoading } = useSelector(state => state.dataReducer)
 
     return (
         <Fragment>
-            <Input type="checkbox" disabled={isLoading} onClick={onClick} defaultChecked={defaultChecked} toggleColor={toggleColor} />
+            <Input
+                type="checkbox"
+                disabled={isLoading}
+                checked={defaultChecked}
+                onClick={onClick}
+                toggleColor={toggleColor}
+                onChange={() => {}}
+            />
         </Fragment>
-    );
-};
+    )
+}
 
 const Input = styled.input`
     -webkit-appearance: none;
@@ -37,7 +44,7 @@ const Input = styled.input`
         border-radius: 18px;
         clear: both;
         background: ${props => {
-            return props.toggleColor.toggleOff;
+            return props.toggleColor.toggleOff
         }}};
     }
 
@@ -63,7 +70,7 @@ const Input = styled.input`
 
     &:checked:after {
         background: ${props => {
-            return props.toggleColor.toggleOn;
+            return props.toggleColor.toggleOn
         }};
     }
-`;
+`

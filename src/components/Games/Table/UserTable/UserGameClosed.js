@@ -1,15 +1,15 @@
-import React, { Fragment, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getGamesData } from '../../redux/dataState';
-import styled from 'styled-components';
+import React, { Fragment, useLayoutEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getGamesData } from '../../../redux/dataState'
+import styled from 'styled-components'
 
 export const UserGameClosed = ({ gameId, gameClosed, currentPlayerAvailable }) => {
-    const dispatch = useDispatch();
-    const { authToken, authUserName } = useSelector(state => state.authReducer);
+    const dispatch = useDispatch()
+    const { authToken, authUserName } = useSelector(state => state.authReducer)
 
     useLayoutEffect(() => {
-        dispatch(getGamesData(authToken));
-    }, [authToken, dispatch]);
+        dispatch(getGamesData(authToken))
+    }, [authToken, dispatch])
 
     return (
         <Fragment>
@@ -19,8 +19,8 @@ export const UserGameClosed = ({ gameId, gameClosed, currentPlayerAvailable }) =
                 {!currentPlayerAvailable && <PlayerUnavialable>{authUserName} NOT Available</PlayerUnavialable>}
             </Flexbox>
         </Fragment>
-    );
-};
+    )
+}
 
 const Flexbox = styled.div`
     display: flex;
@@ -33,7 +33,7 @@ const Flexbox = styled.div`
     @media (max-device-width: 440px) {
         flex-direction: column;
     }
-`;
+`
 
 const PlayerAvailable = styled.p`
     display: inline-block;
@@ -47,7 +47,7 @@ const PlayerAvailable = styled.p`
     @media (max-device-width: 440px) {
         font-size: 1rem;
     }
-`;
+`
 
 const PlayerUnavialable = styled.p`
     display: inline-block;
@@ -61,4 +61,4 @@ const PlayerUnavialable = styled.p`
     @media (max-device-width: 440px) {
         font-size: 1rem;
     }
-`;
+`
