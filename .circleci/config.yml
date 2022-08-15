@@ -21,7 +21,7 @@ jobs:
 workflows:
     test_my_app:
         jobs:
-            - build_and_deply
+            - build_and_deploy
             - deploy:
                   requires:
                       - build_and_test # only deploy if the build_and_test job has completed
