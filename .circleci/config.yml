@@ -7,6 +7,9 @@ jobs:
         steps:
             - checkout
             - run:
+                  command: npm run test
+                  name: Run tests
+            - run:
                   name: Update NPM
                   command: 'sudo npm install -g npm'
             - restore_cache:
