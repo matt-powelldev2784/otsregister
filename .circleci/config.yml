@@ -42,7 +42,7 @@ workflows:
                       branches:
                           only:
                               - main
-        # test_and_deploy: # this can be any name you choose1
+        # test_and_deploy: # this can be any name you choose
         #     executor: node/default
         #     steps:
         #         - checkout
