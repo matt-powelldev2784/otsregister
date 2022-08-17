@@ -30,6 +30,9 @@ jobs:
                   paths:
                       - ./build
             - run:
+                  name: install netlify
+                  command: sudo npm install netlify-cli -g --unsafe-perm
+            - run:
                   name: Deploy to Netlify
                   # command: deploy — dir=./public -p -site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
                   command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
