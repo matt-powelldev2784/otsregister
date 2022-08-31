@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
 interface ButtonProps {
-    onClick?: any
+    onClick: any
     isLoading: boolean
     text: string
 }
