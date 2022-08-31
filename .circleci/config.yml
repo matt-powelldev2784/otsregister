@@ -42,26 +42,3 @@ workflows:
                       branches:
                           only:
                               - main
-        # test_and_deploy: # this can be any name you choose
-        #     executor: node/default
-        #     steps:
-        #         - checkout
-        #         - node/install-packages:
-        #               pkg-manager: npm
-        #         - run:
-        #               command: npm run test
-        #               name: Run tests
-        #         - persist_to_workspace:
-        #               root: ~/project
-        #               paths:
-        #                   - .
-# workflows:
-#     test_my_app:
-#         jobs:
-#             - test_and_deploy
-#             - deploy:
-#                   requires:
-#                       - test_and_deploy # only deploy if the build_and_test job has completed
-#                   filters:
-#                       branches:
-#                           only: main # only deploy when on main

@@ -1,27 +1,27 @@
-import React, { Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/authState';
-import styled from 'styled-components';
-import { FormField } from '../Utilities/FormField';
-import { Button } from '../Utilities/Button';
-import { FormTitle } from '../Utilities/FormTitle';
-import { Errors } from '../Utilities/Errors';
+import React, { Fragment, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../redux/authState'
+import styled from 'styled-components'
+import { FormField } from '../Utilities/FormField'
+import { Button } from '../Utilities/Button'
+import { FormTitle } from '../Utilities/FormTitle'
+import { Errors } from '../Utilities/Errors'
 
 export const Login = () => {
-    const dispatch = useDispatch();
-    const { authIsLoading, authErrors } = useSelector(state => state.authReducer);
-    const [formData, setFormData] = useState({ email: '', password: '' });
-    const { email, password } = formData;
+    const dispatch = useDispatch()
+    const { authIsLoading, authErrors } = useSelector(state => state.authReducer)
+    const [formData, setFormData] = useState({ email: '', password: '' })
+    const { email, password } = formData
 
     const onInputChange = e => {
-        const inputName = e.target.name;
-        setFormData({ ...formData, [inputName]: e.target.value });
-    };
+        const inputName = e.target.name
+        setFormData({ ...formData, [inputName]: e.target.value })
+    }
 
     const loginUser = async e => {
-        e.preventDefault();
-        dispatch(login(formData));
-    };
+        e.preventDefault()
+        dispatch(login(formData))
+    }
 
     return (
         <Fragment>
@@ -50,21 +50,24 @@ export const Login = () => {
                         minLength="6"
                         required
                     />
-                    <Button text="SIGN IN" isLoading={authIsLoading} />
+                    <Button
+                        text="SIGN IN"
+                        isLoading={authIsLoading}
+                    />
                     <Footer>
                         <Link href={'/signup'}>Need an account? Sign Up here</Link>
                     </Footer>
                 </LoginForm>
             </Container>
         </Fragment>
-    );
-};
+    )
+}
 
 const Container = styled.section`
     position: absolute;
     top: 0;
     width: 100%;
-`;
+`
 
 const LoginForm = styled.form`
     margin: 3rem auto 3rem auto;
@@ -81,7 +84,7 @@ const LoginForm = styled.form`
         border-left: none;
         border-right: none;
     }
-`;
+`
 
 const Footer = styled.h1`
     margin-top: 1rem;
@@ -100,7 +103,7 @@ const Footer = styled.h1`
         font-weight: 700;
         font-size: 1rem;
     }
-`;
+`
 
 const Link = styled.a`
     color: #003a68;
@@ -109,4 +112,4 @@ const Link = styled.a`
     &:hover {
         color: black;
     }
-`;
+`

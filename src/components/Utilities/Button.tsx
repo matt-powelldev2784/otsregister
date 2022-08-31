@@ -1,22 +1,32 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import React, { Fragment } from 'react'
+import styled from 'styled-components'
 
-export const Button = ({ onClick, isLoading, text }) => {
+interface ButtonProps {
+    onClick?: any
+    isLoading: boolean
+    text: string
+}
+
+export const Button: React.FC<ButtonProps> = ({ onClick, isLoading, text }) => {
     return (
         <Fragment>
-            <MainButton onClick={onClick} isLoading={isLoading} disabled={isLoading}>
+            <MainButton
+                onClick={onClick}
+                isLoading={isLoading}
+                disabled={isLoading}
+                text={text}
+            >
                 {text}
             </MainButton>
         </Fragment>
-    );
-};
+    )
+}
 
-const MainButton = styled.button`
+const MainButton = styled.button<ButtonProps>`
     display: block;
     margin: 1rem auto 1rem auto;
     color: white;
     cursor: ${props => (props.isLoading === true ? 'wait' : 'pointer')};
-
     background-color: #011826;
     border: 3px solid white;
     border-radius: 0.7rem;
@@ -39,4 +49,4 @@ const MainButton = styled.button`
         transition-duration: 0.1s;
         transform: translateY(1px);
     }
-`;
+`

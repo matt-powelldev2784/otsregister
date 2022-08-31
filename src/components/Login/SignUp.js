@@ -1,45 +1,45 @@
-import React, { Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuthErrors, registerNewUser } from '../redux/authState';
-import styled from 'styled-components';
-import { FormField } from '../Utilities/FormField';
-import { Button } from '../Utilities/Button';
-import { FormTitle } from '../Utilities/FormTitle';
-import { Errors } from '../Utilities/Errors';
+import React, { Fragment, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAuthErrors, registerNewUser } from '../redux/authState'
+import styled from 'styled-components'
+import { FormField } from '../Utilities/FormField'
+import { Button } from '../Utilities/Button'
+import { FormTitle } from '../Utilities/FormTitle'
+import { Errors } from '../Utilities/Errors'
 
 export const SignUp = props => {
-    const dispatch = useDispatch();
-    const { authToken, authIsLoading, authErrors } = useSelector(state => state.authReducer);
+    const dispatch = useDispatch()
+    const { authToken, authIsLoading, authErrors } = useSelector(state => state.authReducer)
 
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' });
-    const { name, email, password, password2 } = formData;
+    const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' })
+    const { name, email, password, password2 } = formData
 
     const signUp = async => {
         try {
-            dispatch(registerNewUser({ authToken, formData }));
+            dispatch(registerNewUser({ authToken, formData }))
         } catch (err) {
-            throw Error;
+            throw Error
         }
-    };
+    }
 
     const onFormSubmit = e => {
-        e.preventDefault();
+        e.preventDefault()
         if (password !== password2) {
-            const error = [{ message: 'Passwords do not match' }];
-            dispatch(setAuthErrors(error));
-            return;
+            const error = [{ message: 'Passwords do not match' }]
+            dispatch(setAuthErrors(error))
+            return
         }
-        signUp();
-    };
+        signUp()
+    }
 
     const onInputChange = e => {
         if (e.target.name === 'email') {
-            const emailLowerCase = e.target.value.toLowerCase();
-            setFormData({ ...formData, [e.target.name]: emailLowerCase });
+            const emailLowerCase = e.target.value.toLowerCase()
+            setFormData({ ...formData, [e.target.name]: emailLowerCase })
         } else {
-            setFormData({ ...formData, [e.target.name]: e.target.value });
+            setFormData({ ...formData, [e.target.name]: e.target.value })
         }
-    };
+    }
 
     return (
         <Fragment>
@@ -55,7 +55,13 @@ export const SignUp = props => {
                         value={name}
                         onChange={onInputChange}
                     />
-                    <FormField placeholder="Email" label="EMAIL" name="email" value={email} onChange={onInputChange} />
+                    <FormField
+                        placeholder="Email"
+                        label="EMAIL"
+                        name="email"
+                        value={email}
+                        onChange={onInputChange}
+                    />
                     <FormField
                         type="password"
                         placeholder="Password"
@@ -72,19 +78,22 @@ export const SignUp = props => {
                         value={password2}
                         onChange={onInputChange}
                     />
-                    <Button text="SIGN UP" disabled={authIsLoading} />
+                    <Button
+                        text="SIGN UP"
+                        disabled={authIsLoading}
+                    />
                     <Footer></Footer>
                 </SignUpForm>
             </Container>
         </Fragment>
-    );
-};
+    )
+}
 
 const Container = styled.section`
     position: absolute;
     top: 0;
     width: 100%;
-`;
+`
 
 const SignUpForm = styled.form`
     margin: 3rem auto 3rem auto;
@@ -102,7 +111,7 @@ const SignUpForm = styled.form`
         border-left: none;
         border-right: none;
     }
-`;
+`
 
 const Footer = styled.h1`
     margin-top: 1rem;
@@ -121,4 +130,4 @@ const Footer = styled.h1`
         font-weight: 700;
         font-size: 1rem;
     }
-`;
+`
