@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const Colors = () => {
     return (
+        console.log('a')
         <div>
             <Color1 />
             <Color2 />
