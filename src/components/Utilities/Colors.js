@@ -29,3 +29,7 @@ const Color4 = styled.div`
 const Color5 = styled.div`
     color: #99d8e1;
 `
+
+const Color6 = styled.div`
+    color: #99d8e1;
+`
