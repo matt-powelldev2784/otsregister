@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getGamesData } from '../../../redux/dataState'
 import styled from 'styled-components'
 import { AdminTableBody } from './AdminTableBody'
-import { GamesTableHead } from '../GamesTableHead'
+import { GamesTableHead } from '../GamesTableHead/GamesTableHead'
 import { Errors } from '../../../Utilities/Errors'
 
 export const AdminGamesTable = () => {

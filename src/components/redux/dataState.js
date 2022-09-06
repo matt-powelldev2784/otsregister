@@ -51,16 +51,19 @@ export const getPlanTeamsData = createAsyncThunk('dataState/getPlanTeamData', as
     }
 })
 
-export const saveFinalTeams = createAsyncThunk('dataState/saveFinalTeams', async ({ authToken, planTeamsGameId, unsortedFinalTeamData }) => {
-    try {
-        const body = { gameId: planTeamsGameId, finalTeam: unsortedFinalTeamData }
-        await apiCall('post', 'api/games/updatefinalteam', authToken, body)
-    } catch (err) {
-        console.log('err.msg', err)
-        const errorMessage = err.errors[0].msg
-        throw Error(errorMessage)
+export const saveFinalTeams = createAsyncThunk(
+    'dataState/saveFinalTeams',
+    async ({ authToken, planTeamsGameId, unsortedFinalTeamData }) => {
+        try {
+            const body = { gameId: planTeamsGameId, finalTeam: unsortedFinalTeamData }
+            await apiCall('post', 'api/games/updatefinalteam', authToken, body)
+        } catch (err) {
+            console.log('err.msg', err)
+            const errorMessage = err.errors[0].msg
+            throw Error(errorMessage)
+        }
     }
-})
+)
 
 export const setGameRegister = createAsyncThunk('dataState/setGameRegister', async ({ authToken, body }) => {
     try {
@@ -330,6 +333,19 @@ export const dataSlice = createSlice({
     }
 })
 
-export const { setPlanGamesId, setGamesNotClosedError, deletePlanTeamsGameId, setFinalTeamDom, setUnsortedFinalTeamData, setSortedFinalTeamData, movePlayerToDifferentTeam, toggleDisplayTableForEmail, deleteAuthData, setAuthData, setDataIsLoading, setPlayerProfile } = dataSlice.actions
+export const {
+    setPlanGamesId,
+    setGamesNotClosedError,
+    deletePlanTeamsGameId,
+    setFinalTeamDom,
+    setUnsortedFinalTeamData,
+    setSortedFinalTeamData,
+    movePlayerToDifferentTeam,
+    toggleDisplayTableForEmail,
+    deleteAuthData,
+    setAuthData,
+    setDataIsLoading,
+    setPlayerProfile
+} = dataSlice.actions
 
 export const dataReducer = dataSlice.reducer

@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getGamesData } from '../../../redux/dataState'
 import styled from 'styled-components'
-import { GamesTableHead } from '../GamesTableHead'
+import { GamesTableHead } from '../GamesTableHead/GamesTableHead'
 import { UserTableBody } from './UserTableBody'
 
 export const UserGamesTable = () => {

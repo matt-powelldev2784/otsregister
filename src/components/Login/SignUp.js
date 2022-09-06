@@ -9,14 +9,14 @@ import { Errors } from '../Utilities/Errors'
 
 export const SignUp = props => {
     const dispatch = useDispatch()
-    const { authToken, authIsLoading, authErrors } = useSelector(state => state.authReducer)
+    const { authIsLoading, authErrors } = useSelector(state => state.authReducer)
 
     const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' })
     const { name, email, password, password2 } = formData
 
     const signUp = async => {
         try {
-            dispatch(registerNewUser({ authToken, formData }))
+            dispatch(registerNewUser(formData))
         } catch (err) {
             throw Error
         }
@@ -25,7 +25,7 @@ export const SignUp = props => {
     const onFormSubmit = e => {
         e.preventDefault()
         if (password !== password2) {
-            const error = [{ message: 'Passwords do not match' }]
+            const error = [{ name: 'Error', message: 'Passwords do not match', stack: 'CUSTOM_ERROR' }]
             dispatch(setAuthErrors(error))
             return
         }
