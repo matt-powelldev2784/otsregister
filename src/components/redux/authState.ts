@@ -4,13 +4,14 @@ import { getAuthUser } from '../Utilities/apiUtil'
 import { registerUser } from '../Utilities/apiUtil'
 import { apiCall } from '../Utilities/apiUtil'
 
-import { AuthState, LoginFormData, SignUpFormData, AuthUser, AuthError } from '../../_TS_Interface/interface'
+import { AuthState, LoginFormData, SignUpFormData, AuthUser } from './ts/authState_interface'
+import { AuthError } from './ts/interfaces'
 
-export const login = createAsyncThunk('authState/login', async (loginFormData: LoginFormData) => {
+export const login = createAsyncThunk('authState/login', async (loginFormData: LoginFormData): Promise<string> => {
     try {
         const authToken = await loginUser(loginFormData)
         window.location.href = '/dashboard'
-        return authToken as string
+        return authToken
     } catch (err) {
         const errorMessage: string = err.errors[0].msg
         throw Error(errorMessage)
@@ -31,7 +32,7 @@ export const registerNewUser = createAsyncThunk('authState/registerNewUser', asy
     try {
         const authToken = await registerUser(signUpFormData)
         const defaultProfile = { defaultTeam: 0, position: 'XX' }
-        await apiCall('post', 'api/profile/createUpdate', authToken, defaultProfile)
+        await apiCall({ apiCallType: 'post', route: 'api/profile/createUpdate', token: authToken, body: defaultProfile })
         window.location.href = '/editProfile'
         return authToken as string
     } catch (err) {

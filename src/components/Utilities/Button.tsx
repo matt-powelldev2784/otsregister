@@ -48,5 +48,6 @@ const MainButton = styled.button<ButtonProps>`
     &:active {
         transition-duration: 0.1s;
         transform: translateY(1px);
+        cursor: ${props => (props.isLoading === true ? 'wait' : 'pointer')};
     }
 `

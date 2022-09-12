@@ -18,9 +18,9 @@ export const CreateGame = () => {
         e.preventDefault()
         const gameDate = createGameDate.current.value
         const gameName = createGameName.current.value
-        const formData = { gameDate, gameName }
+        const createGameData = { authToken, gameData: { gameDate, gameName } }
         try {
-            dispatch(createGame({ authToken, formData }))
+            dispatch(createGame(createGameData))
         } catch (err) {
             throw Error
         }

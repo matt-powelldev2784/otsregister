@@ -12,14 +12,18 @@ export const GameStatus = ({ gameClosed, gameId }) => {
     const { isLoading } = useSelector(state => state.dataReducer)
 
     const gameStatusHandler = () => {
-        if (gameClosed) window.confirm('If the game reopened, any manger team selections will be lost. Players will be reset to their default teams. Please confirm you are happy to proceed?')
+        if (gameClosed)
+            window.confirm(
+                'If the game reopened, any manger team selections will be lost. Players will be reset to their default teams. Please confirm you are happy to proceed?'
+            )
 
-        const body = { gameId, gameClosed: !gameClosed }
-        dispatch(setGameRegister({ authToken, body }))
+        const setGameRegisterData = { authToken, body: { gameId, gameClosed: !gameClosed } }
+        dispatch(setGameRegister(setGameRegisterData))
     }
 
     const deleteGameHandler = () => {
-        dispatch(deleteGame({ authToken, gameId }))
+        const deleteGameData = { authToken, gameId }
+        dispatch(deleteGame(deleteGameData))
     }
 
     const toggleColor = { toggleOn: 'black', toggleOff: 'green' }

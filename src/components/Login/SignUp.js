@@ -14,7 +14,7 @@ export const SignUp = props => {
     const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' })
     const { name, email, password, password2 } = formData
 
-    const signUp = async => {
+    const signUp = () => {
         try {
             dispatch(registerNewUser(formData))
         } catch (err) {
@@ -80,7 +80,7 @@ export const SignUp = props => {
                     />
                     <Button
                         text="SIGN UP"
-                        disabled={authIsLoading}
+                        isLoading={authIsLoading}
                     />
                     <Footer></Footer>
                 </SignUpForm>

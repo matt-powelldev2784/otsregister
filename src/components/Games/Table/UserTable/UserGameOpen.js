@@ -9,8 +9,8 @@ export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
     const { authToken, authUserName } = useSelector(state => state.authReducer)
 
     const playerRegHandler = () => {
-        const body = { gameId: gameId, playerAvailable: !currentPlayerAvailable }
-        dispatch(setPlayerRegister({ authToken, body }))
+        const setPlayerRegisterData = { authToken, body: { gameId: gameId, playerAvailable: !currentPlayerAvailable } }
+        dispatch(setPlayerRegister(setPlayerRegisterData))
     }
 
     const toggleColor = { toggleOn: 'green', toggleOff: 'red' }

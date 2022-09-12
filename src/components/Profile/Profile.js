@@ -12,16 +12,16 @@ export const Profile = () => {
     const dispatch = useDispatch()
     const { authToken, authErrors } = useSelector(state => state.authReducer)
     const { isLoading } = useSelector(state => state.dataReducer)
-    const { defaultTeam, position } = useSelector(state => state.dataReducer.playerProfile.playerProfile)
+    const { defaultTeam, position } = useSelector(state => state.dataReducer.playerProfile)
 
     useEffect(() => {
-        dispatch(getProfileData({ authToken }))
+        dispatch(getProfileData(authToken))
     }, [authToken, dispatch])
 
     const onSubmit = async e => {
         e.preventDefault()
-        const formData = { defaultTeam, position }
-        dispatch(updateProfileData({ authToken, formData }))
+        const updatedProfileData = { authToken, body: { defaultTeam, position } }
+        dispatch(updateProfileData(updatedProfileData))
     }
 
     const onInputChange = e => {

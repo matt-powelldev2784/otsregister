@@ -27,9 +27,3 @@ export interface AuthUser {
     admin: any
     __v: any
 }
-
-export interface AuthError {
-    name: string
-    message: string
-    stack: any
-}

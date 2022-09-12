@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
+        "target": "ES6",
+        "lib": ["es6", "es7", "dom", "dom.iterable", "esnext"],
         "baseUrl": ".",
         "outDir": "build/dist",
         "module": "esnext",
-        "target": "ES5",
-        "lib": ["es6", "es7", "dom", "dom.iterable", "esnext"],
         "sourceMap": true,
         "allowJs": false,
         "jsx": "react",
@@ -12,14 +12,14 @@
         "rootDir": "src",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
-        "noImplicitThis": true,
+        "noImplicitThis": false,
         "noImplicitAny": false, // TODO change to true
         "importHelpers": true,
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
         "allowSyntheticDefaultImports": true,
-        "noEmitOnError": true // TODO change to true
+        "noEmitOnError": false // TODO change to true
     },
     "exclude": [
         "node_modules",

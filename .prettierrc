@@ -14,7 +14,6 @@
     "tabWidth": 4,
     "trailingComma": "none",
     "useTabs": false,
-    "vueIndentScriptAndStyle": false,
     "rangeStart": 0,
     "singleAttributePerLine": true,
     "emmet.includeLanguages": { "javascript": "javascriptreact" }

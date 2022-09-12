@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AuthUser, LoginFormData, SignUpFormData } from '../../_TS_Interface/interface'
+import { AuthUser, LoginFormData, SignUpFormData } from '../redux/ts/authState_interface'
 
 const defaultError = {
     errors: [
@@ -54,7 +54,15 @@ export const getAuthUser = async (token: string) => {
     }
 }
 
-export const apiCall = async (apiCallType: string, route: string, token: string, body: any) => {
+export interface ApiOptions {
+    apiCallType: string
+    route: string
+    token: string
+    body?: any
+}
+
+export const apiCall = async (apiOptions: ApiOptions) => {
+    const { apiCallType, route, token, body } = apiOptions
     const config = { headers: { 'x-auth-token': token } }
 
     try {
