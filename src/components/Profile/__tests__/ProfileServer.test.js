@@ -10,7 +10,7 @@ import { apiCall } from '../../Utilities/apiUtil'
 
 describe('When the api call is sucessful', () => {
     it('should render the input fields from the data', async () => {
-        const { profile } = await apiCall('get', 'api/profile/currentProfile', 'dummyAuthToken')
+        const { profile } = await apiCall({ apiCallType: 'get', route: 'api/profile/currentProfile', token: 'dummyAuthToken' })
 
         expect(profile.defaultTeam).toBe('3')
         expect(profile.position).toBe('GK')
@@ -45,7 +45,7 @@ describe('When the api call is fails', () => {
             })
         )
 
-        await apiCall('get', 'api/profile/currentProfile', 'dummyAuthToken')
+        await apiCall({ apiCallType: 'get', route: 'api/profile/currentProfile', token: 'dummyAuthToken' })
 
         render(
             <Provider store={apiFailStore}>

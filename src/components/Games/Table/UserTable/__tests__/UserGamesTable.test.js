@@ -10,7 +10,7 @@ import { apiCall } from '../../../../Utilities/apiUtil'
 
 describe('When the api call is sucessful', () => {
     it('should render 4 rows in the table', async () => {
-        await apiCall('get', 'api/games/recentgames', 'dummyAuthToken')
+        await apiCall({ apiCallType: 'get', route: 'api/games/recentgames', token: 'dummyAuthToken' })
 
         render(
             <Provider store={apiSucessStore}>
@@ -25,7 +25,7 @@ describe('When the api call is sucessful', () => {
 
 describe('When the api call fails', () => {
     it('should render 4 rows in the table', async () => {
-        await apiCall('get', 'api/games/recentgames', 'dummyAuthToken')
+        await apiCall({ apiCallType: 'get', route: 'api/games/recentgames', token: 'dummyAuthToken' })
 
         render(
             <Provider store={apiFailStore}>
