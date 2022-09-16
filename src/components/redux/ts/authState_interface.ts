@@ -1,5 +1,5 @@
 export interface AuthState {
-    authToken: string | null
+    authToken: string
     authErrors: { name: string; message: string; stack: string }[] | null
     adminUser: boolean
     authUserName: string | null

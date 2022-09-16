@@ -1,15 +1,6 @@
 import axios from 'axios'
 import { AuthUser, LoginFormData, SignUpFormData } from '../redux/ts/authState_interface'
-
-const defaultError = {
-    errors: [
-        {
-            success: false,
-            status: 500,
-            msg: 'Server Error'
-        }
-    ]
-}
+import { ApiOptions } from '../redux/ts/interfaces'
 
 export const registerUser = async (signUpFormData: SignUpFormData) => {
     const config = { headers: { 'Content-Type': 'application/json' } }
@@ -54,13 +45,6 @@ export const getAuthUser = async (token: string) => {
     }
 }
 
-export interface ApiOptions {
-    apiCallType: string
-    route: string
-    token: string
-    body?: any
-}
-
 export const apiCall = async (apiOptions: ApiOptions) => {
     const { apiCallType, route, token, body } = apiOptions
     const config = { headers: { 'x-auth-token': token } }
@@ -69,27 +53,22 @@ export const apiCall = async (apiOptions: ApiOptions) => {
         let response: any
 
         switch (apiCallType) {
-            case 'post':
+            case 'POST':
                 response = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/${route}`, body, config)
                 break
-            case 'get':
+            case 'GET':
                 response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config)
                 break
-            case 'delete':
+            case 'DELETE':
                 response = await axios.delete(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config)
-
                 break
             default:
-                response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/${route}`, config)
+                console.log('Api Call Type Error')
         }
 
         const responseData = response.data
         return responseData
     } catch (err) {
-        if (err.repsonse) {
-            throw err.repsonse.data
-        } else {
-            throw defaultError
-        }
+        throw err.response.data
     }
 }

@@ -32,7 +32,7 @@ export const registerNewUser = createAsyncThunk('authState/registerNewUser', asy
     try {
         const authToken = await registerUser(signUpFormData)
         const defaultProfile = { defaultTeam: 0, position: 'XX' }
-        await apiCall({ apiCallType: 'post', route: 'api/profile/createUpdate', token: authToken, body: defaultProfile })
+        await apiCall({ apiCallType: 'POST', route: 'api/profile/createUpdate', token: authToken, body: defaultProfile })
         window.location.href = '/editProfile'
         return authToken as string
     } catch (err) {
@@ -50,14 +50,14 @@ const initialState: AuthState = {
     authIsLoading: false
 } as AuthState
 
-export const authSlice: any = createSlice({
+export const authSlice = createSlice({
     name: 'authState',
     initialState,
     reducers: {
         deleteAuthToken: state => {
             localStorage.clear()
             sessionStorage.clear()
-            state.authToken = null
+            state.authToken = ''
             state.authUserName = null
             state.authUserId = null
         },
@@ -71,7 +71,7 @@ export const authSlice: any = createSlice({
             //---------------------------------------------------------------------
             .addCase(login.pending, state => {
                 state.authIsLoading = true
-                state.authToken = null
+                state.authToken = ''
                 state.authErrors = null
             })
             .addCase(login.fulfilled, (state, { payload }) => {
@@ -82,7 +82,7 @@ export const authSlice: any = createSlice({
                 state.authErrors = null
             })
             .addCase(login.rejected, (state, { error }: any) => {
-                state.authToken = null
+                state.authToken = ''
                 state.authIsLoading = false
                 state.authErrors = [error]
             })
@@ -116,7 +116,7 @@ export const authSlice: any = createSlice({
             //---------------------------------------------------------------------
             .addCase(registerNewUser.pending, state => {
                 state.authIsLoading = true
-                state.authToken = null
+                state.authToken = ''
                 state.authErrors = null
             })
             .addCase(registerNewUser.fulfilled, (state, { payload }) => {
@@ -127,7 +127,7 @@ export const authSlice: any = createSlice({
                 state.authErrors = null
             })
             .addCase(registerNewUser.rejected, (state, { error }: any) => {
-                state.authToken = null
+                state.authToken = ''
                 state.authIsLoading = false
                 state.authErrors = [error]
             })

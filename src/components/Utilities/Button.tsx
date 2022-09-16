@@ -2,8 +2,8 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
 interface ButtonProps {
-    onClick?: () => void
-    isLoading: boolean
+    onClick?: () => any
+    isLoading?: boolean
     text: string
 }
 

@@ -6,8 +6,6 @@ import playerProfile from '../mocks/mockProfileData.json'
 
 const { profile } = playerProfile
 
-console.log('profile', profile)
-
 export const apiSucessStore = configureStore({
     reducer: { globalReducer: globalReducer, authReducer: authReducer, dataReducer: dataReducer },
     preloadedState: {

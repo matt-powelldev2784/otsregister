@@ -12,14 +12,14 @@
         "rootDir": "src",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
-        "noImplicitThis": false,
+        "noImplicitThis": true,
         "noImplicitAny": false, // TODO change to true
         "importHelpers": true,
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
         "allowSyntheticDefaultImports": true,
-        "noEmitOnError": false // TODO change to true
+        "noEmitOnError": true // TODO change to true
     },
     "exclude": [
         "node_modules",
