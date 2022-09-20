@@ -6,7 +6,6 @@ import { Errors } from '../../Utilities/Errors'
 import { Button } from '../../Utilities/Button'
 import { FormTitle } from '../../Utilities/FormTitle'
 import { FormField } from 'src/components/Utilities/FormField'
-import { CreateGameRequest } from 'src/components/redux/ts/dataState_interface'
 
 export const CreateGame: FC = () => {
     const dispatch = useAppDispatch()
@@ -14,14 +13,14 @@ export const CreateGame: FC = () => {
     const { authErrors } = useAppSelector(state => state.dataReducer.createGameData)
     const [newGame, setNewGame] = useState({ gameDate: '', gameName: '' })
 
-    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const inputName = e.target.name
         setNewGame({ ...newGame, [inputName]: e.target.value })
     }
 
-    const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    const onSubmit = (e: ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault()
-        const createGameRequest: CreateGameRequest = { authToken, gameData: newGame }
+        const createGameRequest = { authToken, gameData: newGame }
         dispatch(createGame(createGameRequest))
     }
 

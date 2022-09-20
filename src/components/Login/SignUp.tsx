@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC, ChangeEvent, Fragment, useState } from 'react'
+import { useAppSelector, useAppDispatch } from '../redux/reduxHooks'
 import { setAuthErrors, registerNewUser } from '../redux/authState'
 import styled from 'styled-components'
 import { FormField } from '../Utilities/FormField'
@@ -7,12 +7,11 @@ import { Button } from '../Utilities/Button'
 import { FormTitle } from '../Utilities/FormTitle'
 import { Errors } from '../Utilities/Errors'
 
-export const SignUp = props => {
-    const dispatch = useDispatch()
-    const { authIsLoading, authErrors } = useSelector(state => state.authReducer)
-
+export const SignUp: FC = () => {
+    const dispatch = useAppDispatch()
+    const { authIsLoading, authErrors } = useAppSelector(state => state.authReducer)
     const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '' })
-    const { name, email, password, password2 } = formData
+    const { password, password2 } = formData
 
     const signUp = () => {
         try {
@@ -22,7 +21,7 @@ export const SignUp = props => {
         }
     }
 
-    const onFormSubmit = e => {
+    const onFormSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (password !== password2) {
             const error = [{ name: 'Error', message: 'Passwords do not match', stack: 'CUSTOM_ERROR' }]
@@ -32,7 +31,7 @@ export const SignUp = props => {
         signUp()
     }
 
-    const onInputChange = e => {
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === 'email') {
             const emailLowerCase = e.target.value.toLowerCase()
             setFormData({ ...formData, [e.target.name]: emailLowerCase })
@@ -44,7 +43,7 @@ export const SignUp = props => {
     return (
         <Fragment>
             <Container>
-                <SignUpForm onSubmit={e => onFormSubmit(e)}>
+                <SignUpForm onSubmit={onFormSubmit}>
                     <FormTitle text="CREATE NEW ACCOUNT" />
                     {authErrors && <Errors errors={authErrors} />}
                     <FormField
@@ -52,14 +51,12 @@ export const SignUp = props => {
                         placeholder="Name"
                         label="FIRST NAME AND SURNAME"
                         name="name"
-                        value={name}
                         onChange={onInputChange}
                     />
                     <FormField
                         placeholder="Email"
                         label="EMAIL"
                         name="email"
-                        value={email}
                         onChange={onInputChange}
                     />
                     <FormField
@@ -67,7 +64,6 @@ export const SignUp = props => {
                         placeholder="Password"
                         label="PASSWORD"
                         name="password"
-                        value={password}
                         onChange={onInputChange}
                     />
                     <FormField
@@ -75,7 +71,6 @@ export const SignUp = props => {
                         placeholder="Confirm Password"
                         label="CONFIRM PASSWORD"
                         name="password2"
-                        value={password2}
                         onChange={onInputChange}
                     />
                     <Button

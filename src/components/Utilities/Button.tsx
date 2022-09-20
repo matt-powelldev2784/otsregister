@@ -1,19 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { FC, Fragment } from 'react'
 import styled from 'styled-components'
 
 interface ButtonProps {
     onClick?: () => any
     isLoading?: boolean
+    disabled?: boolean
     text: string
 }
 
-export const Button: React.FC<ButtonProps> = ({ onClick, isLoading, text }) => {
+export const Button: FC<ButtonProps> = ({ onClick, isLoading, disabled, text }) => {
     return (
         <Fragment>
             <MainButton
                 onClick={onClick}
                 isLoading={isLoading}
-                disabled={isLoading}
+                disabled={disabled}
                 text={text}
             >
                 {text}

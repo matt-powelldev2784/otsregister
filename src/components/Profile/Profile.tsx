@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC, ChangeEvent, Fragment, useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../redux/reduxHooks'
 import styled from 'styled-components'
 import { getProfileData, updateProfileData, setPlayerProfile } from '../redux/dataState'
 import { Button } from '../Utilities/Button'
@@ -8,25 +8,25 @@ import { FormSelect } from '../Utilities/FormSelect'
 import { Errors } from '../Utilities/Errors'
 import ProifleImagePlaceholder from '../../img/account_circle_white_24dp.svg'
 
-export const Profile = () => {
-    const dispatch = useDispatch()
-    const { authToken, authErrors } = useSelector(state => state.authReducer)
-    const { isLoading } = useSelector(state => state.dataReducer)
-    const { defaultTeam, position } = useSelector(state => state.dataReducer.playerProfile)
+export const Profile: FC = () => {
+    const dispatch = useAppDispatch()
+    const { authToken, authErrors } = useAppSelector(state => state.authReducer)
+    const { isLoading, playerProfile } = useAppSelector(state => state.dataReducer)
+    const { defaultTeam, position } = useAppSelector(state => state.dataReducer.playerProfile)
 
     useEffect(() => {
         dispatch(getProfileData(authToken))
     }, [authToken, dispatch])
 
-    const onSubmit = async e => {
+    const onSubmit = (e: ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault()
         const updatedProfileData = { authToken, body: { defaultTeam, position } }
         dispatch(updateProfileData(updatedProfileData))
     }
 
-    const onInputChange = e => {
+    const onInputChange = (e: ChangeEvent<HTMLSelectElement>): void => {
         const inputName = e.target.name
-        dispatch(setPlayerProfile({ [inputName]: e.target.value }))
+        dispatch(setPlayerProfile({ ...playerProfile, [inputName]: e.target.value }))
     }
 
     const teamOptions = [
@@ -54,7 +54,7 @@ export const Profile = () => {
     return (
         <Fragment>
             <Container>
-                <UpdateProfileForm onSubmit={e => onSubmit(e)}>
+                <UpdateProfileForm onSubmit={onSubmit}>
                     <FormTitle text="PROFILE" />
                     {authErrors && <Errors errors={authErrors} />}
                     <ProfileImage src={ProifleImagePlaceholder} />
@@ -74,7 +74,7 @@ export const Profile = () => {
                     />
                     <Button
                         text="UPDATE PROFILE"
-                        disabled={isLoading}
+                        isLoading={isLoading}
                     />
                     <Footer>
                         <Link href={'/dashboard'}>Click here to register for Training or Games</Link>

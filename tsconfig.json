@@ -13,7 +13,7 @@
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "noImplicitAny": false, // TODO change to true
+        "noImplicitAny": true, // TODO change to true
         "importHelpers": true,
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
@@ -31,5 +31,6 @@
         "src/setupTests.ts",
         "babel.config.js",
         "coverage"
-    ]
+    ],
+    "include": ["src/components", "src/custom.d.ts"]
 }

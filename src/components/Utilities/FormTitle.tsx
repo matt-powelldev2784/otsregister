@@ -1,13 +1,17 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import React, { FC, Fragment } from 'react'
+import styled from 'styled-components'
 
-export const FormTitle = ({ text }) => {
+interface FormTitleProps {
+    text: string
+}
+
+export const FormTitle: FC<FormTitleProps> = ({ text }) => {
     return (
         <Fragment>
             <TitleText>{text}</TitleText>
         </Fragment>
-    );
-};
+    )
+}
 
 const TitleText = styled.h1`
     margin: -2px;
@@ -25,4 +29,4 @@ const TitleText = styled.h1`
         font-size: 1.5rem;
         margin: 0;
     }
-`;
+`

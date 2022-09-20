@@ -1,11 +1,11 @@
 import { AuthError } from './interfaces'
 
 export interface DataState {
-    isLoading: Boolean | null
+    isLoading: boolean
     dataErrors: [AuthError] | null
     authUserName: string | null
     authUserId: string | null
-    playerProfile: {}
+    playerProfile: PlayerProfile
     createGameData: { authErrors: [AuthError] | null }
     gamesData: { gamesList: Game[] | null; authErrors: [AuthError] | null }
     planTeamsData: {

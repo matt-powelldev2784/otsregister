@@ -11,9 +11,22 @@ interface FormFieldProps {
     onChange?: React.ChangeEventHandler<HTMLInputElement> & Function
     error?: boolean
     aria?: any
+    autocomplete?: 'on' | 'off'
+    required?: boolean
 }
 
-export const FormField: React.FC<FormFieldProps> = ({ label, type, placeholder, name, value, onChange, error, aria }) => {
+export const FormField: React.FC<FormFieldProps> = ({
+    label,
+    type,
+    placeholder,
+    name,
+    value,
+    onChange,
+    error,
+    autocomplete,
+    required,
+    aria
+}) => {
     const labelUppercase = label?.toUpperCase()
 
     return (
@@ -28,6 +41,8 @@ export const FormField: React.FC<FormFieldProps> = ({ label, type, placeholder, 
                 value={value}
                 id={name}
                 error={error}
+                autocomplete={autocomplete}
+                required={required}
             />
         </Fragment>
     )

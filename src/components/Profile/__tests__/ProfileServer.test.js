@@ -53,7 +53,7 @@ describe('When the api call is fails', () => {
             </Provider>
         )
 
-        const errorMessageElement = screen.getByRole('heading', { name: /error/i })
+        const errorMessageElement = screen.getByText(/error/i)
         expect(errorMessageElement.innerHTML).toBe('Mock Error Message')
     })
 })

@@ -1,13 +1,17 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import React, { FC, Fragment } from 'react'
+import styled from 'styled-components'
 
-export const Error = ({ errorMessage }) => {
+interface ErrorProps {
+    errorMessage: string
+}
+
+export const Error: FC<ErrorProps> = ({ errorMessage }) => {
     return (
         <Fragment>
-            <ErrorMessage name={'Error Message'}>{errorMessage}</ErrorMessage>
+            <ErrorMessage data-testid="error">{errorMessage}</ErrorMessage>
         </Fragment>
-    );
-};
+    )
+}
 
 const ErrorMessage = styled.h1`
     margin: 0.7rem auto 0.7rem auto;
@@ -23,4 +27,4 @@ const ErrorMessage = styled.h1`
         font-size: 1rem;
         font-weight: 500;
     }
-`;
+`

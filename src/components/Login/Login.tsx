@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC, Fragment, useState, ChangeEvent } from 'react'
+import { useAppSelector, useAppDispatch } from '../redux/reduxHooks'
 import { login } from '../redux/authState'
 import styled from 'styled-components'
 import { FormField } from '../Utilities/FormField'
@@ -7,18 +7,17 @@ import { Button } from '../Utilities/Button'
 import { FormTitle } from '../Utilities/FormTitle'
 import { Errors } from '../Utilities/Errors'
 
-export const Login = () => {
-    const dispatch = useDispatch()
-    const { authIsLoading, authErrors } = useSelector(state => state.authReducer)
+export const Login: FC = () => {
+    const dispatch = useAppDispatch()
+    const { authIsLoading, authErrors } = useAppSelector(state => state.authReducer)
     const [formData, setFormData] = useState({ email: '', password: '' })
-    const { email, password } = formData
 
-    const onInputChange = e => {
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputName = e.target.name
         setFormData({ ...formData, [inputName]: e.target.value })
     }
 
-    const loginUser = async e => {
+    const loginUser = async (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(login(formData))
     }
@@ -26,7 +25,7 @@ export const Login = () => {
     return (
         <Fragment>
             <Container>
-                <LoginForm onSubmit={e => loginUser(e)}>
+                <LoginForm onSubmit={loginUser}>
                     <FormTitle text="LOGIN" />
                     {authErrors && <Errors errors={authErrors} />}
                     <FormField
@@ -34,21 +33,14 @@ export const Login = () => {
                         placeholder="Email"
                         label="EMAIL"
                         name="email"
-                        value={email}
                         onChange={onInputChange}
-                        aria="email"
-                        required
-                        autocomplete
                     />
                     <FormField
                         type="password"
                         placeholder="Password"
                         label="PASSWORD"
                         name="password"
-                        value={password}
                         onChange={onInputChange}
-                        minLength="6"
-                        required
                     />
                     <Button
                         text="SIGN IN"

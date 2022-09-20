@@ -18,7 +18,9 @@ export const apiFailStore = configureStore({
         authReducer: {
             authErrors: [
                 {
-                    msg: 'Mock Error Message'
+                    name: 'Mock Name',
+                    message: 'Mock Error Message',
+                    stack: 'Mock Stack'
                 }
             ]
         }

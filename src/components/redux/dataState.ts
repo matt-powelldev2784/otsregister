@@ -141,8 +141,7 @@ export const setPlayerRegister = createAsyncThunk(
 
 export const getProfileData = createAsyncThunk('dataState/getProfileData', async (authToken: string): Promise<PlayerProfile> => {
     try {
-        const profileData = await apiCall({ apiCallType: 'GET', route: 'api/profile/currentProfile', token: authToken })
-        const { profile } = profileData
+        const { profile } = await apiCall({ apiCallType: 'GET', route: 'api/profile/currentProfile', token: authToken })
         return profile
     } catch (err) {
         console.log('err.msg', err)
@@ -156,7 +155,7 @@ export const updateProfileData = createAsyncThunk(
     async (updatedProfileData: UpdatedProfileData): Promise<PlayerProfile> => {
         try {
             const { authToken, body } = updatedProfileData
-            const updatedProfile = await apiCall({ apiCallType: 'GET', route: 'api/profile/createUpdate', token: authToken, body })
+            const { updatedProfile } = await apiCall({ apiCallType: 'POST', route: 'api/profile/createUpdate', token: authToken, body })
             window.location.href = '/dashboard'
             return updatedProfile
         } catch (err) {
@@ -172,7 +171,18 @@ const initialState: DataState = {
     dataErrors: null,
     authUserName: localStorage.getItem('authUserName') || null,
     authUserId: localStorage.getItem('authUserId') || null,
-    playerProfile: {},
+    playerProfile: {
+        _id: '',
+        defaultTeam: '',
+        position: '',
+        date: '',
+        __v: '',
+        user: {
+            _id: '',
+            name: '',
+            email: ''
+        }
+    },
     createGameData: { authErrors: null },
     gamesData: { gamesList: null, authErrors: null },
     planTeamsData: {
@@ -213,7 +223,6 @@ export const dataSlice = createSlice({
             const { playerId } = payload
             const newTeam = payload.newTeam.toString()
             state.planTeamsData.unsortedFinalTeamData.map((player: PlayerProfile): PlayerProfile => {
-                console.log('player', player)
                 if (player.user._id === playerId) {
                     player.defaultTeam = newTeam
                 }
@@ -352,13 +361,16 @@ export const dataSlice = createSlice({
             })
             //---------------------------------------------------------------------
             .addCase(updateProfileData.pending, state => {
+                state.isLoading = true
                 state.playerProfile = { ...state.playerProfile }
                 state.dataErrors = null
             })
             .addCase(updateProfileData.fulfilled, (state, { payload }) => {
-                state.playerProfile = { playerProfile: payload }
+                state.isLoading = false
+                state.playerProfile = payload
             })
             .addCase(updateProfileData.rejected, (state, { error }: any) => {
+                state.isLoading = false
                 state.playerProfile = { ...state.playerProfile }
                 state.dataErrors = [error]
             })
