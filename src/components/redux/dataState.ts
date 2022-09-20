@@ -155,7 +155,7 @@ export const updateProfileData = createAsyncThunk(
     async (updatedProfileData: UpdatedProfileData): Promise<PlayerProfile> => {
         try {
             const { authToken, body } = updatedProfileData
-            const { updatedProfile } = await apiCall({ apiCallType: 'POST', route: 'api/profile/createUpdate', token: authToken, body })
+            const { updatedProfile } = await apiCall({ apiCallType: 'POST', route: 'api/profile/updateProfile', token: authToken, body })
             window.location.href = '/dashboard'
             return updatedProfile
         } catch (err) {
