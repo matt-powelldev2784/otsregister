@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getGamesData } from '../../../redux/dataState'
 import styled from 'styled-components'
@@ -9,7 +9,7 @@ export const UserGamesTable = () => {
     const dispatch = useDispatch()
     const { authToken } = useSelector(state => state.authReducer)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (authToken) {
             dispatch(getGamesData(authToken))
         }
