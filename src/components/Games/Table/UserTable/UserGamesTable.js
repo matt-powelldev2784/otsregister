@@ -7,7 +7,7 @@ import { UserTableBody } from './UserTableBody'
 
 export const UserGamesTable = () => {
     const dispatch = useDispatch()
-    const { authToken, authUserId } = useSelector(state => state.authReducer)
+    const { authToken } = useSelector(state => state.authReducer)
 
     useLayoutEffect(() => {
         if (authToken) {
