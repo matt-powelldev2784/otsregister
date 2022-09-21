@@ -32,7 +32,7 @@ export const UserTableBody = () => {
                     gameDate={gameDate}
                     gameName={gameName}
                     registeredPlayers={registeredPlayers}
-                    currentPlayerAvailable={currentPlayerAvailable || false}
+                    currentPlayerAvailable={currentPlayerAvailable}
                 />
             )
         })
