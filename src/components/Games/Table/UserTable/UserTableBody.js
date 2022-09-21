@@ -6,8 +6,7 @@ import { formatDate } from '../../../Utilities/formatDate'
 import { UserTableRow } from './UserTableRow'
 
 export const UserTableBody = () => {
-    const { gamesData } = useSelector(state => state.dataReducer)
-    const { gamesList } = gamesData
+    const { gamesList } = useSelector(state => state.dataReducer.gamesData)
 
     let UserTableBody = (
         <TableRow>
