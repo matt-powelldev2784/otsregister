@@ -1,20 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { apiCall } from '../Utilities/apiUtil'
 import { formatDate } from '../Utilities/formatDate'
-import {
-    CreateGameRequest,
-    DataState,
-    PlanTeamsDataRequest,
-    SaveFinalTeamsData,
-    SetGameRegisterData,
-    DeleteGameData,
-    SetPlayerRegisterData,
-    UpdatedProfileData,
-    Game,
-    CreatedGame,
-    PlayerProfile,
-    FinalTeam
-} from './ts/dataState_interface'
+import { CreateGameRequest, DataState, PlanTeamsDataRequest, SaveFinalTeamsData, SetGameRegisterData, DeleteGameData, SetPlayerRegisterData, UpdatedProfileData, Game, CreatedGame, PlayerProfile, FinalTeam } from './ts/dataState_interface'
 
 const setGamesDataWithCurrentUserAvailability = (gamesData: Game[], authUserId: string | null): Game[] => {
     const updatedGames = gamesData.map(game => {
@@ -28,6 +15,8 @@ const setGamesDataWithCurrentUserAvailability = (gamesData: Game[], authUserId: 
         const updatedGame = { ...game, currentPlayerAvailable: currentPlayerAvailable }
         return updatedGame
     })
+
+    console.log('updatedGames', updatedGames)
     return updatedGames
 }
 
@@ -56,57 +45,48 @@ export const createGame = createAsyncThunk('dataState/createGame', async (create
     }
 })
 
-export const getPlanTeamsData = createAsyncThunk(
-    'dataState/getPlanTeamData',
-    async (planTeamsDataRequest: PlanTeamsDataRequest): Promise<Game> => {
-        const { authToken, gameId } = planTeamsDataRequest
-        try {
-            const game = await apiCall({
-                apiCallType: 'GET',
-                route: `api/games/planTeamData/${gameId}`,
-                token: authToken,
-                body: { gameId }
-            })
-            const { gameDetails } = game
-            return gameDetails
-        } catch (err) {
-            console.log('err.msg', err)
-            const errorMessage = err.errors[0].msg
-            throw Error(errorMessage)
-        }
+export const getPlanTeamsData = createAsyncThunk('dataState/getPlanTeamData', async (planTeamsDataRequest: PlanTeamsDataRequest): Promise<Game> => {
+    const { authToken, gameId } = planTeamsDataRequest
+    try {
+        const game = await apiCall({
+            apiCallType: 'GET',
+            route: `api/games/planTeamData/${gameId}`,
+            token: authToken,
+            body: { gameId }
+        })
+        const { gameDetails } = game
+        return gameDetails
+    } catch (err) {
+        console.log('err.msg', err)
+        const errorMessage = err.errors[0].msg
+        throw Error(errorMessage)
     }
-)
+})
 
-export const saveFinalTeams = createAsyncThunk(
-    'dataState/saveFinalTeams',
-    async (saveFinalTeamsData: SaveFinalTeamsData): Promise<void> => {
-        try {
-            const { authToken, body } = saveFinalTeamsData
-            await apiCall({ apiCallType: 'POST', route: 'api/games/updatefinalteam', token: authToken, body })
-        } catch (err) {
-            console.log('err.msg', err)
-            const errorMessage = err.errors[0].msg
-            throw Error(errorMessage)
-        }
+export const saveFinalTeams = createAsyncThunk('dataState/saveFinalTeams', async (saveFinalTeamsData: SaveFinalTeamsData): Promise<void> => {
+    try {
+        const { authToken, body } = saveFinalTeamsData
+        await apiCall({ apiCallType: 'POST', route: 'api/games/updatefinalteam', token: authToken, body })
+    } catch (err) {
+        console.log('err.msg', err)
+        const errorMessage = err.errors[0].msg
+        throw Error(errorMessage)
     }
-)
+})
 
-export const setGameRegister = createAsyncThunk(
-    'dataState/setGameRegister',
-    async (setGameRegisterData: SetGameRegisterData): Promise<Game[]> => {
-        try {
-            const { authToken, body } = setGameRegisterData
-            await apiCall({ apiCallType: 'POST', route: 'api/games/gameregister', token: authToken, body })
-            const gamesData = await apiCall({ apiCallType: 'GET', route: 'api/games/recentgames', token: authToken })
-            const { recentGames } = gamesData
-            return recentGames
-        } catch (err) {
-            console.log('err.msg', err)
-            const errorMessage = err.errors[0].msg
-            throw Error(errorMessage)
-        }
+export const setGameRegister = createAsyncThunk('dataState/setGameRegister', async (setGameRegisterData: SetGameRegisterData): Promise<Game[]> => {
+    try {
+        const { authToken, body } = setGameRegisterData
+        await apiCall({ apiCallType: 'POST', route: 'api/games/gameregister', token: authToken, body })
+        const gamesData = await apiCall({ apiCallType: 'GET', route: 'api/games/recentgames', token: authToken })
+        const { recentGames } = gamesData
+        return recentGames
+    } catch (err) {
+        console.log('err.msg', err)
+        const errorMessage = err.errors[0].msg
+        throw Error(errorMessage)
     }
-)
+})
 
 export const deleteGame = createAsyncThunk('dataState/deleteGame', async (deleteGameData: DeleteGameData): Promise<Game[]> => {
     try {
@@ -122,22 +102,19 @@ export const deleteGame = createAsyncThunk('dataState/deleteGame', async (delete
     }
 })
 
-export const setPlayerRegister = createAsyncThunk(
-    'dataState/setPlayerRegister',
-    async (setPlayerRegisterData: SetPlayerRegisterData): Promise<Game[]> => {
-        try {
-            const { authToken, body } = setPlayerRegisterData
-            await apiCall({ apiCallType: 'POST', route: 'api/player/playerRegister', token: authToken, body })
-            const gamesData = await apiCall({ apiCallType: 'GET', route: 'api/games/recentgames', token: authToken })
-            const { recentGames } = gamesData
-            return recentGames
-        } catch (err) {
-            console.log('err.msg', err)
-            const errorMessage = err.errors[0].msg
-            throw Error(errorMessage)
-        }
+export const setPlayerRegister = createAsyncThunk('dataState/setPlayerRegister', async (setPlayerRegisterData: SetPlayerRegisterData): Promise<Game[]> => {
+    try {
+        const { authToken, body } = setPlayerRegisterData
+        await apiCall({ apiCallType: 'POST', route: 'api/player/playerRegister', token: authToken, body })
+        const gamesData = await apiCall({ apiCallType: 'GET', route: 'api/games/recentgames', token: authToken })
+        const { recentGames } = gamesData
+        return recentGames
+    } catch (err) {
+        console.log('err.msg', err)
+        const errorMessage = err.errors[0].msg
+        throw Error(errorMessage)
     }
-)
+})
 
 export const getProfileData = createAsyncThunk('dataState/getProfileData', async (authToken: string): Promise<PlayerProfile> => {
     try {
@@ -150,21 +127,18 @@ export const getProfileData = createAsyncThunk('dataState/getProfileData', async
     }
 })
 
-export const updateProfileData = createAsyncThunk(
-    'dataState/updateProfileData',
-    async (updatedProfileData: UpdatedProfileData): Promise<PlayerProfile> => {
-        try {
-            const { authToken, body } = updatedProfileData
-            const { updatedProfile } = await apiCall({ apiCallType: 'POST', route: 'api/profile/updateProfile', token: authToken, body })
-            window.location.href = '/dashboard'
-            return updatedProfile
-        } catch (err) {
-            console.log('err.msg', err)
-            const errorMessage = err.errors[0].msg
-            throw Error(errorMessage)
-        }
+export const updateProfileData = createAsyncThunk('dataState/updateProfileData', async (updatedProfileData: UpdatedProfileData): Promise<PlayerProfile> => {
+    try {
+        const { authToken, body } = updatedProfileData
+        const { updatedProfile } = await apiCall({ apiCallType: 'POST', route: 'api/profile/updateProfile', token: authToken, body })
+        window.location.href = '/dashboard'
+        return updatedProfile
+    } catch (err) {
+        console.log('err.msg', err)
+        const errorMessage = err.errors[0].msg
+        throw Error(errorMessage)
     }
-)
+})
 
 const initialState: DataState = {
     isLoading: false,
@@ -377,14 +351,6 @@ export const dataSlice = createSlice({
     }
 })
 
-export const {
-    setPlanGamesId,
-    setGamesNotClosedError,
-    deletePlanTeamsGameId,
-    setSortedFinalTeamData,
-    movePlayerToDifferentTeam,
-    deleteAuthData,
-    setPlayerProfile
-} = dataSlice.actions
+export const { setPlanGamesId, setGamesNotClosedError, deletePlanTeamsGameId, setSortedFinalTeamData, movePlayerToDifferentTeam, deleteAuthData, setPlayerProfile } = dataSlice.actions
 
 export const dataReducer = dataSlice.reducer
