@@ -1,29 +1,42 @@
-import React from 'react';
-import { UserGameOpen } from './UserGameOpen';
-import { UserGameClosed } from './UserGameClosed';
-import styled from 'styled-components';
+import React from 'react'
+import { UserGameOpen } from './UserGameOpen'
+import { UserGameClosed } from './UserGameClosed'
+import styled from 'styled-components'
 
 export const UserTableRow = ({ gameId, gameDate, gameName, registeredPlayers, gameClosed, currentPlayerAvailable }) => {
-    const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open';
+    const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open'
 
     return (
         <TableRow>
             <TableCell>{gameDate}</TableCell>
+
             <TableCell>{gameName}</TableCell>
+
             <TableCell>
                 <Div> {gameClosedText}</Div>
                 <Div>{registeredPlayers} Available Players</Div>
             </TableCell>
+
             <TableCell>
                 <Flexbox>
-                    {!gameClosed && <UserGameOpen gameId={gameId} currentPlayerAvailable={currentPlayerAvailable} />}
+                    {!gameClosed && (
+                        <UserGameOpen
+                            gameId={gameId}
+                            currentPlayerAvailable={currentPlayerAvailable}
+                        />
+                    )}
 
-                    {gameClosed && <UserGameClosed gameId={gameId} currentPlayerAvailable={currentPlayerAvailable} />}
+                    {gameClosed && (
+                        <UserGameClosed
+                            gameId={gameId}
+                            currentPlayerAvailable={currentPlayerAvailable}
+                        />
+                    )}
                 </Flexbox>
             </TableCell>
         </TableRow>
-    );
-};
+    )
+}
 
 const TableRow = styled.tr`
     height: 3rem;
@@ -38,7 +51,7 @@ const TableRow = styled.tr`
         background: ${props => props.color || '#003a68'};
         color: white;
     }
-`;
+`
 
 const TableCell = styled.td`
     padding: 0.4rem 0.5rem 0.4rem 0.5rem;
@@ -48,7 +61,7 @@ const TableCell = styled.td`
     @media (max-device-width: 440px) {
         font-size: 1rem;
     }
-`;
+`
 
 const Flexbox = styled.div`
     display: flex;
@@ -61,8 +74,8 @@ const Flexbox = styled.div`
     @media (max-device-width: 440px) {
         flex-direction: column;
     }
-`;
+`
 
 const Div = styled.div`
     padding: 0.25rem;
-`;
+`
