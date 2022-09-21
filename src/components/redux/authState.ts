@@ -18,23 +18,23 @@ export const login = createAsyncThunk('authState/login', async (loginFormData: L
     }
 })
 
-export const getAuhtorisedUser = createAsyncThunk('authState/getAuthorisedUser', async (authToken: string) => {
+export const getAuhtorisedUser = createAsyncThunk('authState/getAuthorisedUser', async (authToken: string): Promise<AuthUser> => {
     try {
         const authUser = await getAuthUser(authToken)
-        return authUser as AuthUser
+        return authUser
     } catch (err) {
         const errorMessage = err.errors[0].msg
         throw Error(errorMessage)
     }
 })
 
-export const registerNewUser = createAsyncThunk('authState/registerNewUser', async (signUpFormData: SignUpFormData) => {
+export const registerNewUser = createAsyncThunk('authState/registerNewUser', async (signUpFormData: SignUpFormData): Promise<string> => {
     try {
         const authToken = await registerUser(signUpFormData)
-        const defaultProfile = { defaultTeam: 0, position: 'XX' }
-        await apiCall({ apiCallType: 'POST', route: 'api/profile/createUpdate', token: authToken, body: defaultProfile })
+        const body = { defaultTeam: '0', position: 'XX' }
+        await apiCall({ apiCallType: 'POST', route: 'api/profile/newProfile', token: authToken, body })
         window.location.href = '/editProfile'
-        return authToken as string
+        return authToken
     } catch (err) {
         const errorMessage = err.errors[0].msg
         throw Error(errorMessage)
