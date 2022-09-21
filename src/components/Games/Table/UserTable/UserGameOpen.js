@@ -7,6 +7,8 @@ import { ToggleButton } from '../../Utilites/ToggleButton'
 export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
     const dispatch = useDispatch()
     const { authToken, authUserName } = useSelector(state => state.authReducer)
+    const reduxData = useSelector(state => state.dataReducer)
+    console.log('reduxData', reduxData)
 
     const playerRegHandler = () => {
         const setPlayerRegisterData = { authToken, body: { gameId: gameId, playerAvailable: !currentPlayerAvailable } }
