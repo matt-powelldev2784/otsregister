@@ -11,12 +11,8 @@ export const UserGamesTable = () => {
     const { authToken } = useSelector(state => state.authReducer)
 
     useEffect(() => {
-        if (authToken) {
-            console.log('dispatch before')
-            dispatch(getAuhtorisedUser(authToken))
-            dispatch(getGamesData(authToken))
-            console.log('dispatch after')
-        }
+        dispatch(getAuhtorisedUser(authToken))
+        dispatch(getGamesData(authToken))
     }, [authToken, dispatch])
 
     const tableHeadTitles = { cell1: 'Game Date', cell2: 'Game Name', cell3: 'Register Status', cell4: 'Player Availability' }

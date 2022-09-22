@@ -8,20 +8,15 @@ const setGamesDataWithCurrentUserAvailability = (gamesData: Game[], authUserId: 
         let currentPlayerAvailable: boolean = false
 
         game.playersAvailable.forEach(player => {
-            console.log('player.user._id', player.user._id)
-            console.log('authUserId', authUserId)
             if (player.user._id === authUserId) {
                 currentPlayerAvailable = true
-                console.log('currentPlayerAvailable inside forEach', currentPlayerAvailable)
             }
         })
 
-        console.log('currentPlayerAvailable outside ForEach', currentPlayerAvailable)
         const updatedGame = { ...game, currentPlayerAvailable: currentPlayerAvailable }
         return updatedGame
     })
 
-    console.log('updatedGames', updatedGames)
     return updatedGames
 }
 
@@ -228,7 +223,6 @@ export const dataSlice = createSlice({
 
                 const gamesData = action.payload
                 const updatedGamesList = setGamesDataWithCurrentUserAvailability(gamesData, state.authUserId)
-                console.log('updatedGamesList', updatedGamesList)
 
                 state.gamesData = {
                     ...state.gamesData,
