@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAuhtorisedUser, getGamesData } from '../../../redux/dataState'
+import { getGamesData } from '../../../redux/dataState'
+import { getAuhtorisedUser } from '../../../redux/authState'
 import styled from 'styled-components'
 import { GamesTableHead } from '../GamesTableHead/GamesTableHead'
 import { UserTableBody } from './UserTableBody'
