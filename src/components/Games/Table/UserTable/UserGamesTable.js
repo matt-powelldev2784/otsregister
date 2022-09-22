@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getGamesData } from '../../../redux/dataState'
+import { getAuhtorisedUser, getGamesData } from '../../../redux/dataState'
 import styled from 'styled-components'
 import { GamesTableHead } from '../GamesTableHead/GamesTableHead'
 import { UserTableBody } from './UserTableBody'
@@ -12,6 +12,7 @@ export const UserGamesTable = () => {
     useEffect(() => {
         if (authToken) {
             console.log('dispatch before')
+            dispatch(getAuhtorisedUser(authToken))
             dispatch(getGamesData(authToken))
             console.log('dispatch after')
         }
