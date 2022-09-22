@@ -6,6 +6,7 @@ import { CreateGameRequest, DataState, PlanTeamsDataRequest, SaveFinalTeamsData,
 const setGamesDataWithCurrentUserAvailability = (gamesData: Game[], authUserId: string | null): Game[] => {
     const updatedGames = gamesData.map(game => {
         let currentPlayerAvailable: boolean = false
+
         game.playersAvailable.forEach(player => {
             if (player.user._id === authUserId) {
                 currentPlayerAvailable = true
@@ -223,6 +224,7 @@ export const dataSlice = createSlice({
 
                 const gamesData = action.payload
                 const updatedGamesList = setGamesDataWithCurrentUserAvailability(gamesData, state.authUserId)
+                console.log('updatedGamesList', updatedGamesList)
 
                 state.gamesData = {
                     ...state.gamesData,

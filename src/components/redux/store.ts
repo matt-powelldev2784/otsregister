@@ -1,5 +1,3 @@
-//ts-nocheck
-
 import { configureStore } from '@reduxjs/toolkit'
 import { globalReducer } from './globalState'
 import { authReducer } from './authState'

@@ -11,7 +11,9 @@ export const UserGamesTable = () => {
 
     useEffect(() => {
         if (authToken) {
+            console.log('dispatch before')
             dispatch(getGamesData(authToken))
+            console.log('dispatch after')
         }
     }, [authToken, dispatch])
 
