@@ -8,11 +8,15 @@ const setGamesDataWithCurrentUserAvailability = (gamesData: Game[], authUserId: 
         let currentPlayerAvailable: boolean = false
 
         game.playersAvailable.forEach(player => {
+            console.log('player.user._id', player.user._id)
+            console.log('authUserId', authUserId)
             if (player.user._id === authUserId) {
                 currentPlayerAvailable = true
+                console.log('currentPlayerAvailable inside forEach', currentPlayerAvailable)
             }
         })
 
+        console.log('currentPlayerAvailable outside ForEach', currentPlayerAvailable)
         const updatedGame = { ...game, currentPlayerAvailable: currentPlayerAvailable }
         return updatedGame
     })
