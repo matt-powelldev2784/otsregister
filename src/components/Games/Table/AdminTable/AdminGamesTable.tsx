@@ -1,15 +1,15 @@
-import React, { useLayoutEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC, useLayoutEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../redux/reduxHooks'
 import { getGamesData } from '../../../redux/dataState'
 import styled from 'styled-components'
 import { AdminTableBody } from './AdminTableBody'
 import { GamesTableHead } from '../GamesTableHead/GamesTableHead'
 import { Errors } from '../../../Utilities/Errors'
 
-export const AdminGamesTable = () => {
-    const dispatch = useDispatch()
-    const { authToken } = useSelector(state => state.authReducer)
-    const { gameNotClosedError } = useSelector(state => state.dataReducer.planTeamsData)
+export const AdminGamesTable: FC = () => {
+    const dispatch = useAppDispatch()
+    const { authToken } = useAppSelector(state => state.authReducer)
+    const { gameNotClosedError } = useAppSelector(state => state.dataReducer.planTeamsData)
 
     useLayoutEffect(() => {
         if (authToken) {

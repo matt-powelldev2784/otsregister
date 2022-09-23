@@ -1,11 +1,17 @@
-import React, { Fragment, useLayoutEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC, Fragment, useLayoutEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../redux/reduxHooks'
 import { getGamesData } from '../../../redux/dataState'
 import styled from 'styled-components'
 
-export const UserGameClosed = ({ gameId, gameClosed, currentPlayerAvailable }) => {
-    const dispatch = useDispatch()
-    const { authToken, authUserName } = useSelector(state => state.authReducer)
+interface UserGameClosedProps {
+    gameId: string
+    gameClosed?: boolean
+    currentPlayerAvailable: boolean
+}
+
+export const UserGameClosed: FC<UserGameClosedProps> = ({ currentPlayerAvailable }) => {
+    const dispatch = useAppDispatch()
+    const { authToken, authUserName } = useAppSelector(state => state.authReducer)
 
     useLayoutEffect(() => {
         dispatch(getGamesData(authToken))

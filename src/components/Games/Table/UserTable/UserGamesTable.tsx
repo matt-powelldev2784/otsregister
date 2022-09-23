@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC, useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../redux/reduxHooks'
 import { getGamesData } from '../../../redux/dataState'
 import { getAuhtorisedUser } from '../../../redux/authState'
 import styled from 'styled-components'
 import { GamesTableHead } from '../GamesTableHead/GamesTableHead'
 import { UserTableBody } from './UserTableBody'
 
-export const UserGamesTable = () => {
-    const dispatch = useDispatch()
-    const { authToken } = useSelector(state => state.authReducer)
+export const UserGamesTable: FC = () => {
+    const dispatch = useAppDispatch()
+    const { authToken } = useAppSelector(state => state.authReducer)
 
     useEffect(() => {
         dispatch(getAuhtorisedUser(authToken))

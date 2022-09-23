@@ -10,7 +10,7 @@ export interface DataState {
     gamesData: { gamesList: Game[] | null; authErrors: [AuthError] | null }
     planTeamsData: {
         planTeamsGameId: string | null
-        gameNotClosedError: null | { msg: string }
+        gameNotClosedError: null | AuthError[]
         fixtureDate: string
         fixtureName: string
         unsortedFinalTeamData: [PlayerProfile] | []
@@ -46,7 +46,7 @@ export interface SetGameRegisterData {
     authToken: string
     body: {
         gameId: string
-        gameClosed: string
+        gameClosed: boolean
     }
 }
 

@@ -1,43 +1,53 @@
-import React from 'react'
+import React, { FC, ReactElement, useLayoutEffect } from 'react'
 import { Fragment } from 'react'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../redux/reduxHooks'
+import { getGamesData } from '../../../redux/dataState'
 import { formatDate } from '../../../Utilities/formatDate'
-import { UserTableRow } from './UserTableRow'
+import { AdminTableRow } from './AdminTableRow'
 
-export const UserTableBody = () => {
-    const { gamesList } = useSelector(state => state.dataReducer.gamesData)
+export const AdminTableBody: FC = () => {
+    const dispatch = useAppDispatch()
+    const { authToken } = useAppSelector(state => state.authReducer)
+    const { gamesData } = useAppSelector(state => state.dataReducer)
+    const { gamesList } = gamesData
 
-    let UserTableBody = (
+    useLayoutEffect(() => {
+        if (authToken) {
+            dispatch(getGamesData(authToken))
+        }
+    }, [authToken, dispatch])
+
+    let BlankAdminTable = (
         <TableRow>
             <TableCell></TableCell>
-            <TableCell name={'No Games Scheduled'}>No Games Scheduled</TableCell>
+            <TableCell>No Games Scheduled</TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
         </TableRow>
     )
 
+    let GamesAdminTable: ReactElement[] | null = null
     if (gamesList && gamesList.length > 0) {
-        UserTableBody = gamesList.map(game => {
+        GamesAdminTable = gamesList.map(game => {
             const gameDate = formatDate(game.gameDate)
-            const { gameName, _id, gameClosed, currentPlayerAvailable } = game
+            const { gameName, _id, gameClosed } = game
             const registeredPlayers = game.playersAvailable.length
 
             return (
-                <UserTableRow
+                <AdminTableRow
                     key={_id}
                     gameId={_id}
                     gameClosed={gameClosed}
                     gameDate={gameDate}
                     gameName={gameName}
                     registeredPlayers={registeredPlayers}
-                    currentPlayerAvailable={currentPlayerAvailable}
                 />
             )
         })
     }
 
-    return <Fragment>{UserTableBody}</Fragment>
+    return <Fragment>{GamesAdminTable || BlankAdminTable}</Fragment>
 }
 
 const TableRow = styled.tr`

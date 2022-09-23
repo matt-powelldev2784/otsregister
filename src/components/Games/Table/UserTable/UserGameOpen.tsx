@@ -1,19 +1,25 @@
-import React, { Fragment } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { FC, Fragment } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../redux/reduxHooks'
 import { setPlayerRegister } from '../../../redux/dataState'
 import styled from 'styled-components'
 import { ToggleButton } from '../../Utilites/ToggleButton'
+import { ToggleColor } from '../../../redux/ts/interfaces'
 
-export const UserGameOpen = ({ gameId, currentPlayerAvailable }) => {
-    const dispatch = useDispatch()
-    const { authToken, authUserName } = useSelector(state => state.authReducer)
+interface UserGameOpenProps {
+    gameId: string
+    currentPlayerAvailable: boolean
+}
+
+export const UserGameOpen: FC<UserGameOpenProps> = ({ gameId, currentPlayerAvailable }) => {
+    const dispatch = useAppDispatch()
+    const { authToken, authUserName } = useAppSelector(state => state.authReducer)
 
     const playerRegHandler = () => {
         const setPlayerRegisterData = { authToken, body: { gameId: gameId, playerAvailable: !currentPlayerAvailable } }
         dispatch(setPlayerRegister(setPlayerRegisterData))
     }
 
-    const toggleColor = { toggleOn: 'green', toggleOff: 'red' }
+    const toggleColor: ToggleColor = { toggleOn: 'green', toggleOff: 'red' }
 
     return (
         <Fragment>

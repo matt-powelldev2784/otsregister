@@ -1,15 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { FC, Fragment } from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../redux/reduxHooks'
 import { setGameRegister, deleteGame } from '../../../redux/dataState'
 import { ToggleButton } from '../../Utilites/ToggleButton'
 import { TableButton } from '../../Utilites/TableButton'
+import { SetGameRegisterData } from '../../../redux/ts/dataState_interface'
 
-export const GameStatus = ({ gameClosed, gameId }) => {
-    const dispatch = useDispatch()
-    const { isDesktop } = useSelector(state => state.globalReducer)
-    const { authToken } = useSelector(state => state.authReducer)
-    const { isLoading } = useSelector(state => state.dataReducer)
+interface GameStatusProps {
+    gameClosed: boolean
+    gameId: string
+}
+
+export const GameStatus: FC<GameStatusProps> = ({ gameClosed, gameId }) => {
+    const dispatch = useAppDispatch()
+    const { isDesktop } = useAppSelector(state => state.globalReducer)
+    const { authToken } = useAppSelector(state => state.authReducer)
 
     const gameStatusHandler = () => {
         if (gameClosed)
@@ -17,7 +22,7 @@ export const GameStatus = ({ gameClosed, gameId }) => {
                 'If the game reopened, any manger team selections will be lost. Players will be reset to their default teams. Please confirm you are happy to proceed?'
             )
 
-        const setGameRegisterData = { authToken, body: { gameId, gameClosed: !gameClosed } }
+        const setGameRegisterData: SetGameRegisterData = { authToken, body: { gameId, gameClosed: !gameClosed } }
         dispatch(setGameRegister(setGameRegisterData))
     }
 
@@ -38,7 +43,6 @@ export const GameStatus = ({ gameClosed, gameId }) => {
                     onClick={gameStatusHandler}
                     defaultChecked={gameClosed}
                     toggleColor={toggleColor}
-                    isLoading={isLoading}
                 />
                 {isDesktop && (
                     <TableButton

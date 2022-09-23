@@ -10,3 +10,8 @@ export interface ApiOptions {
     token: string
     body?: any
 }
+
+export interface ToggleColor {
+    toggleOn: string
+    toggleOff: string
+}

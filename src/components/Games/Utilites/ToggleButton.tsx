@@ -1,9 +1,16 @@
-import React, { Fragment } from 'react'
-import { useSelector } from 'react-redux'
+import React, { FC, Fragment } from 'react'
+import { useAppSelector } from '../../redux/reduxHooks'
 import styled from 'styled-components'
+import { ToggleColor } from '../../redux/ts/interfaces'
 
-export const ToggleButton = ({ onClick, defaultChecked, toggleColor }) => {
-    const { isLoading } = useSelector(state => state.dataReducer)
+interface ToggleButtonProps {
+    onClick: React.MouseEventHandler<HTMLInputElement> & Function
+    defaultChecked?: boolean
+    toggleColor: ToggleColor
+}
+
+export const ToggleButton: FC<ToggleButtonProps> = ({ onClick, defaultChecked, toggleColor }) => {
+    const { isLoading } = useAppSelector(state => state.dataReducer)
 
     return (
         <Fragment>
@@ -13,13 +20,13 @@ export const ToggleButton = ({ onClick, defaultChecked, toggleColor }) => {
                 checked={defaultChecked}
                 onClick={onClick}
                 toggleColor={toggleColor}
-                onChange={() => {}}
+                readOnly
             />
         </Fragment>
     )
 }
 
-const Input = styled.input`
+const Input = styled.input<ToggleButtonProps>`
     -webkit-appearance: none;
     -webkit-tap-highlight-color: transparent;
     position: relative;

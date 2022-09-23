@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { UserGameOpen } from './UserGameOpen'
 import { UserGameClosed } from './UserGameClosed'
 import styled from 'styled-components'
 
-export const UserTableRow = ({ gameId, gameDate, gameName, registeredPlayers, gameClosed, currentPlayerAvailable }) => {
+interface UserTableRowProps {
+    gameId: string
+    gameDate: string
+    gameName: string
+    registeredPlayers: number
+    gameClosed: boolean
+    currentPlayerAvailable: any
+}
+
+export const UserTableRow: FC<UserTableRowProps> = ({ gameId, gameDate, gameName, registeredPlayers, gameClosed, currentPlayerAvailable }) => {
     const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open'
 
     return (
