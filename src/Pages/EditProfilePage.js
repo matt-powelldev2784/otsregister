@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { getAuhtorisedUser } from '../components/redux/authState'
 import { setMenu } from '../components/redux/globalState'
 import styled from 'styled-components'
 import { Header } from '../components/Header/Header'

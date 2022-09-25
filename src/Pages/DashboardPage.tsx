@@ -1,6 +1,5 @@
 import React, { FC, Fragment, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../components/redux/reduxHooks'
-import { getAuhtorisedUser } from '../components/redux/authState'
 import { setMenu } from '../components/redux/globalState'
 import styled from 'styled-components'
 import { Header } from '../components/Header/Header'
@@ -14,7 +13,7 @@ export const DashboardPage: FC = () => {
     const dispatch = useAppDispatch()
     const { isDesktop } = useAppSelector(state => state.globalReducer)
     const { dataErrors } = useAppSelector(state => state.dataReducer)
-    const { authToken, adminUser, authUserName, authErrors } = useAppSelector(state => state.authReducer)
+    const { adminUser, authUserName, authErrors } = useAppSelector(state => state.authReducer)
     const userName = authUserName === 'admin' ? 'Admin' : authUserName
 
     useEffect(() => {
