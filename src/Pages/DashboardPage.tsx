@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { FC, Fragment, useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../components/redux/reduxHooks'
 import { getAuhtorisedUser } from '../components/redux/authState'
 import { setMenu } from '../components/redux/globalState'
 import styled from 'styled-components'
@@ -10,22 +10,12 @@ import { UserGamesTable } from '../components/Games/Table/UserTable/UserGamesTab
 import { AdminGamesTable } from '../components/Games/Table/AdminTable/AdminGamesTable'
 import { Errors } from '../components/Utilities/Errors'
 
-export const DashboardPage = () => {
-    const dispatch = useDispatch()
-    const { isDesktop } = useSelector(state => state.globalReducer)
-    const { dataErrors } = useSelector(state => state.dataReducer)
-    const { authToken, adminUser, authUserName, authErrors } = useSelector(state => state.authReducer)
+export const DashboardPage: FC = () => {
+    const dispatch = useAppDispatch()
+    const { isDesktop } = useAppSelector(state => state.globalReducer)
+    const { dataErrors } = useAppSelector(state => state.dataReducer)
+    const { authToken, adminUser, authUserName, authErrors } = useAppSelector(state => state.authReducer)
     const userName = authUserName === 'admin' ? 'Admin' : authUserName
-
-    useEffect(() => {
-        try {
-            if (authToken) {
-                dispatch(getAuhtorisedUser(authToken))
-            }
-        } catch (err) {
-            throw Error
-        }
-    }, [authToken, dispatch])
 
     useEffect(() => {
         dispatch(setMenu({ homepage: false, adminUser: adminUser, user: !adminUser }))
