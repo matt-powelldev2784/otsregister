@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
-import backgroundImage from '../../img/soccer_bg_color_80.jpg';
+import React, { FC, Fragment } from 'react'
+import styled from 'styled-components'
+import backgroundImage from '../../img/soccer_bg_color_80.jpg'
 
-export const Background = () => {
+export const Background: FC = () => {
     return (
         <Fragment>
             <BackgroudImage />
         </Fragment>
-    );
-};
+    )
+}
 
 const BackgroudImage = styled.img`
     position: relative;
@@ -17,8 +17,8 @@ const BackgroudImage = styled.img`
     width: 100vw;
     height: 100vh;
     margin: 0 auto 0 auto;
-`;
+`
 
 BackgroudImage.defaultProps = {
     src: backgroundImage
-};
+}

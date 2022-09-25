@@ -1,15 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { FC } from 'react'
+import styled from 'styled-components'
 
-export const MenuElement = ({ href, menuContent }) => {
+interface MenuElementProps {
+    href: string
+    menuContent: any
+}
+
+export const MenuElement: FC<MenuElementProps> = ({ href, menuContent }) => {
     return (
         <FlexItem>
             <Container href={href}>
                 <MenuItem>{menuContent}</MenuItem>
             </Container>
         </FlexItem>
-    );
-};
+    )
+}
 
 const FlexItem = styled.div`
     display: block;
@@ -21,12 +26,12 @@ const FlexItem = styled.div`
         width: 100vw;
         font-size: 1.5rem;
     }
-`;
+`
 
 const Container = styled.a`
     color: white;
     text-align: center;
-`;
+`
 
 const MenuItem = styled.div`
     color: white;
@@ -51,4 +56,4 @@ const MenuItem = styled.div`
             color: #99d8e1;
         }
     }
-`;
+`

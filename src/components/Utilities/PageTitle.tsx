@@ -1,13 +1,17 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import React, { FC, Fragment } from 'react'
+import styled from 'styled-components'
 
-export const PageTitle = ({ text }) => {
+interface PageTitleProps {
+    text: string
+}
+
+export const PageTitle: FC<PageTitleProps> = ({ text }) => {
     return (
         <Fragment>
             <TitleText>{text}</TitleText>
         </Fragment>
-    );
-};
+    )
+}
 
 const TitleText = styled.h1`
     display: block;
@@ -23,4 +27,4 @@ const TitleText = styled.h1`
         color: #003a68;
         background: white;
     }
-`;
+`

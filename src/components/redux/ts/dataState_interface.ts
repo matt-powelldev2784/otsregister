@@ -1,4 +1,5 @@
 import { AuthError } from './interfaces'
+import { PlayerProfile } from './interfaces'
 
 export interface DataState {
     isLoading: boolean
@@ -9,7 +10,7 @@ export interface DataState {
     createGameData: { authErrors: [AuthError] | null }
     gamesData: { gamesList: Game[] | null; authErrors: [AuthError] | null }
     planTeamsData: {
-        planTeamsGameId: string | null
+        planTeamsGameId: string | ''
         gameNotClosedError: null | AuthError[]
         fixtureDate: string
         fixtureName: string
@@ -37,8 +38,8 @@ export interface PlanTeamsDataRequest {
 export interface SaveFinalTeamsData {
     authToken: string
     body: {
-        planTeamsGameId: string
-        unsortedFinalTeamData: string
+        gameId: string
+        unsortedFinalTeamData: [PlayerProfile] | []
     }
 }
 
@@ -71,27 +72,12 @@ export interface UpdatedProfileData {
     }
 }
 
-export interface User {
-    _id: string
-    name: string
-    email: string
-}
-
 export interface CreatedGame {
     success: boolean
     status: number | string
     msg: string
     gameDate: string
     gameName: string
-}
-
-export interface PlayerProfile {
-    _id: string
-    defaultTeam: string
-    position: string
-    date: string
-    __v: any
-    user: User
 }
 
 export interface Game {

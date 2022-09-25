@@ -12,10 +12,9 @@ import {
     UpdatedProfileData,
     Game,
     CreatedGame,
-    PlayerProfile,
     FinalTeam
 } from './ts/dataState_interface'
-import { AuthError } from './ts/interfaces'
+import { AuthError, PlayerProfile } from './ts/interfaces'
 
 const setGamesDataWithCurrentUserAvailability = (gamesData: Game[], authUserId: string | null): Game[] => {
     const updatedGames = gamesData.map(game => {
@@ -46,23 +45,32 @@ export const getGamesData = createAsyncThunk('dataState/getGamesData', async (au
     }
 })
 
-export const createGame = createAsyncThunk('dataState/createGame', async (createGameData: CreateGameRequest): Promise<CreatedGame> => {
-    try {
-        const { authToken, gameData } = createGameData
-        const createdGame = await apiCall({ apiCallType: 'POST', route: 'api/games/creategame', token: authToken, body: gameData })
-        window.location.href = '/dashboard'
-        return createdGame
-    } catch (err) {
-        console.log('err.msg', err)
-        const errorMessage = err.errors[0].msg
-        throw Error(errorMessage)
+export const createGame = createAsyncThunk(
+    'dataState/createGame',
+    async (createGameData: CreateGameRequest): Promise<CreatedGame> => {
+        try {
+            const { authToken, gameData } = createGameData
+            const createdGame = await apiCall({
+                apiCallType: 'POST',
+                route: 'api/games/creategame',
+                token: authToken,
+                body: gameData
+            })
+            window.location.href = '/dashboard'
+            return createdGame
+        } catch (err) {
+            console.log('err.msg', err)
+            const errorMessage = err.errors[0].msg
+            throw Error(errorMessage)
+        }
     }
-})
+)
 
 export const getPlanTeamsData = createAsyncThunk(
     'dataState/getPlanTeamData',
     async (planTeamsDataRequest: PlanTeamsDataRequest): Promise<Game> => {
         const { authToken, gameId } = planTeamsDataRequest
+
         try {
             const game = await apiCall({
                 apiCallType: 'GET',
@@ -71,6 +79,7 @@ export const getPlanTeamsData = createAsyncThunk(
                 body: { gameId }
             })
             const { gameDetails } = game
+
             return gameDetails
         } catch (err) {
             console.log('err.msg', err)
@@ -158,7 +167,12 @@ export const updateProfileData = createAsyncThunk(
     async (updatedProfileData: UpdatedProfileData): Promise<PlayerProfile> => {
         try {
             const { authToken, body } = updatedProfileData
-            const { updatedProfile } = await apiCall({ apiCallType: 'POST', route: 'api/profile/updateProfile', token: authToken, body })
+            const { updatedProfile } = await apiCall({
+                apiCallType: 'POST',
+                route: 'api/profile/updateProfile',
+                token: authToken,
+                body
+            })
             window.location.href = '/dashboard'
             return updatedProfile
         } catch (err) {
@@ -189,7 +203,7 @@ const initialState: DataState = {
     createGameData: { authErrors: null },
     gamesData: { gamesList: null, authErrors: null },
     planTeamsData: {
-        planTeamsGameId: sessionStorage.getItem('planTeamsGameId') || null,
+        planTeamsGameId: sessionStorage.getItem('planTeamsGameId') || '',
         gameNotClosedError: null,
         fixtureDate: '',
         fixtureName: '',
@@ -212,12 +226,12 @@ export const dataSlice = createSlice({
             state.planTeamsData.gameNotClosedError = payload
         },
         deleteAuthData: state => {
-            state.planTeamsData.planTeamsGameId = null
+            state.planTeamsData.planTeamsGameId = ''
             state.authUserName = null
             state.authUserId = null
         },
         deletePlanTeamsGameId: state => {
-            state.planTeamsData.planTeamsGameId = null
+            state.planTeamsData.planTeamsGameId = ''
         },
         setSortedFinalTeamData: (state, { payload }: PayloadAction<[FinalTeam]>) => {
             state.planTeamsData.sortedFinalTeamData = payload

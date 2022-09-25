@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import React, { FC, Fragment } from 'react'
+import styled from 'styled-components'
 
-import { LogoTitle } from './LogoTitle';
-import { Navbar } from './Navbar';
+import { LogoTitle } from './LogoTitle'
+import { Navbar } from './Navbar'
 
-export const Header = () => {
+export const Header: FC = () => {
     return (
         <Fragment>
             <Container>
@@ -18,13 +18,13 @@ export const Header = () => {
                 </Flexbox>
             </Container>
         </Fragment>
-    );
-};
+    )
+}
 
 const Container = styled.header`
     width: 100vw;
     background-color: #003a68;
-`;
+`
 
 const Flexbox = styled.div`
     background-color: #003a68;
@@ -40,7 +40,7 @@ const Flexbox = styled.div`
     @media (max-device-width: 440px) {
         justify-content: center;
     }
-`;
+`
 
 const FlexItem = styled.div`
     display: block;
@@ -48,4 +48,4 @@ const FlexItem = styled.div`
     color: white;
     font-family: Roboto;
     font-weight: 500;
-`;
+`
