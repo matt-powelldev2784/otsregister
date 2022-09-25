@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getAuhtorisedUser } from '../components/redux/authState'
+import React, { FC, Fragment, useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../components/redux/reduxHooks'
 import { setMenu } from '../components/redux/globalState'
 import styled from 'styled-components'
 import { Header } from '../components/Header/Header'
@@ -8,21 +7,11 @@ import { Background } from '../components/Header/Background'
 import { Profile } from '../components/Profile/Profile'
 import { Errors } from '../components/Utilities/Errors'
 
-export const EditProfilePage = () => {
-    const dispatch = useDispatch()
-    const { isDesktop } = useSelector(state => state.globalReducer)
-    const { authToken, adminUser, authErrors } = useSelector(state => state.authReducer)
-    const { dataErrors } = useSelector(state => state.dataReducer)
-
-    useEffect(() => {
-        try {
-            if (authToken) {
-                dispatch(getAuhtorisedUser(authToken))
-            }
-        } catch (err) {
-            throw Error
-        }
-    }, [authToken, dispatch])
+export const EditProfilePage: FC = () => {
+    const dispatch = useAppDispatch()
+    const { isDesktop } = useAppSelector(state => state.globalReducer)
+    const { adminUser, authErrors } = useAppSelector(state => state.authReducer)
+    const { dataErrors } = useAppSelector(state => state.dataReducer)
 
     useEffect(() => {
         dispatch(setMenu({ homepage: false, adminUser: adminUser, user: !adminUser }))

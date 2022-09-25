@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { Background } from '../components/Header/Background';
-import { Header } from '../components/Header/Header';
-import { PageTitle } from '../components/Utilities/PageTitle';
+import React, { FC } from 'react'
+import styled from 'styled-components'
+import { useAppSelector } from '../components/redux/reduxHooks'
+import { Background } from '../components/Header/Background'
+import { Header } from '../components/Header/Header'
+import { PageTitle } from '../components/Utilities/PageTitle'
 
-export const Error = () => {
-    const { isDesktop } = useSelector(state => state.globalReducer);
+export const Error: FC = () => {
+    const { isDesktop } = useAppSelector(state => state.globalReducer)
 
     return (
         <div>
@@ -18,13 +18,13 @@ export const Error = () => {
                 </Main>
             </Container>
         </div>
-    );
-};
+    )
+}
 
 const Container = styled.section`
     position: absolute;
     width: 100%;
-`;
+`
 
 const Main = styled.main`
     position: absolute;
@@ -32,4 +32,4 @@ const Main = styled.main`
     width: 100%;
     display: block;
     margin: 0 auto 0 auto;
-`;
+`
