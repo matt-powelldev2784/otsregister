@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
 interface FormSelectProps {
@@ -7,9 +7,13 @@ interface FormSelectProps {
     onChange?: React.ChangeEventHandler<HTMLSelectElement> & Function
     value?: string | number
     optionsElements: any[]
+    width?: string
+    display?: string
 }
 
-export const FormSelect: FC<FormSelectProps> = ({ placeholder, name, value, onChange, optionsElements }) => {
+export const FormSelect: FC<FormSelectProps> = ({ placeholder, name, value, onChange, optionsElements, width }) => {
+    console.log(width)
+
     const Options = optionsElements.map((option, i) => {
         const { value, text } = option
         return (
@@ -25,7 +29,7 @@ export const FormSelect: FC<FormSelectProps> = ({ placeholder, name, value, onCh
     const labelTitle = placeholder.toUpperCase()
 
     return (
-        <Fragment>
+        <Container>
             <Label>
                 <Span>{labelTitle}</Span>
                 <Select
@@ -33,18 +37,29 @@ export const FormSelect: FC<FormSelectProps> = ({ placeholder, name, value, onCh
                     name={name}
                     value={value}
                     onChange={onChange}
+                    optionsElements={optionsElements}
+                    width={width}
                 >
                     {Options}
                 </Select>
             </Label>
-        </Fragment>
+        </Container>
     )
 }
 
-const Select = styled.select`
+const Container = styled.section`
+    position: relative;
+    display: block;
+    top: 0;
+    width: 100%;
+`
+
+const Select = styled.select<FormSelectProps>`
     display: block;
     margin: 0rem auto 0rem auto;
-    width: 18rem;
+    width: ${props => {
+        return props.width || '18rem'
+    }}}
     padding: 0.5rem;
     border-radius: 0rem;
     box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.3);
@@ -68,6 +83,5 @@ const Span = styled.span`
     color: white;
     font-weight: 500;
     font-size: 0.8rem;
-
     background: none;
 `

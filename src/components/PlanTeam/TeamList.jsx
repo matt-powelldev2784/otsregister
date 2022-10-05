@@ -1,33 +1,45 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { movePlayerToDifferentTeam } from '../redux/dataState';
-import { useDrop } from 'react-dnd';
-import { PlayerItem } from './PlayerItem';
+import React from 'react'
+import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+import { movePlayerToDifferentTeam } from '../redux/dataState'
+import { useDrop } from 'react-dnd'
+import { PlayerItem } from './PlayerItem'
 
 export const TeamList = ({ teamList, teamName }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
-    const [, teamDropTarget] = useDrop({
+    const [dropTargetProps, teamDropTarget] = useDrop({
         accept: 'player',
         drop: (item, monitor) => {
-            const playerId = item.id;
-            const newTeam = monitor.targetId.substring(1);
-            dispatch(movePlayerToDifferentTeam({ playerId, newTeam }));
+            console.log(item, monitor)
+            console.log(dropTargetProps)
+            const playerId = item.id
+            const newTeam = monitor.targetId.substring(1)
+            console.log(newTeam)
+            dispatch(movePlayerToDifferentTeam({ playerId, newTeam }))
         },
         collect: (monitor, props) => ({
-            isOver: !!monitor.isOver()
+            isOver: !!monitor.isOver(),
+            dropTarget: !!monitor.getDropResult()
         })
-    });
+    })
 
-    let PlayersList;
+    let PlayersList
     if (teamList && teamList.length > 0) {
         PlayersList = teamList.map(player => {
-            const { position, defaultTeam } = player;
-            const _id = player.user._id;
-            const name = player.user.name;
-            return <PlayerItem key={_id} id={_id} position={position} name={name} defaultTeam={defaultTeam} />;
-        });
+            const { position, defaultTeam } = player
+            const _id = player.user._id
+            const name = player.user.name
+            return (
+                <PlayerItem
+                    key={_id}
+                    id={_id}
+                    position={position}
+                    name={name}
+                    defaultTeam={defaultTeam}
+                />
+            )
+        })
     }
 
     return (
@@ -37,8 +49,8 @@ export const TeamList = ({ teamList, teamName }) => {
                 {PlayersList}
             </TeamContainer>
         </List>
-    );
-};
+    )
+}
 
 const List = styled.div`
     text-align: center;
@@ -46,15 +58,19 @@ const List = styled.div`
     background: #003a68;
     padding: 0rem;
     margin: 0.5rem;
-    width: 17rem;
+    width: 20rem;
     border-radius: 0.7rem 0.7rem 0rem 0rem;
 
     @media (max-device-width: 440px) {
-        align-text: center;
-        width: 100vw;
-        margin: 0 auto 0.5rem auto;
+        text-align: center;
+        font-size: 1.2rem;
+        background: #003a68;
+        padding: 0rem;
+        margin: 0.5rem;
+        width: 100%;
+        border-radius: 0.7rem 0.7rem 0rem 0rem;
     }
-`;
+`
 
 const TitleText = styled.h1`
     border-radius: 0.7rem 0.7rem 0rem 0rem;
@@ -71,6 +87,6 @@ const TitleText = styled.h1`
         font-size: 1.5rem;
         margin: 0;
     }
-`;
+`
 
-const TeamContainer = styled.div``;
+const TeamContainer = styled.div``

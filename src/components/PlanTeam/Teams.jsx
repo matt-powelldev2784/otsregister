@@ -30,18 +30,17 @@ export const Teams = () => {
     }, [unsortedFinalTeamData, dispatch, authToken, planTeamsGameId])
 
     let Teams
-    if (sortedFinalTeamData) {
-        Teams = sortedFinalTeamData.map(teamData => {
-            const { team, players } = teamData
-            return (
-                <TeamList
-                    key={team}
-                    teamList={players}
-                    teamName={team}
-                />
-            )
-        })
-    }
+
+    Teams = sortedFinalTeamData?.map(teamData => {
+        const { team, players } = teamData
+        return (
+            <TeamList
+                key={team}
+                teamList={players}
+                teamName={team}
+            />
+        )
+    })
 
     return (
         <Container>
@@ -66,6 +65,11 @@ const Flexbox = styled.div`
     margin: 0rem auto 0rem auto;
 
     @media (max-device-width: 440px) {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: top;
+        margin: 0rem auto 0rem auto;
     }
 `
