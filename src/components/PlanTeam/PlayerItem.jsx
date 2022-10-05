@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDrag } from 'react-dnd'
-import { MoveTeamMobile } from './MoveTeamMobile'
 
 export const PlayerItem = ({ position, name, id, defaultTeam }) => {
     const [, drag] = useDrag(() => ({
