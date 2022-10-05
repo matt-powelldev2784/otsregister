@@ -8,19 +8,16 @@ import { PlayerItem } from './PlayerItem'
 export const TeamList = ({ teamList, teamName }) => {
     const dispatch = useDispatch()
 
-    const [dropTargetProps, teamDropTarget] = useDrop({
+    const [, teamDropTarget] = useDrop({
         accept: 'player',
         drop: (item, monitor) => {
-            console.log(item, monitor)
-            console.log(dropTargetProps)
             const playerId = item.id
             const newTeam = monitor.targetId.substring(1)
-            console.log(newTeam)
             dispatch(movePlayerToDifferentTeam({ playerId, newTeam }))
         },
         collect: (monitor, props) => ({
             isOver: !!monitor.isOver(),
-            dropTarget: !!monitor.getDropResult()
+            droppedOnTarget: !!monitor.getDropResult()
         })
     })
 

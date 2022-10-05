@@ -13,11 +13,16 @@ export const PlayerItem = ({ position, name, id, defaultTeam }) => {
         })
     }))
 
+    const nameLength = name.length
+    const fontSize = nameLength > 25 ? '0.9rem' : '1.2rem'
+
     return (
         <Container>
             <Flexbox>
-                <ListItem ref={drag}>{`${position} ${name}`}</ListItem>
-                <MoveTeamMobile></MoveTeamMobile>
+                <ListItem
+                    ref={drag}
+                    fontSize={fontSize}
+                >{`${position} ${name}`}</ListItem>
             </Flexbox>
         </Container>
     )
@@ -50,8 +55,11 @@ const Flexbox = styled.div`
 `
 
 const ListItem = styled.div`
-    width: 50%;
+    width: 95%;
     color: white;
     padding: 0.25rem;
-    font-size: 1.2rem;
+    font-size: ${props => {
+        return props.fontSize
+    }}}
+    
 `
