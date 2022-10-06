@@ -29,9 +29,7 @@ export const Teams = () => {
         }
     }, [unsortedFinalTeamData, dispatch, authToken, planTeamsGameId])
 
-    let Teams
-
-    Teams = sortedFinalTeamData?.map(teamData => {
+    const Teams = sortedFinalTeamData?.map(teamData => {
         const { team, players } = teamData
         return (
             <TeamList

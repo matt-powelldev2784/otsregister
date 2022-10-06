@@ -8,7 +8,7 @@ import { PlayerItem } from './PlayerItem'
 export const TeamList = ({ teamList, teamName }) => {
     const dispatch = useDispatch()
 
-    const [, teamDropTarget] = useDrop({
+    const [{ isOver }, teamDropTarget] = useDrop({
         accept: 'player',
         drop: (item, monitor) => {
             const playerId = item.id
@@ -16,33 +16,32 @@ export const TeamList = ({ teamList, teamName }) => {
             dispatch(movePlayerToDifferentTeam({ playerId, newTeam }))
         },
         collect: (monitor, props) => ({
-            isOver: !!monitor.isOver(),
-            droppedOnTarget: !!monitor.getDropResult()
+            isOver: !!monitor.isOver()
         })
     })
 
-    let PlayersList
-    if (teamList && teamList.length > 0) {
-        PlayersList = teamList.map(player => {
-            const { position, defaultTeam } = player
-            const _id = player.user._id
-            const name = player.user.name
-            return (
-                <PlayerItem
-                    key={_id}
-                    id={_id}
-                    position={position}
-                    name={name}
-                    defaultTeam={defaultTeam}
-                />
-            )
-        })
-    }
+    const PlayersList = teamList?.map(player => {
+        const { position, defaultTeam } = player
+        const _id = player.user._id
+        const name = player.user.name
+        return (
+            <PlayerItem
+                key={_id}
+                id={_id}
+                position={position}
+                name={name}
+                defaultTeam={defaultTeam}
+            />
+        )
+    })
 
     return (
-        <List ref={teamDropTarget}>
+        <List
+            ref={teamDropTarget}
+            bgColor={isOver ? '#7F9CB3' : false}
+        >
             <TeamContainer>
-                <TitleText>{teamName}</TitleText>
+                <TitleText bgColor={isOver ? '#E5EBEF' : false}>{teamName}</TitleText>
                 {PlayersList}
             </TeamContainer>
         </List>
@@ -52,7 +51,7 @@ export const TeamList = ({ teamList, teamName }) => {
 const List = styled.div`
     text-align: center;
     font-size: 1.2rem;
-    background: #003a68;
+    background: ${({ bgColor }) => bgColor || '#003a68'};
     padding: 0rem;
     margin: 0.5rem;
     width: 20rem;
@@ -61,9 +60,9 @@ const List = styled.div`
     @media (max-device-width: 440px) {
         text-align: center;
         font-size: 1.2rem;
-        background: #003a68;
+        background: ${({ bgColor }) => bgColor || '#003a68'};
         padding: 0rem;
-        margin: 0.5rem;
+        margin: 1rem;
         width: 100%;
         border-radius: 0.7rem 0.7rem 0rem 0rem;
     }
@@ -76,14 +75,7 @@ const TitleText = styled.h1`
     font-weight: 700;
     font-size: 1.5rem;
     color: #003a68;
-    background: white;
-
-    @media (max-device-width: 440px) {
-        border-radius: 0rem;
-        font-weight: 700;
-        font-size: 1.5rem;
-        margin: 0;
-    }
+    background: ${({ bgColor }) => bgColor || 'white'};
 `
 
 const TeamContainer = styled.div``
