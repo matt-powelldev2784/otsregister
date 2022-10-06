@@ -24,8 +24,8 @@ export const UserGameOpen: FC<UserGameOpenProps> = ({ gameId, currentPlayerAvail
     return (
         <Fragment>
             <Flexbox>
-                {currentPlayerAvailable && <PlayerAvailable data-testid="available">{authUserName} Available</PlayerAvailable>}
-                {!currentPlayerAvailable && <PlayerUnavialable data-testid="unavailable">{authUserName} NOT Available</PlayerUnavialable>}
+                {currentPlayerAvailable && <PlayerAvailable>{authUserName} Available</PlayerAvailable>}
+                {!currentPlayerAvailable && <PlayerUnavialable>{authUserName} NOT Available</PlayerUnavialable>}
                 <ToggleButton
                     onClick={playerRegHandler}
                     defaultChecked={currentPlayerAvailable}

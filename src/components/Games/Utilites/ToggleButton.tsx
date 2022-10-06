@@ -50,8 +50,8 @@ const Input = styled.input<ToggleButtonProps>`
         display: inline-block;
         border-radius: 18px;
         clear: both;
-        background: ${props => {
-            return props.toggleColor.toggleOff
+        background: ${({ toggleColor }) => {
+            return toggleColor.toggleOff
         }}};
     }
 
@@ -76,8 +76,8 @@ const Input = styled.input<ToggleButtonProps>`
     }
 
     &:checked:after {
-        background: ${props => {
-            return props.toggleColor.toggleOn
+        background: ${({ toggleColor }) => {
+            return toggleColor.toggleOn
         }};
     }
 `

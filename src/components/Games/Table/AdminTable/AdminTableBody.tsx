@@ -27,27 +27,28 @@ export const AdminTableBody: FC = () => {
         </TableRow>
     )
 
-    let GamesAdminTable: ReactElement[] | null = null
-    if (gamesList && gamesList.length > 0) {
-        GamesAdminTable = gamesList.map(game => {
-            const gameDate = formatDate(game.gameDate)
-            const { gameName, _id, gameClosed } = game
-            const registeredPlayers = game.playersAvailable.length
+    let GamesAdminTable: ReactElement[] | ReactElement<any> | undefined = gamesList?.map(game => {
+        const gameDate = formatDate(game.gameDate)
+        const { gameName, _id, gameClosed } = game
+        const registeredPlayers = game.playersAvailable.length
 
-            return (
-                <AdminTableRow
-                    key={_id}
-                    gameId={_id}
-                    gameClosed={gameClosed}
-                    gameDate={gameDate}
-                    gameName={gameName}
-                    registeredPlayers={registeredPlayers}
-                />
-            )
-        })
+        return (
+            <AdminTableRow
+                key={_id}
+                gameId={_id}
+                gameClosed={gameClosed}
+                gameDate={gameDate}
+                gameName={gameName}
+                registeredPlayers={registeredPlayers}
+            />
+        )
+    })
+
+    if (GamesAdminTable && GamesAdminTable.length === 0) {
+        GamesAdminTable = BlankAdminTable
     }
 
-    return <Fragment>{GamesAdminTable || BlankAdminTable}</Fragment>
+    return <Fragment>{GamesAdminTable}</Fragment>
 }
 
 const TableRow = styled.tr`
@@ -55,12 +56,12 @@ const TableRow = styled.tr`
     font-weight: 500;
 
     &:nth-child(even) {
-        background: ${props => props.color || 'white'};
+        background: ${({ color }) => color || 'white'};
         color: #003a68;
     }
 
     &:nth-child(odd) {
-        background: ${props => props.color || '#003a68'};
+        background: ${({ color }) => color || '#003a68'};
         color: white;
     }
 `

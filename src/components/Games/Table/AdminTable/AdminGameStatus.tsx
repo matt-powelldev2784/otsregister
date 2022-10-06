@@ -17,27 +17,42 @@ export const GameStatus: FC<GameStatusProps> = ({ gameClosed, gameId }) => {
     const { authToken } = useAppSelector(state => state.authReducer)
 
     const gameStatusHandler = () => {
-        if (gameClosed)
-            window.confirm(
-                'If the game reopened, any manger team selections will be lost. Players will be reset to their default teams. Please confirm you are happy to proceed?'
-            )
+        const gameClosedMessage =
+            'If the game reopened, any manger team selections will be lost. Players will be reset to their default teams. Please confirm you are happy to proceed?'
 
-        const setGameRegisterData: SetGameRegisterData = { authToken, body: { gameId, gameClosed: !gameClosed } }
+        if (gameClosed) {
+            const okToCloseGame = window.confirm(gameClosedMessage)
+            if (!okToCloseGame) {
+                return
+            }
+        }
+        const setGameRegisterData: SetGameRegisterData = {
+            authToken,
+            body: {
+                gameId,
+                gameClosed: !gameClosed
+            }
+        }
         dispatch(setGameRegister(setGameRegisterData))
     }
 
     const deleteGameHandler = () => {
-        const deleteGameData = { authToken, gameId }
+        const deleteGameData = {
+            authToken,
+            gameId
+        }
         dispatch(deleteGame(deleteGameData))
     }
 
-    const toggleColor = { toggleOn: 'black', toggleOff: 'green' }
-    const gameClosedColor = gameClosed ? 'black' : undefined
+    const toggleColor = {
+        toggleOn: 'black',
+        toggleOff: 'green'
+    }
 
     return (
         <Fragment>
             <Flexbox>
-                {gameClosed && <GameClosed color={gameClosedColor}>Game Closed</GameClosed>}
+                {gameClosed && <GameClosed>Game Closed</GameClosed>}
                 {!gameClosed && <GameOpen>Game Open</GameOpen>}
                 <ToggleButton
                     onClick={gameStatusHandler}
@@ -87,7 +102,7 @@ const GameOpen = styled.p`
 
 const GameClosed = styled.p`
     display: inline-block;
-    background: ${props => props.color};
+    background: black;
     color: white;
     width: 10rem;
     padding: 0.2rem 0.6rem;

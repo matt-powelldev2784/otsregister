@@ -68,7 +68,7 @@ const TableRow = styled.tr<AdminTableRowProps>`
 
 const TableCell = styled.td`
     padding: 0.4rem 0.5rem 0.4rem 0.5rem;
-    color: ${props => props.color};
+    color: ${({ color }) => color};
     text-align: center;
 
     @media (max-device-width: 440px) {

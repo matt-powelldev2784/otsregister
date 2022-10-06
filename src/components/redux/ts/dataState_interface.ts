@@ -8,7 +8,7 @@ export interface DataState {
     authUserId: string | null
     playerProfile: PlayerProfile
     createGameData: { authErrors: [AuthError] | null }
-    gamesData: { gamesList: Game[] | null; authErrors: [AuthError] | null }
+    gamesData: { gamesList: Game[] | null | undefined; authErrors: [AuthError] | null }
     planTeamsData: {
         planTeamsGameId: string | ''
         gameNotClosedError: null | AuthError[]

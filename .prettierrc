@@ -3,9 +3,9 @@
     "bracketSpacing": true,
     "htmlWhitespaceSensitivity": "css",
     "insertPragma": false,
-    "jsxBracketSameLine": false,
+    "jsxBracketSameLine": true,
     "jsxSingleQuote": false,
-    "printWidth": 130,
+    "printWidth": 140,
     "proseWrap": "preserve",
     "quoteProps": "as-needed",
     "requirePragma": false,
@@ -16,5 +16,7 @@
     "useTabs": false,
     "rangeStart": 0,
     "singleAttributePerLine": true,
-    "emmet.includeLanguages": { "javascript": "javascriptreact" }
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    }
 }

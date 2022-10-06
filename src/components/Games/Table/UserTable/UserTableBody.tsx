@@ -16,28 +16,32 @@ export const UserTableBody: FC = () => {
         </TableRow>
     )
 
-    let GamesUserTable: ReactElement[] | null = null
-    if (gamesList && gamesList.length > 0) {
-        GamesUserTable = gamesList.map(game => {
-            const gameDate = formatDate(game.gameDate)
-            const { gameName, _id, gameClosed, currentPlayerAvailable } = game
-            const registeredPlayers = game.playersAvailable.length
+    // let GamesUserTable: ReactElement[] | null = null
+    // if (gamesList && gamesList.length > 0) {
 
-            return (
-                <UserTableRow
-                    key={_id}
-                    gameId={_id}
-                    gameClosed={gameClosed}
-                    gameDate={gameDate}
-                    gameName={gameName}
-                    registeredPlayers={registeredPlayers}
-                    currentPlayerAvailable={currentPlayerAvailable}
-                />
-            )
-        })
+    let GamesUserTable: ReactElement[] | ReactElement<any> | undefined = gamesList?.map(game => {
+        const gameDate = formatDate(game.gameDate)
+        const { gameName, _id, gameClosed, currentPlayerAvailable } = game
+        const registeredPlayers = game.playersAvailable.length
+
+        return (
+            <UserTableRow
+                key={_id}
+                gameId={_id}
+                gameClosed={gameClosed}
+                gameDate={gameDate}
+                gameName={gameName}
+                registeredPlayers={registeredPlayers}
+                currentPlayerAvailable={currentPlayerAvailable}
+            />
+        )
+    })
+
+    if (GamesUserTable && GamesUserTable.length === 0) {
+        GamesUserTable = BlankUserTable
     }
 
-    return <Fragment>{GamesUserTable || BlankUserTable}</Fragment>
+    return <Fragment>{GamesUserTable}</Fragment>
 }
 
 const TableRow = styled.tr`

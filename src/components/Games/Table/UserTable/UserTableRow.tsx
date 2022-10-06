@@ -12,20 +12,24 @@ interface UserTableRowProps {
     currentPlayerAvailable: any
 }
 
-export const UserTableRow: FC<UserTableRowProps> = ({ gameId, gameDate, gameName, registeredPlayers, gameClosed, currentPlayerAvailable }) => {
+export const UserTableRow: FC<UserTableRowProps> = ({
+    gameId,
+    gameDate,
+    gameName,
+    registeredPlayers,
+    gameClosed,
+    currentPlayerAvailable
+}) => {
     const gameClosedText = gameClosed ? 'Register Closed' : 'Register Open'
 
     return (
         <TableRow>
             <TableCell>{gameDate}</TableCell>
-
             <TableCell>{gameName}</TableCell>
-
             <TableCell>
                 <Div> {gameClosedText}</Div>
                 <Div>{registeredPlayers} Available Players</Div>
             </TableCell>
-
             <TableCell>
                 <Flexbox>
                     {!gameClosed && (
