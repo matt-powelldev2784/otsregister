@@ -44,7 +44,7 @@ export const AdminTableBody: FC = () => {
         )
     })
 
-    if (GamesAdminTable && GamesAdminTable.length === 0) {
+    if ((GamesAdminTable && GamesAdminTable.length === 0) || !GamesAdminTable) {
         GamesAdminTable = BlankAdminTable
     }
 

@@ -16,9 +16,6 @@ export const UserTableBody: FC = () => {
         </TableRow>
     )
 
-    // let GamesUserTable: ReactElement[] | null = null
-    // if (gamesList && gamesList.length > 0) {
-
     let GamesUserTable: ReactElement[] | ReactElement<any> | undefined = gamesList?.map(game => {
         const gameDate = formatDate(game.gameDate)
         const { gameName, _id, gameClosed, currentPlayerAvailable } = game
@@ -37,7 +34,7 @@ export const UserTableBody: FC = () => {
         )
     })
 
-    if (GamesUserTable && GamesUserTable.length === 0) {
+    if ((GamesUserTable && GamesUserTable.length === 0) || !GamesUserTable) {
         GamesUserTable = BlankUserTable
     }
 
