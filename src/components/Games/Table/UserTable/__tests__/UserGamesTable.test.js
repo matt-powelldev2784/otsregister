@@ -33,8 +33,6 @@ describe('When the api call fails', () => {
             </Provider>
         )
 
-        screen.debug()
-
         const tableRowElements = screen.getAllByRole('row')
         expect(tableRowElements.length).toBe(2) //table row elements header plus 1 row stating no games scheduled
 
