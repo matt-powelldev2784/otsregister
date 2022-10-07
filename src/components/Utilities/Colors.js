@@ -9,6 +9,7 @@ export const Colors = () => {
             <Color3 />
             <Color4 />
             <Color5 />
+            <Color6 />
         </div>
     )
 }
