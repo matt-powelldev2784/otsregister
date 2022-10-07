@@ -17,8 +17,7 @@ export const TableForEmail = () => {
         return (
             <TeamName
                 teamName={team}
-                key={key}
-            ></TeamName>
+                key={key}></TeamName>
         )
     })
 
@@ -27,15 +26,19 @@ export const TableForEmail = () => {
             return null
         }
 
+        const playersWithSortKey = [...players]
+        playersWithSortKey.sort((a, b) => {
+            return a.positionSortOrder - b.positionSortOrder
+        })
+
         const key = `${team}${i}`
-        const Players = players.map(player => {
+        const Players = playersWithSortKey.map(player => {
             const { _id } = player
             const name = player.user.name
             return (
                 <PlayerItem
                     playerName={name}
-                    key={_id}
-                ></PlayerItem>
+                    key={_id}></PlayerItem>
             )
         })
         return <TableCell key={key}>{Players}</TableCell>
