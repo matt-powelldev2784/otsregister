@@ -8,6 +8,11 @@ import { PlayerItem } from './PlayerItem'
 export const TeamList = ({ teamList, teamName }) => {
     const dispatch = useDispatch()
 
+    const teamListWithSortKey = [...teamList]
+    teamListWithSortKey.sort((a, b) => {
+        return a.positionSortOrder - b.positionSortOrder
+    })
+
     const [{ isOver }, teamDropTarget] = useDrop({
         accept: 'player',
         drop: (item, monitor) => {
@@ -20,7 +25,7 @@ export const TeamList = ({ teamList, teamName }) => {
         })
     })
 
-    const PlayersList = teamList?.map(player => {
+    const PlayersList = teamListWithSortKey?.map(player => {
         const { position, defaultTeam } = player
         const _id = player.user._id
         const name = player.user.name
@@ -38,8 +43,7 @@ export const TeamList = ({ teamList, teamName }) => {
     return (
         <List
             ref={teamDropTarget}
-            bgColor={isOver ? '#7F9CB3' : false}
-        >
+            bgColor={isOver ? '#7F9CB3' : false}>
             <TeamContainer>
                 <TitleText bgColor={isOver ? '#E5EBEF' : false}>{teamName}</TitleText>
                 {PlayersList}
